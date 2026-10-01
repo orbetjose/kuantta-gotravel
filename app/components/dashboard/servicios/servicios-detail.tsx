@@ -33,6 +33,7 @@ export default function ServiciosDetail({
   role,
 }: ServicioDetailProps) {
   const cliente = servicio.cliente;
+  const pasajero = servicio.pasajero;
   const proveedor = servicio.proveedor;
   const tipoServicio = servicio.tipo;
 
@@ -97,7 +98,7 @@ export default function ServiciosDetail({
 
           <InfoItem
             label="Pasajero"
-            value={servicio.detalleServicio.pasajero}
+            value={`${pasajero.nombre} ${pasajero.apellido}`}
           />
           <InfoItem
             label="Código de reserva"

@@ -45,6 +45,7 @@ export default async function ServicioDetailPage({
     },
     include: {
       cliente: true,
+      pasajero: true,
       proveedor: true,
       tiquete: {
         include: {

@@ -1,7 +1,6 @@
 import ServicioActions from "../servicios/servicio-actions";
 import { getEstadoStyles } from "@/libs/helpers";
 
-
 type TiqueteDetailProps = {
   tiquete: any;
   role: "ADMINISTRADOR" | "ASESOR" | "FACTURADOR";
@@ -32,6 +31,7 @@ const formatEstado = (estado: string) => {
 
 export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
   const cliente = tiquete.servicio.cliente;
+  const pasajero = tiquete.servicio.pasajero;
   const proveedor = tiquete.servicio.proveedor;
   const ruta = tiquete.ruta;
   const servicio = tiquete.servicio;
@@ -113,7 +113,10 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <InfoItem label="Pasajero" value={tiquete.pasajero} />
+          <InfoItem
+            label="Pasajero"
+            value={`${pasajero.nombre} ${pasajero.apellido}`}
+          />
 
           <InfoItem label="Clase" value={tiquete.clase} />
 

@@ -28,7 +28,6 @@ export default async function TiqueteDetailPage({
       numeroTiqueteRevision: true,
 
       clase: true,
-      pasajero: true,
       fechaIda: true,
       fechaRegreso: true,
 
@@ -83,6 +82,16 @@ export default async function TiqueteDetailPage({
           createdAt: true,
 
           cliente: {
+            select: {
+              id: true,
+              nombre: true,
+              apellido: true,
+              correo: true,
+              telefono: true,
+            },
+          },
+
+          pasajero: {
             select: {
               id: true,
               nombre: true,
