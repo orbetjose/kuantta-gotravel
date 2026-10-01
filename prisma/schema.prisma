@@ -1,0 +1,243 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../libs/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                  String     @id @default(cuid())
+  name                String?
+  email               String     @unique
+  password            String?
+  emailVerified       DateTime?
+  image               String?
+  role                Role       @default(ADMINISTRADOR)
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  accounts            Account[]
+  serviciosCreados    Servicio[] @relation("ServiciosCreados")
+  serviciosFacturados Servicio[] @relation("ServiciosFacturados")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Cliente {
+  id        Int        @id @default(autoincrement())
+  nombre    String
+  apellido  String
+  correo    String     @unique
+  telefono  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  servicios Servicio[]
+}
+
+model Servicio {
+  id               Int            @id @default(autoincrement())
+  clienteId        Int
+  proveedorId      Int?
+  tipo             TipoServicio
+  estado           EstadoServicio @default(BORRADOR)
+
+  // Datos generales
+  fechaEmision DateTime
+
+  // Documentos
+  facturaProveedorUrl          String?
+  facturaGoTravelUrl           String?
+  soporteTiqueteElectronicoUrl String?
+  observaciones                String?
+
+  // Forma de pago
+  formaPago       TipoPago
+  tipoCash        TipoCash?
+  numeroTarjeta   String?
+  numeroAprobacion String?
+  creditoAgencia Int?
+
+  // Información administrativa
+  proyectoFCDS String?
+  ceCos        String?
+
+  vencimientoFacturaProveedor DateTime?
+  pagadoProveedor             TipoPagadoProveedor?
+  fechaPagoProveedor DateTime?
+  fechaPagoCliente DateTime?
+  pagadoCliente Boolean @default(false)
+
+
+  // Facturación
+  creadoPorId      String
+  facturadoPorId   String?
+  fechaFacturacion DateTime?
+  motivoDevolucion String?
+
+  uuid      String   @unique @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cliente      Cliente    @relation(fields: [clienteId], references: [id])
+  proveedor    Proveedor? @relation(fields: [proveedorId], references: [id])
+
+  creadoPor    User       @relation("ServiciosCreados", fields: [creadoPorId], references: [id])
+  facturadoPor User?      @relation("ServiciosFacturados", fields: [facturadoPorId], references: [id])
+
+  tiquete         Tiquete?
+  detalleServicio DetalleServicio?
+}
+
+model DetalleServicio {
+  id                    Int      @id @default(autoincrement())
+  servicioId            Int      @unique
+
+  descripcionServicio   String
+  pasajero              String
+  codigoReserva         String
+
+  valorPagadoProveedor   Decimal
+  trm                    Decimal
+  feePagoTarjetaCredito  Decimal
+  valorPagadoGoTravel    Decimal
+  totalIngreso           Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  servicio Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade)
+
+}
+
+model Tiquete {
+  id                       Int       @id @default(autoincrement())
+  servicioId               Int       @unique
+
+  rutaId                   Int
+  numeroTiquete            String
+
+  revision                 Boolean
+  numeroTiqueteRevision    String?
+
+  clase                    String
+  pasajero                 String
+  fechaIda                 DateTime
+  fechaRegreso             DateTime?
+
+  tarifaNeta               Decimal
+  tarifaAdministrativaNeta Decimal
+  ivaTarifaAdministrativa  Decimal
+  feeAgenciaNeta           Decimal
+  ivaFeeAgencia            Decimal
+  feePagoTarjeta           Decimal
+
+  totalPagar               Decimal
+  aph                      TipoAPH
+
+  ivaTarifa                Decimal
+  otrosImpuestos           Decimal
+
+  fechaEmisionTiqueteFES   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ruta     Ruta     @relation(fields: [rutaId], references: [id])
+  servicio Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade)
+}
+
+model Proveedor {
+  id          Int        @id @default(autoincrement())
+  razonSocial String
+  ruc         String     @unique
+  direccionFiscal String
+  telefono    String
+  correo      String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  servicios   Servicio[]
+}
+
+model Ruta {
+  id            Int       @id @default(autoincrement())
+  origen        String
+  codigoOrigen  String
+  destino       String
+  codigoDestino String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  tiquetes      Tiquete[]
+}
+
+enum Role {
+  ADMINISTRADOR
+  ASESOR
+  FACTURADOR
+}
+
+enum TYPE_DOCUMENT {
+  CC
+  PAS
+  RUC
+}
+
+enum TipoServicio {
+  TIQUETE
+  HOTEL
+  ALQUILER_AUTO
+  SALON
+  EVENTO
+  SILLA
+  TARJETA_ASISTENCIA
+  TRASLADO
+  VISA
+  WEB_CHECKIN
+  PLAN_VACACIONAL
+}
+
+enum TipoPagadoProveedor {
+  SI
+  NO
+  NO_APLICA
+}
+
+enum EstadoServicio {
+  BORRADOR
+  DEVUELTO
+  POR_FACTURAR
+  FACTURADO
+  ANULADO
+}
+
+enum TipoAPH {
+  NACIONAL
+  INTERNACIONAL
+}
+
+enum TipoPago {
+  CASH
+  TARJETA_CREDITO
+  CREDITO_AGENCIA
+}
+
+enum TipoCash {
+  EFECTIVO
+  TRANSFERENCIA
+}
