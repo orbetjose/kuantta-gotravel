@@ -60,7 +60,7 @@ export const registerAction = async (
     }
     return { error: "An unexpected error occurred" };
   }*/
-  return Response.json({ error: "Registro deshabilitado" }, { status: 403 });
+  return Response.json({ error: "Registro deshabilitado" }, { status: 403 }, );
 };
 
 export async function getAuthenticatedUser() {

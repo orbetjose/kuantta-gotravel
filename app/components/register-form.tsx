@@ -35,10 +35,12 @@ export default function RegisterForm() {
 
     startTransition(async () => {
       const response = await registerAction(data);
-      if (response?.error) {
-        setError(response.error);
-      } else {
-        router.push("/login");
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setError(result.error ?? "Ocurrió un error");
+        return;
       }
     });
   };
@@ -56,10 +58,7 @@ export default function RegisterForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Nombre */}
           <div>
-            <label
-              htmlFor="name"
-              className="mb-2 block text-sm  text-white"
-            >
+            <label htmlFor="name" className="mb-2 block text-sm  text-white">
               Nombre
             </label>
 
@@ -84,10 +83,7 @@ export default function RegisterForm() {
 
           {/* Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-sm  text-white"
-            >
+            <label htmlFor="email" className="mb-2 block text-sm  text-white">
               Email
             </label>
 
@@ -190,7 +186,7 @@ export default function RegisterForm() {
         <p className="mt-6 text-center text-sm text-white">
           ¿Ya tienes una cuenta?{" "}
           <Link
-            href="/login"            
+            href="/login"
             className=" text-white hover:text-blue-700 underline"
           >
             Inicia sesión

@@ -4,7 +4,12 @@ import { prisma } from "@/libs/prisma";
 import TicketForm from "@/app/components/dashboard/ticket-form";
 import { TicketFormInitialData } from "@/libs/schemas/ticketSchema";
 
-import { getClientes, getProveedores, getRutas } from "@/actions/catalogos";
+import {
+  getClientes,
+  getPasajeros,
+  getProveedores,
+  getRutas,
+} from "@/actions/catalogos";
 
 export default async function EditarTiquetePage({
   params,
@@ -19,7 +24,7 @@ export default async function EditarTiquetePage({
     notFound();
   }
 
-  const [tiquete, clientes, proveedores, rutas] = await Promise.all([
+  const [tiquete, clientes, proveedores, rutas, pasajeros] = await Promise.all([
     prisma.tiquete.findUnique({
       where: {
         id: tiqueteId,
@@ -29,6 +34,7 @@ export default async function EditarTiquetePage({
           include: {
             cliente: true,
             proveedor: true,
+            pasajero: true,
           },
         },
         ruta: true,
@@ -38,6 +44,7 @@ export default async function EditarTiquetePage({
     getClientes(),
     getProveedores(),
     getRutas(),
+    getPasajeros(),
   ]);
 
   if (!tiquete) {
@@ -60,18 +67,14 @@ export default async function EditarTiquetePage({
 
     proveedorId: tiquete.servicio.proveedor?.id,
 
-    fechaEmision: tiquete.servicio.fechaEmision
-      .toISOString()
-      .split("T")[0],
+    pasajeroId: tiquete.servicio.pasajero.id,
+
+    fechaEmision: tiquete.servicio.fechaEmision.toISOString().split("T")[0],
 
     formaPago: tiquete.servicio.formaPago,
 
     creditoAgencia: tiquete.servicio.creditoAgencia
-      ? (String(tiquete.servicio.creditoAgencia) as
-          | "3"
-          | "8"
-          | "15"
-          | "30")
+      ? (String(tiquete.servicio.creditoAgencia) as "3" | "8" | "15" | "30")
       : undefined,
 
     numeroTarjeta: tiquete.servicio.numeroTarjeta ?? "",
@@ -94,18 +97,13 @@ export default async function EditarTiquetePage({
 
     revision: tiquete.revision ? "SI" : "NO",
 
-    numeroTiqueteRevision:
-      tiquete.numeroTiqueteRevision ?? "",
+    numeroTiqueteRevision: tiquete.numeroTiqueteRevision ?? "",
 
     rutaId: tiquete.rutaId,
 
     clase: tiquete.clase,
 
-    pasajero: tiquete.pasajero,
-
-    fechaIda: tiquete.fechaIda
-      .toISOString()
-      .split("T")[0],
+    fechaIda: tiquete.fechaIda.toISOString().split("T")[0],
 
     fechaRegreso: tiquete.fechaRegreso
       ? tiquete.fechaRegreso.toISOString().split("T")[0]
@@ -117,30 +115,23 @@ export default async function EditarTiquetePage({
 
     otrosImpuestos: Number(tiquete.otrosImpuestos),
 
-    tarifaAdministrativaNeta:
-      Number(tiquete.tarifaAdministrativaNeta),
+    tarifaAdministrativaNeta: Number(tiquete.tarifaAdministrativaNeta),
 
-    ivaTarifaAdministrativa:
-      Number(tiquete.ivaTarifaAdministrativa),
+    ivaTarifaAdministrativa: Number(tiquete.ivaTarifaAdministrativa),
 
-    feeAgenciaNeta:
-      Number(tiquete.feeAgenciaNeta),
+    feeAgenciaNeta: Number(tiquete.feeAgenciaNeta),
 
-    ivaFeeAgencia:
-      Number(tiquete.ivaFeeAgencia),
+    ivaFeeAgencia: Number(tiquete.ivaFeeAgencia),
 
-    feePagoTarjeta:
-      Number(tiquete.feePagoTarjeta),
+    feePagoTarjeta: Number(tiquete.feePagoTarjeta),
 
-    totalPagar:
-      Number(tiquete.totalPagar),
+    totalPagar: Number(tiquete.totalPagar),
 
     aph: tiquete.aph,
 
-    fechaEmisionTiqueteFES:
-      tiquete.fechaEmisionTiqueteFES
-        .toISOString()
-        .split("T")[0],
+    fechaEmisionTiqueteFES: tiquete.fechaEmisionTiqueteFES
+      .toISOString()
+      .split("T")[0],
   };
 
   return (
@@ -150,6 +141,7 @@ export default async function EditarTiquetePage({
       initialData={initialData}
       clientes={clientes}
       proveedores={proveedores}
+      pasajeros={pasajeros}
       rutas={rutas}
     />
   );

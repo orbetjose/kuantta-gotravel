@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import { prisma } from "@/libs/prisma";
-import { getClientes, getProveedores } from "@/actions/catalogos";
+import { getClientes, getPasajeros, getProveedores } from "@/actions/catalogos";
 import { ServiceFormInitialData } from "@/libs/schemas/serviceSchema";
 import ServiceForm from "@/app/components/dashboard/service-form";
 
@@ -18,7 +18,7 @@ export default async function EditarServicioPage({
     notFound();
   }
 
-  const [servicio, clientes, proveedores] = await Promise.all([
+  const [servicio, clientes, proveedores, pasajeros] = await Promise.all([
     prisma.servicio.findUnique({
       where: {
         id: serviceId,
@@ -26,12 +26,14 @@ export default async function EditarServicioPage({
       include: {
         cliente: true,
         proveedor: true,
+        pasajero: true,
         detalleServicio: true,
       },
     }),
 
     getClientes(),
     getProveedores(),
+    getPasajeros(),
   ]);
 
   if (!servicio) {
@@ -60,9 +62,9 @@ export default async function EditarServicioPage({
       : "HOTEL",
     clienteId: servicio.cliente.id,
     proveedorId: servicio.proveedor?.id,
+    pasajeroId: servicio.pasajero.id,
     fechaEmision: servicio.fechaEmision.toISOString().split("T")[0],
     descripcionServicio: servicio.detalleServicio?.descripcionServicio ?? "",
-    pasajero: servicio.detalleServicio?.pasajero ?? "",
     codigoReserva: servicio.detalleServicio?.codigoReserva ?? "",
     valorPagadoProveedor: Number(
       servicio.detalleServicio?.valorPagadoProveedor,
@@ -102,6 +104,7 @@ export default async function EditarServicioPage({
       initialData={initialData}
       clientes={clientes}
       proveedores={proveedores}
+      pasajeros={pasajeros}
     />
   );
 }
