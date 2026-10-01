@@ -20,6 +20,7 @@ export const serviceSchema = z
       },
     ),
     clienteId: z.coerce.number().min(1, "Selecciona un cliente"),
+    pasajeroId: z.coerce.number().min(1, "Selecciona un pasajero"),
     fechaEmision: z.string().min(1, "Selecciona la fecha de emisión"),
 
     proveedorId: z.coerce.number().min(1, "Selecciona un proveedor"),
@@ -36,7 +37,6 @@ export const serviceSchema = z
     descripcionServicio: z
       .string()
       .max(240, "Las descripciones no pueden superar los 240 caracteres"),
-    pasajero: z.string().min(1, "Ingresa el pasajero"),
     codigoReserva: z.string().min(1, "Ingresa el codigo de reserva"),
     valorPagadoProveedor: z.coerce
       .number({

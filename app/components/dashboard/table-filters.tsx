@@ -2,35 +2,63 @@
 
 import { TableFilter, TableFilterValues } from "@/types";
 import { useState } from "react";
+import { SearchInput } from "./search";
 
 interface TableFiltersProps {
   filters: TableFilter[];
   values: TableFilterValues;
+  search: string;
+  placeholder: string;
+  onSearchChange: (value: string) => void;
   onChange: (values: TableFilterValues) => void;
+    onReset: () => void;
 }
 
 export default function TableFilters({
   filters,
   values,
   onChange,
+  search,
+  onSearchChange,
+  placeholder,
+  onReset
 }: TableFiltersProps) {
+  const [activeFiltros, setActiveFiltros] = useState(false);
+
   const updateFilter = (field: keyof TableFilterValues, value: string) => {
     onChange({
       ...values,
       [field]: value,
     });
   };
-  const [isActive, setIsActive] = useState(false);
+  const handleSearch = (value: string) => {
+    onSearchChange(value);
+  };
 
   return (
-    <div className="flex flex-wrap items-end gap-4">
-      <button
-        className="rounded-lg bg-primary-blue w-30 py-1.5 font-inter text-sm font-bold text-white hover:opacity-90 transition "
-        onClick={() => setIsActive(!isActive)}
+    <div className="mb-4">
+      <div className="flex flex-col md:flex-row md:items-center md:gap-12 gap-4">
+        <SearchInput
+          value={search}
+          onChange={handleSearch}
+          placeholder={`Buscar ${placeholder}...`}
+          className="md:w-100"
+        />
+        <div className="flex gap-4">
+          <button
+            className="rounded-lg bg-primary-blue w-30 py-1.5 font-inter text-sm font-bold text-white hover:opacity-90 transition"
+            onClick={() => setActiveFiltros(!activeFiltros)}
+          >
+            Filtros
+          </button>
+          <button className="rounded-lg bg-primary-blue w-30 py-1.5 font-inter text-sm font-bold text-white hover:opacity-90 transition " onClick={onReset}>
+            Reset filtros
+          </button>
+        </div>
+      </div>
+      <div
+        className={`${activeFiltros ? "max-h-100" : "max-h-0 overflow-hidden opacity-0"} flex flex-col md:flex-row md:gap-8 gap-4 mt-4 transition-all duration-300 ease-in-out`}
       >
-        Filtros
-      </button>
-      <div className={`${isActive ? "max-h-100" : "max-h-0 overflow-hidden opacity-0"} flex flex-wrap items-end gap-4 transition-all duration-300 ease-in-out`}>
         {filters.includes("date") && (
           <>
             <div className="flex flex-col gap-1 w-full">

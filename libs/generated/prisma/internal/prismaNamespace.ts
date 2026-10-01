@@ -400,6 +400,7 @@ export const ModelName = {
   User: 'User',
   Account: 'Account',
   Cliente: 'Cliente',
+  Pasajero: 'Pasajero',
   Servicio: 'Servicio',
   DetalleServicio: 'DetalleServicio',
   Tiquete: 'Tiquete',
@@ -420,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "cliente" | "servicio" | "detalleServicio" | "tiquete" | "proveedor" | "ruta"
+    modelProps: "user" | "account" | "cliente" | "pasajero" | "servicio" | "detalleServicio" | "tiquete" | "proveedor" | "ruta"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -643,6 +644,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ClienteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ClienteCountAggregateOutputType> | number
+        }
+      }
+    }
+    Pasajero: {
+      payload: Prisma.$PasajeroPayload<ExtArgs>
+      fields: Prisma.PasajeroFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PasajeroFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PasajeroFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>
+        }
+        findFirst: {
+          args: Prisma.PasajeroFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PasajeroFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>
+        }
+        findMany: {
+          args: Prisma.PasajeroFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>[]
+        }
+        create: {
+          args: Prisma.PasajeroCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>
+        }
+        createMany: {
+          args: Prisma.PasajeroCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PasajeroCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>[]
+        }
+        delete: {
+          args: Prisma.PasajeroDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>
+        }
+        update: {
+          args: Prisma.PasajeroUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>
+        }
+        deleteMany: {
+          args: Prisma.PasajeroDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PasajeroUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PasajeroUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>[]
+        }
+        upsert: {
+          args: Prisma.PasajeroUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PasajeroPayload>
+        }
+        aggregate: {
+          args: Prisma.PasajeroAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePasajero>
+        }
+        groupBy: {
+          args: Prisma.PasajeroGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PasajeroGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PasajeroCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PasajeroCountAggregateOutputType> | number
         }
       }
     }
@@ -1102,10 +1177,24 @@ export const ClienteScalarFieldEnum = {
 export type ClienteScalarFieldEnum = (typeof ClienteScalarFieldEnum)[keyof typeof ClienteScalarFieldEnum]
 
 
+export const PasajeroScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  apellido: 'apellido',
+  correo: 'correo',
+  telefono: 'telefono',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PasajeroScalarFieldEnum = (typeof PasajeroScalarFieldEnum)[keyof typeof PasajeroScalarFieldEnum]
+
+
 export const ServicioScalarFieldEnum = {
   id: 'id',
   clienteId: 'clienteId',
   proveedorId: 'proveedorId',
+  pasajeroId: 'pasajeroId',
   tipo: 'tipo',
   estado: 'estado',
   fechaEmision: 'fechaEmision',
@@ -1141,7 +1230,6 @@ export const DetalleServicioScalarFieldEnum = {
   id: 'id',
   servicioId: 'servicioId',
   descripcionServicio: 'descripcionServicio',
-  pasajero: 'pasajero',
   codigoReserva: 'codigoReserva',
   valorPagadoProveedor: 'valorPagadoProveedor',
   trm: 'trm',
@@ -1163,7 +1251,6 @@ export const TiqueteScalarFieldEnum = {
   revision: 'revision',
   numeroTiqueteRevision: 'numeroTiqueteRevision',
   clase: 'clase',
-  pasajero: 'pasajero',
   fechaIda: 'fechaIda',
   fechaRegreso: 'fechaRegreso',
   tarifaNeta: 'tarifaNeta',
@@ -1569,6 +1656,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   account?: Prisma.AccountOmit
   cliente?: Prisma.ClienteOmit
+  pasajero?: Prisma.PasajeroOmit
   servicio?: Prisma.ServicioOmit
   detalleServicio?: Prisma.DetalleServicioOmit
   tiquete?: Prisma.TiqueteOmit

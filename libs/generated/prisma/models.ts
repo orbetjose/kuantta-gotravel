@@ -11,6 +11,7 @@
 export type * from './models/User'
 export type * from './models/Account'
 export type * from './models/Cliente'
+export type * from './models/Pasajero'
 export type * from './models/Servicio'
 export type * from './models/DetalleServicio'
 export type * from './models/Tiquete'

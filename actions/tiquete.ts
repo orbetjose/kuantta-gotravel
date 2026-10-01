@@ -6,6 +6,7 @@ import { prisma } from "@/libs/prisma";
 type TiqueteData = {
   clienteId: number;
   proveedorId?: number;
+  pasajeroId: number;
 
   // Campos comunes de Servicio
   fechaEmision: string;
@@ -27,7 +28,6 @@ type TiqueteData = {
 
   rutaId: number;
   clase: string;
-  pasajero: string;
   fechaIda: string;
   fechaRegreso?: string;
 
@@ -71,6 +71,19 @@ export async function createTiquete(data: TiqueteData) {
         throw new Error("El cliente seleccionado no existe.");
       }
 
+      const pasajero = await tx.pasajero.findUnique({
+        where: {
+          id: data.pasajeroId,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!pasajero) {
+        throw new Error("El pasajero seleccionado no existe.");
+      }
+
       if (data.proveedorId) {
         const proveedor = await tx.proveedor.findUnique({
           where: {
@@ -107,6 +120,7 @@ export async function createTiquete(data: TiqueteData) {
         data: {
           clienteId: data.clienteId,
           proveedorId: data.proveedorId ?? null,
+          pasajeroId: data.pasajeroId,
 
           tipo: "TIQUETE",
           estado: "BORRADOR",
@@ -170,8 +184,6 @@ export async function createTiquete(data: TiqueteData) {
             data.revision === "SI" ? data.numeroTiqueteRevision || null : null,
 
           clase: data.clase,
-
-          pasajero: data.pasajero,
 
           fechaIda: new Date(data.fechaIda),
 
@@ -329,6 +341,7 @@ export async function updateTiquete(tiqueteId: number, data: TiqueteData) {
       data: {
         clienteId: data.clienteId,
         proveedorId: data.proveedorId ?? null,
+        pasajeroId: data.pasajeroId,
 
         fechaEmision: new Date(data.fechaEmision),
 
@@ -373,8 +386,6 @@ export async function updateTiquete(tiqueteId: number, data: TiqueteData) {
         rutaId: data.rutaId,
 
         clase: data.clase,
-
-        pasajero: data.pasajero,
 
         fechaIda: new Date(data.fechaIda),
 

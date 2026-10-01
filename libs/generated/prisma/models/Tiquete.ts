@@ -64,7 +64,6 @@ export type TiqueteMinAggregateOutputType = {
   revision: boolean | null
   numeroTiqueteRevision: string | null
   clase: string | null
-  pasajero: string | null
   fechaIda: Date | null
   fechaRegreso: Date | null
   tarifaNeta: runtime.Decimal | null
@@ -90,7 +89,6 @@ export type TiqueteMaxAggregateOutputType = {
   revision: boolean | null
   numeroTiqueteRevision: string | null
   clase: string | null
-  pasajero: string | null
   fechaIda: Date | null
   fechaRegreso: Date | null
   tarifaNeta: runtime.Decimal | null
@@ -116,7 +114,6 @@ export type TiqueteCountAggregateOutputType = {
   revision: number
   numeroTiqueteRevision: number
   clase: number
-  pasajero: number
   fechaIda: number
   fechaRegreso: number
   tarifaNeta: number
@@ -174,7 +171,6 @@ export type TiqueteMinAggregateInputType = {
   revision?: true
   numeroTiqueteRevision?: true
   clase?: true
-  pasajero?: true
   fechaIda?: true
   fechaRegreso?: true
   tarifaNeta?: true
@@ -200,7 +196,6 @@ export type TiqueteMaxAggregateInputType = {
   revision?: true
   numeroTiqueteRevision?: true
   clase?: true
-  pasajero?: true
   fechaIda?: true
   fechaRegreso?: true
   tarifaNeta?: true
@@ -226,7 +221,6 @@ export type TiqueteCountAggregateInputType = {
   revision?: true
   numeroTiqueteRevision?: true
   clase?: true
-  pasajero?: true
   fechaIda?: true
   fechaRegreso?: true
   tarifaNeta?: true
@@ -339,7 +333,6 @@ export type TiqueteGroupByOutputType = {
   revision: boolean
   numeroTiqueteRevision: string | null
   clase: string
-  pasajero: string
   fechaIda: Date
   fechaRegreso: Date | null
   tarifaNeta: runtime.Decimal
@@ -388,7 +381,6 @@ export type TiqueteWhereInput = {
   revision?: Prisma.BoolFilter<"Tiquete"> | boolean
   numeroTiqueteRevision?: Prisma.StringNullableFilter<"Tiquete"> | string | null
   clase?: Prisma.StringFilter<"Tiquete"> | string
-  pasajero?: Prisma.StringFilter<"Tiquete"> | string
   fechaIda?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
   fechaRegreso?: Prisma.DateTimeNullableFilter<"Tiquete"> | Date | string | null
   tarifaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -416,7 +408,6 @@ export type TiqueteOrderByWithRelationInput = {
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrderInput | Prisma.SortOrder
   clase?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   fechaIda?: Prisma.SortOrder
   fechaRegreso?: Prisma.SortOrderInput | Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
@@ -447,7 +438,6 @@ export type TiqueteWhereUniqueInput = Prisma.AtLeast<{
   revision?: Prisma.BoolFilter<"Tiquete"> | boolean
   numeroTiqueteRevision?: Prisma.StringNullableFilter<"Tiquete"> | string | null
   clase?: Prisma.StringFilter<"Tiquete"> | string
-  pasajero?: Prisma.StringFilter<"Tiquete"> | string
   fechaIda?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
   fechaRegreso?: Prisma.DateTimeNullableFilter<"Tiquete"> | Date | string | null
   tarifaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -475,7 +465,6 @@ export type TiqueteOrderByWithAggregationInput = {
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrderInput | Prisma.SortOrder
   clase?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   fechaIda?: Prisma.SortOrder
   fechaRegreso?: Prisma.SortOrderInput | Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
@@ -509,7 +498,6 @@ export type TiqueteScalarWhereWithAggregatesInput = {
   revision?: Prisma.BoolWithAggregatesFilter<"Tiquete"> | boolean
   numeroTiqueteRevision?: Prisma.StringNullableWithAggregatesFilter<"Tiquete"> | string | null
   clase?: Prisma.StringWithAggregatesFilter<"Tiquete"> | string
-  pasajero?: Prisma.StringWithAggregatesFilter<"Tiquete"> | string
   fechaIda?: Prisma.DateTimeWithAggregatesFilter<"Tiquete"> | Date | string
   fechaRegreso?: Prisma.DateTimeNullableWithAggregatesFilter<"Tiquete"> | Date | string | null
   tarifaNeta?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -532,7 +520,6 @@ export type TiqueteCreateInput = {
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  pasajero: string
   fechaIda: Date | string
   fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -560,7 +547,6 @@ export type TiqueteUncheckedCreateInput = {
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  pasajero: string
   fechaIda: Date | string
   fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -583,7 +569,6 @@ export type TiqueteUpdateInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -611,7 +596,6 @@ export type TiqueteUncheckedUpdateInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -637,7 +621,6 @@ export type TiqueteCreateManyInput = {
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  pasajero: string
   fechaIda: Date | string
   fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -660,7 +643,6 @@ export type TiqueteUpdateManyMutationInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -686,7 +668,6 @@ export type TiqueteUncheckedUpdateManyInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -717,7 +698,6 @@ export type TiqueteCountOrderByAggregateInput = {
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrder
   clase?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   fechaIda?: Prisma.SortOrder
   fechaRegreso?: Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
@@ -758,7 +738,6 @@ export type TiqueteMaxOrderByAggregateInput = {
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrder
   clase?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   fechaIda?: Prisma.SortOrder
   fechaRegreso?: Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
@@ -784,7 +763,6 @@ export type TiqueteMinOrderByAggregateInput = {
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrder
   clase?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   fechaIda?: Prisma.SortOrder
   fechaRegreso?: Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
@@ -910,7 +888,6 @@ export type TiqueteCreateWithoutServicioInput = {
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  pasajero: string
   fechaIda: Date | string
   fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -936,7 +913,6 @@ export type TiqueteUncheckedCreateWithoutServicioInput = {
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  pasajero: string
   fechaIda: Date | string
   fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -975,7 +951,6 @@ export type TiqueteUpdateWithoutServicioInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1001,7 +976,6 @@ export type TiqueteUncheckedUpdateWithoutServicioInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1024,7 +998,6 @@ export type TiqueteCreateWithoutRutaInput = {
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  pasajero: string
   fechaIda: Date | string
   fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1050,7 +1023,6 @@ export type TiqueteUncheckedCreateWithoutRutaInput = {
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  pasajero: string
   fechaIda: Date | string
   fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1105,7 +1077,6 @@ export type TiqueteScalarWhereInput = {
   revision?: Prisma.BoolFilter<"Tiquete"> | boolean
   numeroTiqueteRevision?: Prisma.StringNullableFilter<"Tiquete"> | string | null
   clase?: Prisma.StringFilter<"Tiquete"> | string
-  pasajero?: Prisma.StringFilter<"Tiquete"> | string
   fechaIda?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
   fechaRegreso?: Prisma.DateTimeNullableFilter<"Tiquete"> | Date | string | null
   tarifaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1130,7 +1101,6 @@ export type TiqueteCreateManyRutaInput = {
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  pasajero: string
   fechaIda: Date | string
   fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1153,7 +1123,6 @@ export type TiqueteUpdateWithoutRutaInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1179,7 +1148,6 @@ export type TiqueteUncheckedUpdateWithoutRutaInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1204,7 +1172,6 @@ export type TiqueteUncheckedUpdateManyWithoutRutaInput = {
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1232,7 +1199,6 @@ export type TiqueteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   revision?: boolean
   numeroTiqueteRevision?: boolean
   clase?: boolean
-  pasajero?: boolean
   fechaIda?: boolean
   fechaRegreso?: boolean
   tarifaNeta?: boolean
@@ -1260,7 +1226,6 @@ export type TiqueteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   revision?: boolean
   numeroTiqueteRevision?: boolean
   clase?: boolean
-  pasajero?: boolean
   fechaIda?: boolean
   fechaRegreso?: boolean
   tarifaNeta?: boolean
@@ -1288,7 +1253,6 @@ export type TiqueteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   revision?: boolean
   numeroTiqueteRevision?: boolean
   clase?: boolean
-  pasajero?: boolean
   fechaIda?: boolean
   fechaRegreso?: boolean
   tarifaNeta?: boolean
@@ -1316,7 +1280,6 @@ export type TiqueteSelectScalar = {
   revision?: boolean
   numeroTiqueteRevision?: boolean
   clase?: boolean
-  pasajero?: boolean
   fechaIda?: boolean
   fechaRegreso?: boolean
   tarifaNeta?: boolean
@@ -1334,7 +1297,7 @@ export type TiqueteSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TiqueteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "servicioId" | "rutaId" | "numeroTiquete" | "revision" | "numeroTiqueteRevision" | "clase" | "pasajero" | "fechaIda" | "fechaRegreso" | "tarifaNeta" | "tarifaAdministrativaNeta" | "ivaTarifaAdministrativa" | "feeAgenciaNeta" | "ivaFeeAgencia" | "feePagoTarjeta" | "totalPagar" | "aph" | "ivaTarifa" | "otrosImpuestos" | "fechaEmisionTiqueteFES" | "createdAt" | "updatedAt", ExtArgs["result"]["tiquete"]>
+export type TiqueteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "servicioId" | "rutaId" | "numeroTiquete" | "revision" | "numeroTiqueteRevision" | "clase" | "fechaIda" | "fechaRegreso" | "tarifaNeta" | "tarifaAdministrativaNeta" | "ivaTarifaAdministrativa" | "feeAgenciaNeta" | "ivaFeeAgencia" | "feePagoTarjeta" | "totalPagar" | "aph" | "ivaTarifa" | "otrosImpuestos" | "fechaEmisionTiqueteFES" | "createdAt" | "updatedAt", ExtArgs["result"]["tiquete"]>
 export type TiqueteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ruta?: boolean | Prisma.RutaDefaultArgs<ExtArgs>
   servicio?: boolean | Prisma.ServicioDefaultArgs<ExtArgs>
@@ -1362,7 +1325,6 @@ export type $TiquetePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     revision: boolean
     numeroTiqueteRevision: string | null
     clase: string
-    pasajero: string
     fechaIda: Date
     fechaRegreso: Date | null
     tarifaNeta: runtime.Decimal
@@ -1810,7 +1772,6 @@ export interface TiqueteFieldRefs {
   readonly revision: Prisma.FieldRef<"Tiquete", 'Boolean'>
   readonly numeroTiqueteRevision: Prisma.FieldRef<"Tiquete", 'String'>
   readonly clase: Prisma.FieldRef<"Tiquete", 'String'>
-  readonly pasajero: Prisma.FieldRef<"Tiquete", 'String'>
   readonly fechaIda: Prisma.FieldRef<"Tiquete", 'DateTime'>
   readonly fechaRegreso: Prisma.FieldRef<"Tiquete", 'DateTime'>
   readonly tarifaNeta: Prisma.FieldRef<"Tiquete", 'Decimal'>

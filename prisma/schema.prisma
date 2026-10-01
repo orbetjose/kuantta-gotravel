@@ -52,12 +52,24 @@ model Cliente {
   servicios Servicio[]
 }
 
+model Pasajero {
+  id        Int        @id @default(autoincrement())
+  nombre    String
+  apellido  String
+  correo    String     @unique
+  telefono  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  servicios Servicio[]
+}
+
 model Servicio {
-  id               Int            @id @default(autoincrement())
-  clienteId        Int
-  proveedorId      Int?
-  tipo             TipoServicio
-  estado           EstadoServicio @default(BORRADOR)
+  id          Int            @id @default(autoincrement())
+  clienteId   Int
+  proveedorId Int?
+  pasajeroId  Int
+  tipo        TipoServicio
+  estado      EstadoServicio @default(BORRADOR)
 
   // Datos generales
   fechaEmision DateTime
@@ -69,11 +81,11 @@ model Servicio {
   observaciones                String?
 
   // Forma de pago
-  formaPago       TipoPago
-  tipoCash        TipoCash?
-  numeroTarjeta   String?
+  formaPago        TipoPago
+  tipoCash         TipoCash?
+  numeroTarjeta    String?
   numeroAprobacion String?
-  creditoAgencia Int?
+  creditoAgencia   Int?
 
   // Información administrativa
   proyectoFCDS String?
@@ -81,10 +93,9 @@ model Servicio {
 
   vencimientoFacturaProveedor DateTime?
   pagadoProveedor             TipoPagadoProveedor?
-  fechaPagoProveedor DateTime?
-  fechaPagoCliente DateTime?
-  pagadoCliente Boolean @default(false)
-
+  fechaPagoProveedor          DateTime?
+  fechaPagoCliente            DateTime?
+  pagadoCliente               Boolean              @default(false)
 
   // Facturación
   creadoPorId      String
@@ -96,50 +107,48 @@ model Servicio {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  cliente      Cliente    @relation(fields: [clienteId], references: [id])
-  proveedor    Proveedor? @relation(fields: [proveedorId], references: [id])
+  cliente   Cliente    @relation(fields: [clienteId], references: [id])
+  proveedor Proveedor? @relation(fields: [proveedorId], references: [id])
+  pasajero  Pasajero   @relation(fields: [pasajeroId], references: [id])
 
-  creadoPor    User       @relation("ServiciosCreados", fields: [creadoPorId], references: [id])
-  facturadoPor User?      @relation("ServiciosFacturados", fields: [facturadoPorId], references: [id])
+  creadoPor    User  @relation("ServiciosCreados", fields: [creadoPorId], references: [id])
+  facturadoPor User? @relation("ServiciosFacturados", fields: [facturadoPorId], references: [id])
 
   tiquete         Tiquete?
   detalleServicio DetalleServicio?
 }
 
 model DetalleServicio {
-  id                    Int      @id @default(autoincrement())
-  servicioId            Int      @unique
+  id         Int @id @default(autoincrement())
+  servicioId Int @unique
 
-  descripcionServicio   String
-  pasajero              String
-  codigoReserva         String
+  descripcionServicio String
+  codigoReserva       String
 
-  valorPagadoProveedor   Decimal
-  trm                    Decimal
-  feePagoTarjetaCredito  Decimal
-  valorPagadoGoTravel    Decimal
-  totalIngreso           Decimal
+  valorPagadoProveedor  Decimal
+  trm                   Decimal
+  feePagoTarjetaCredito Decimal
+  valorPagadoGoTravel   Decimal
+  totalIngreso          Decimal
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  servicio Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade)
-
+  servicio  Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade)
 }
 
 model Tiquete {
-  id                       Int       @id @default(autoincrement())
-  servicioId               Int       @unique
+  id         Int @id @default(autoincrement())
+  servicioId Int @unique
 
-  rutaId                   Int
-  numeroTiquete            String
+  rutaId        Int
+  numeroTiquete String
 
-  revision                 Boolean
-  numeroTiqueteRevision    String?
+  revision              Boolean
+  numeroTiqueteRevision String?
 
-  clase                    String
-  pasajero                 String
-  fechaIda                 DateTime
-  fechaRegreso             DateTime?
+  clase        String
+  fechaIda     DateTime
+  fechaRegreso DateTime?
 
   tarifaNeta               Decimal
   tarifaAdministrativaNeta Decimal
@@ -148,13 +157,13 @@ model Tiquete {
   ivaFeeAgencia            Decimal
   feePagoTarjeta           Decimal
 
-  totalPagar               Decimal
-  aph                      TipoAPH
+  totalPagar Decimal
+  aph        TipoAPH
 
-  ivaTarifa                Decimal
-  otrosImpuestos           Decimal
+  ivaTarifa      Decimal
+  otrosImpuestos Decimal
 
-  fechaEmisionTiqueteFES   DateTime
+  fechaEmisionTiqueteFES DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -164,15 +173,15 @@ model Tiquete {
 }
 
 model Proveedor {
-  id          Int        @id @default(autoincrement())
-  razonSocial String
-  ruc         String     @unique
+  id              Int        @id @default(autoincrement())
+  razonSocial     String
+  ruc             String     @unique
   direccionFiscal String
-  telefono    String
-  correo      String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  servicios   Servicio[]
+  telefono        String
+  correo          String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  servicios       Servicio[]
 }
 
 model Ruta {

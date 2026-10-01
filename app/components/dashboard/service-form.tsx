@@ -27,6 +27,12 @@ type ClienteOption = {
   apellido: string;
   correo: string;
 };
+type PasajeroOption = {
+  id: number;
+  nombre: string;
+  apellido: string;
+  correo: string;
+};
 type ProveedorOption = {
   id: number;
   razonSocial: string;
@@ -35,6 +41,7 @@ type ProveedorOption = {
 
 type ServiceFormProps = {
   clientes: ClienteOption[];
+  pasajeros: PasajeroOption[];
   proveedores: ProveedorOption[];
   initialData?: ServiceFormInitialData;
   detalleServicioId?: number;
@@ -44,6 +51,7 @@ type ServiceFormProps = {
 export default function ServiceForm({
   clientes,
   proveedores,
+  pasajeros,
   initialData,
   detalleServicioId,
   mode = "create",
@@ -65,7 +73,6 @@ export default function ServiceForm({
           fechaEmision: "",
           clienteId: "",
           proveedorId: "",
-          pasajero: "",
 
           formaPago: "CASH",
           creditoAgencia: undefined,
@@ -82,6 +89,10 @@ export default function ServiceForm({
   const clientesOptions = clientes.map((cliente) => ({
     value: String(cliente.id),
     label: `${cliente.nombre} ${cliente.apellido}`,
+  }));
+  const pasajerosOptions = pasajeros.map((pasajero) => ({
+    value: String(pasajero.id),
+    label: `${pasajero.nombre} ${pasajero.apellido}`,
   }));
   const proveedoresOptions = proveedores.map((proveedor) => ({
     value: String(proveedor.id),
@@ -227,13 +238,23 @@ export default function ServiceForm({
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {/* Pasajero */}
           <div className="xl:col-span-2">
-            <FormInput
-              label="Pasajero"
-              name="pasajero"
-              registration={register("pasajero")}
-              placeholder="Nombre completo del pasajero"
-              required
-              error={errors.pasajero?.message}
+            <Controller
+              name="pasajeroId"
+              control={control}
+              render={({ field }) => (
+                <FormComboBox
+                  label="Pasajero"
+                  name={field.name}
+                  value={String(field.value ?? "")}
+                  onChange={field.onChange}
+                  searchEndpoint="/api/pasajeros/search"
+                  required
+                  placeholder="Seleccionar cliente"
+                  searchPlaceholder="Buscar pasajero..."
+                  options={pasajerosOptions}
+                  error={errors.pasajeroId?.message}
+                />
+              )}
             />
           </div>
           {/* Codigo reserva */}
@@ -464,7 +485,7 @@ export default function ServiceForm({
           {/* Fecha de pago cliente */}
           <FormDate
             label="Fecha de pago cliente"
-            name="fechaPagoCliente"            
+            name="fechaPagoCliente"
             registration={register("fechaPagoCliente")}
             error={errors.fechaPagoCliente?.message}
           />

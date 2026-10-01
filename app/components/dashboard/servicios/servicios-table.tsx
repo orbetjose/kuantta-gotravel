@@ -29,6 +29,13 @@ type Pagination = {
 };
 
 export default function ServiciosTable({ tipo }: ServiciosTableProps) {
+  const initialFilters: TableFilterValues = {
+    fechaDesde: "",
+    fechaHasta: "",
+    tipo: "",
+    estado: "",
+    creditoAgencia: "",
+  };
   const [servicios, setServicios] = useState<Servicios[]>([]);
   const [pagination, setPagination] = useState<Pagination>({
     page: 1,
@@ -37,13 +44,7 @@ export default function ServiciosTable({ tipo }: ServiciosTableProps) {
     totalPages: 0,
   });
 
-  const [filters, setFilters] = useState<TableFilterValues>({
-    fechaDesde: "",
-    fechaHasta: "",
-    tipo: "",
-    estado: "",
-    creditoAgencia: "",
-  });
+  const [filters, setFilters] = useState<TableFilterValues>(initialFilters);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -124,6 +125,11 @@ export default function ServiciosTable({ tipo }: ServiciosTableProps) {
     handleTableFiltersChange(values, setFilters, setPagination);
   };
 
+  const resetFilters = () => {
+    setFilters(initialFilters);
+    setSearch("");
+  };
+
   return (
     <div className="w-full rounded-lg bg-fourth-gray p-6">
       {/* Header */}
@@ -142,20 +148,15 @@ export default function ServiciosTable({ tipo }: ServiciosTableProps) {
       </div>
 
       {/* Search */}
-      <div className="mb-4 flex flex-col md:flex-row md:items-center gap-4">
-        <div className="relative md:max-w-md flex-1 ">
-          <SearchInput
-            value={search}
-            onChange={handleSearch}
-            placeholder="Buscar servicio..."
-          />
-        </div>
-        <TableFilters
-          filters={availableFilters}
-          values={filters}
-          onChange={handleFiltersChange}
-        />
-      </div>
+      <TableFilters
+        filters={availableFilters}
+        values={filters}
+        search={search}
+        onSearchChange={setSearch}
+        placeholder="servicio"
+        onChange={handleFiltersChange}
+        onReset={resetFilters}
+      />
 
       {/* Table */}
       <div className="overflow-x-auto rounded-lg p-4 bg-white shadow-sm">
@@ -239,7 +240,9 @@ export default function ServiciosTable({ tipo }: ServiciosTableProps) {
                     )}
                   </td>
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray md:max-w-55 3xl:max-w-full">
-                    <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">{servicio.proveedor}</span>                    
+                    <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">
+                      {servicio.proveedor}
+                    </span>
                   </td>
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
                     <span

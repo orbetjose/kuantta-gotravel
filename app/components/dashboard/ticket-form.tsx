@@ -27,6 +27,12 @@ type ClienteOption = {
   apellido: string;
   correo: string;
 };
+type PasajeroOption = {
+  id: number;
+  nombre: string;
+  apellido: string;
+  correo: string;
+};
 type ProveedorOption = {
   id: number;
   razonSocial: string;
@@ -42,6 +48,7 @@ type RutaOption = {
 
 type TicketFormProps = {
   clientes: ClienteOption[];
+  pasajeros: PasajeroOption[];
   proveedores: ProveedorOption[];
   rutas: RutaOption[];
   initialData?: TicketFormInitialData;
@@ -51,6 +58,7 @@ type TicketFormProps = {
 
 export default function TicketForm({
   clientes,
+  pasajeros,
   proveedores,
   rutas,
   tiqueteId,
@@ -74,12 +82,12 @@ export default function TicketForm({
           fechaEmision: "",
           clienteId: "",
           proveedorId: "",
+          pasajeroId: "",
           rutaId: "",
           numeroTiquete: "",
           revision: "NO",
           numeroTiqueteRevision: "",
           clase: "",
-          pasajero: "",
           fechaIda: "",
           fechaRegreso: "",
           aph: "NACIONAL",
@@ -108,6 +116,10 @@ export default function TicketForm({
   const clientesOptions = clientes.map((cliente) => ({
     value: String(cliente.id),
     label: `${cliente.nombre} ${cliente.apellido}`,
+  }));
+  const pasajerosOption = pasajeros.map((pasajero) => ({
+    value: String(pasajero.id),
+    label: `${pasajero.nombre} ${pasajero.apellido}`,
   }));
   const proveedoresOptions = proveedores.map((proveedor) => ({
     value: String(proveedor.id),
@@ -319,13 +331,23 @@ export default function TicketForm({
 
           {/* Pasajero */}
           <div className="xl:col-span-2">
-            <FormInput
-              label="Pasajero"
-              name="pasajero"
-              registration={register("pasajero")}
-              placeholder="Nombre completo del pasajero"
-              required
-              error={errors.pasajero?.message}
+            <Controller
+              name="pasajeroId"
+              control={control}
+              render={({ field }) => (
+                <FormComboBox
+                  label="Pasajero"
+                  name={field.name}
+                  value={String(field.value ?? "")}
+                  onChange={field.onChange}
+                  searchEndpoint="/api/pasajeros/search"
+                  required
+                  placeholder="Seleccionar pasajero"
+                  searchPlaceholder="Buscar pasajero..."
+                  options={pasajerosOption}
+                  error={errors.pasajeroId?.message}
+                />
+              )}
             />
           </div>
 

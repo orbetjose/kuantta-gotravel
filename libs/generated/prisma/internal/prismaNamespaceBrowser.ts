@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   Account: 'Account',
   Cliente: 'Cliente',
+  Pasajero: 'Pasajero',
   Servicio: 'Servicio',
   DetalleServicio: 'DetalleServicio',
   Tiquete: 'Tiquete',
@@ -124,10 +125,24 @@ export const ClienteScalarFieldEnum = {
 export type ClienteScalarFieldEnum = (typeof ClienteScalarFieldEnum)[keyof typeof ClienteScalarFieldEnum]
 
 
+export const PasajeroScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre',
+  apellido: 'apellido',
+  correo: 'correo',
+  telefono: 'telefono',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PasajeroScalarFieldEnum = (typeof PasajeroScalarFieldEnum)[keyof typeof PasajeroScalarFieldEnum]
+
+
 export const ServicioScalarFieldEnum = {
   id: 'id',
   clienteId: 'clienteId',
   proveedorId: 'proveedorId',
+  pasajeroId: 'pasajeroId',
   tipo: 'tipo',
   estado: 'estado',
   fechaEmision: 'fechaEmision',
@@ -163,7 +178,6 @@ export const DetalleServicioScalarFieldEnum = {
   id: 'id',
   servicioId: 'servicioId',
   descripcionServicio: 'descripcionServicio',
-  pasajero: 'pasajero',
   codigoReserva: 'codigoReserva',
   valorPagadoProveedor: 'valorPagadoProveedor',
   trm: 'trm',
@@ -185,7 +199,6 @@ export const TiqueteScalarFieldEnum = {
   revision: 'revision',
   numeroTiqueteRevision: 'numeroTiqueteRevision',
   clase: 'clase',
-  pasajero: 'pasajero',
   fechaIda: 'fechaIda',
   fechaRegreso: 'fechaRegreso',
   tarifaNeta: 'tarifaNeta',

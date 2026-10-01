@@ -1,11 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {
-  TipoServicio,
-  EstadoServicio,
-  Prisma,
-} from "@/libs/generated/prisma/client";
+import { TipoServicio, EstadoServicio } from "@/libs/generated/prisma/client";
 import { getEstadoStyles } from "@/libs/helpers";
 
 type ClienteDetailProps = {
@@ -76,7 +72,7 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
           id: servicio.detalleServicio?.id ?? null,
           totalPagar: servicio.detalleServicio?.totalIngreso ?? null,
           href: servicio.detalleServicio
-            ? `/dashboard/servicios/${servicio.tipo.toLowerCase().replace("_","-")}/${servicio.detalleServicio.id}`
+            ? `/dashboard/servicios/${servicio.tipo.toLowerCase().replace("_", "-")}/${servicio.detalleServicio.id}`
             : null,
         };
 

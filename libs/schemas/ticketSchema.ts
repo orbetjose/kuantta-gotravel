@@ -4,6 +4,7 @@ export const ticketSchema = z
   .object({
     // Información general
     clienteId: z.coerce.number().min(1, "Selecciona un cliente"),
+    pasajeroId: z.coerce.number().min(1, "Selecciona un pasajero"),
 
     fechaEmision: z.string().min(1, "Selecciona la fecha de emisión"),
 
@@ -30,8 +31,6 @@ export const ticketSchema = z
     rutaId: z.coerce.number().min(1, "Selecciona una ruta"),
     
     clase: z.string().min(1, "Ingresa la clase"),
-
-    pasajero: z.string().min(1, "Ingresa el pasajero"),
 
     fechaIda: z.string().min(1, "Selecciona la fecha de ida"),
 

@@ -24,6 +24,13 @@ type Pagination = {
 };
 
 export default function FacturacionTable() {
+  const initialFilters: TableFilterValues = {
+    fechaDesde: "",
+    fechaHasta: "",
+    tipo: "",
+    estado: "",
+    creditoAgencia: "",
+  };
   const [servicios, setServicios] = useState<Servicios[]>([]);
   const [pagination, setPagination] = useState<Pagination>({
     page: 1,
@@ -35,13 +42,7 @@ export default function FacturacionTable() {
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isFacturando, setIsFacturando] = useState(false);
-  const [filters, setFilters] = useState<TableFilterValues>({
-    fechaDesde: "",
-    fechaHasta: "",
-    tipo: "",
-    estado: "",
-    creditoAgencia: "",
-  });
+  const [filters, setFilters] = useState<TableFilterValues>(initialFilters);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [servicioSeleccionado, setServicioSeleccionado] = useState<
@@ -105,15 +106,6 @@ export default function FacturacionTable() {
     return () => clearTimeout(timeout);
   }, [search, pagination.page, pagination.limit, filters]);
 
-  function handleSearch(value: string) {
-    setSearch(value);
-
-    setPagination((prev) => ({
-      ...prev,
-      page: 1,
-    }));
-  }
-
   function handlePageChange(page: number) {
     setPagination((prev) => ({
       ...prev,
@@ -149,6 +141,11 @@ export default function FacturacionTable() {
     handleTableFiltersChange(values, setFilters, setPagination);
   };
 
+  const resetFilters = () => {
+    setFilters(initialFilters);
+    setSearch("");
+  };
+
   return (
     <>
       <div className="w-full rounded-lg bg-fourth-gray p-6">
@@ -166,20 +163,16 @@ export default function FacturacionTable() {
         </div>
 
         {/* Search */}
-        <div className="mb-4 flex flex-col md:flex-row md:items-center gap-4">
-          <div className="relative max-w-md flex-1 ">
-            <SearchInput
-              value={search}
-              onChange={handleSearch}
-              placeholder="Buscar servicio..."
-            />
-          </div>
-          <TableFilters
-            filters={["date", "tipo"]}
-            values={filters}
-            onChange={handleFiltersChange}
-          />
-        </div>
+
+        <TableFilters
+          filters={["date", "tipo"]}
+          search={search}
+          onSearchChange={setSearch}
+          values={filters}
+          onChange={handleFiltersChange}
+          placeholder="servicio"
+          onReset={resetFilters}
+        />
 
         {/* Table */}
         <div className="overflow-x-auto rounded-lg p-4 bg-white shadow-sm">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import BtnAdd from "@/app/components/dashboard/btn-add";
 import { formatCurrency, getEstadoStyles } from "@/libs/helpers";
 import Pagination from "../pagination";
@@ -29,6 +29,14 @@ type Pagination = {
 };
 
 export default function TiquetesTable() {
+  const initialFilters: TableFilterValues = {
+    fechaDesde: "",
+    fechaHasta: "",
+    tipo: "",
+    estado: "",
+    creditoAgencia: "",
+  };
+
   const [tiquetes, setTiquetes] = useState<Tiquetes[]>([]);
   const [pagination, setPagination] = useState<Pagination>({
     page: 1,
@@ -36,13 +44,7 @@ export default function TiquetesTable() {
     total: 0,
     totalPages: 0,
   });
-  const [filters, setFilters] = useState<TableFilterValues>({
-    fechaDesde: "",
-    fechaHasta: "",
-    tipo: "",
-    estado: "",
-    creditoAgencia: "",
-  });
+  const [filters, setFilters] = useState<TableFilterValues>(initialFilters);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -93,15 +95,6 @@ export default function TiquetesTable() {
     return () => clearTimeout(timeout);
   }, [search, pagination.page, pagination.limit, filters]);
 
-  function handleSearch(value: string) {
-    setSearch(value);
-
-    setPagination((prev) => ({
-      ...prev,
-      page: 1,
-    }));
-  }
-
   function handlePageChange(page: number) {
     setPagination((prev) => ({
       ...prev,
@@ -113,8 +106,13 @@ export default function TiquetesTable() {
     handleTableFiltersChange(values, setFilters, setPagination);
   };
 
+  const resetFilters = () => {
+    setFilters(initialFilters);
+    setSearch("");
+  };
+
   return (
-    <div className="w-full rounded-lg bg-fourth-gray p-6">
+    <div className="w-full rounded-lg bg-fourth-gray md:p-6 px-2 py-4">
       {/* Header */}
       <div className="mb-4 flex md:items-center justify-between flex-col md:flex-row gap-4">
         <div>
@@ -134,20 +132,15 @@ export default function TiquetesTable() {
       </div>
 
       {/* Search */}
-      <div className="mb-4 flex flex-col md:flex-row md:items-center gap-4">
-        <div className="relative max-w-md flex-1 ">
-          <SearchInput
-            value={search}
-            onChange={handleSearch}
-            placeholder="Buscar tiquete..."
-          />
-        </div>
-        <TableFilters
-          filters={["date", "estado"]}
-          values={filters}
-          onChange={handleFiltersChange}
-        />
-      </div>
+      <TableFilters
+        filters={["date", "estado"]}
+        search={search}
+        onSearchChange={setSearch}
+        values={filters}
+        placeholder="tiquete"
+        onChange={handleFiltersChange}
+        onReset={resetFilters}
+      />
 
       {/* Table */}
       <div className="overflow-x-auto rounded-lg p-4 bg-white shadow-sm">
@@ -208,7 +201,9 @@ export default function TiquetesTable() {
                   className="bg-fifth-gray/11 border-b border-gray-100 last:border-0 rounded-lg"
                 >
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray rounded-l-lg">
-                    <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">{tiquete.numeroTiquete}</span>
+                    <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">
+                      {tiquete.numeroTiquete}
+                    </span>
                   </td>
 
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
@@ -223,7 +218,9 @@ export default function TiquetesTable() {
                     {new Date(tiquete.fechaEmision).toLocaleDateString("es-CO")}
                   </td>
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray md:max-w-55 3xl:max-w-full">
-                    <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">{tiquete.proveedor}</span> 
+                    <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">
+                      {tiquete.proveedor}
+                    </span>
                   </td>
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
                     <span

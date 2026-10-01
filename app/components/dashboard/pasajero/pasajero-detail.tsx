@@ -2,18 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { TipoServicio, EstadoServicio } from "@/libs/generated/prisma/client";
-import { getEstadoStyles } from "@/libs/helpers";
+import { formatCurrency, getEstadoStyles } from "@/libs/helpers";
 
-type ProveedorDetailProps = {
-  proveedor: {
+type PasajeroDetailProps = {
+  pasajero: {
     id: number;
-    razonSocial: string;
-    ruc: string;
+    nombre: string;
+    apellido: string;
     correo: string;
-    direccionFiscal: string;
     telefono: string;
     createdAt: Date;
     updatedAt: Date;
+
     servicios: {
       id: number;
       uuid: string;
@@ -30,39 +30,51 @@ type ProveedorDetailProps = {
         id: number;
         totalPagar: number;
       } | null;
+      detalleServicio: {
+        id: number;
+        totalIngreso: number;
+      } | null;
     }[];
   };
 };
 
-export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
+export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
   const router = useRouter();
 
   const fechaRegistro = new Intl.DateTimeFormat("es-CO", {
     dateStyle: "long",
-  }).format(new Date(proveedor.createdAt));
+  }).format(new Date(pasajero.createdAt));
 
   const getServicioInfo = (
-    servicio: ProveedorDetailProps["proveedor"]["servicios"][number],
+    servicio: PasajeroDetailProps["pasajero"]["servicios"][number],
   ) => {
     switch (servicio.tipo) {
       case "TIQUETE":
         return {
-          id: servicio.tiquete?.id,
-          totalPagar: servicio.tiquete?.totalPagar,
+          id: servicio.tiquete?.id ?? null,
+          totalPagar: servicio.tiquete?.totalPagar ?? null,
           href: servicio.tiquete
             ? `/dashboard/servicios/tiquete/${servicio.tiquete.id}`
             : null,
         };
 
-      // Cuando exista Hotel:
-      // case "HOTEL":
-      //   return {
-      //     id: servicio.hotel?.id,
-      //     totalPagar: servicio.hotel?.totalPagar,
-      //     href: servicio.hotel
-      //       ? `/dashboard/hoteles/${servicio.hotel.id}`
-      //       : null,
-      //   };
+      case "HOTEL":
+      case "ALQUILER_AUTO":
+      case "SALON":
+      case "EVENTO":
+      case "SILLA":
+      case "TARJETA_ASISTENCIA":
+      case "TRASLADO":
+      case "VISA":
+      case "WEB_CHECKIN":
+      case "PLAN_VACACIONAL":
+        return {
+          id: servicio.detalleServicio?.id ?? null,
+          totalPagar: servicio.detalleServicio?.totalIngreso ?? null,
+          href: servicio.detalleServicio
+            ? `/dashboard/servicios/${servicio.tipo.toLowerCase().replace("_", "-")}/${servicio.detalleServicio.id}`
+            : null,
+        };
 
       default:
         return {
@@ -78,63 +90,65 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
       {/* Encabezado */}
       <div className="mb-6 bg-white p-6 rounded-lg flex items-center justify-between">
         <div>
-          <p className="text-sm text-fifth-gray">Detalle del proveedor</p>
+          <p className="text-sm text-fifth-gray">Detalle del pasajero</p>
 
-          <h1 className="text-4xl font-bold">{proveedor.razonSocial}</h1>
+          <h1 className="text-4xl font-bold">
+            {pasajero.nombre} {pasajero.apellido}
+          </h1>
         </div>
         <div>
           <div className="flex gap-4">
             <button
               type="button"
               onClick={() =>
-                router.push(`/dashboard/proveedores/${proveedor.id}/editar`)
+                router.push(`/dashboard/pasajeros/${pasajero.id}/editar`)
               }
               className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
             >
-              Editar proveedor
+              Editar pasajero
             </button>
 
             <button
               type="button"
               className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
             >
-              Eliminar proveedor
+              Eliminar pasajero
             </button>
           </div>
         </div>
       </div>
 
-      {/* Información del proveedor */}
+      {/* Información del pasajero */}
       <div className="rounded-lg bg-white p-6">
-        <h2 className="mb-6 text-xl font-bold">Información del proveedor</h2>
+        <h2 className="mb-6 text-xl font-bold">Información del pasajero</h2>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* razon social */}
+          {/* Nombre */}
           <div>
-            <p className="mb-1 text-sm text-fifth-gray">Razón social</p>
+            <p className="mb-1 text-sm text-fifth-gray">Nombre</p>
 
-            <p className="font-bold">{proveedor.razonSocial}</p>
+            <p className="font-bold">{pasajero.nombre}</p>
           </div>
 
-          {/* ruc */}
+          {/* Apellido */}
           <div>
-            <p className="mb-1 text-sm text-fifth-gray">RUC</p>
+            <p className="mb-1 text-sm text-fifth-gray">Apellido</p>
 
-            <p className="font-bold">{proveedor.ruc}</p>
+            <p className="font-bold">{pasajero.apellido}</p>
           </div>
 
           {/* Correo */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Correo electrónico</p>
 
-            <p className="font-bold">{proveedor.correo}</p>
+            <p className="font-bold">{pasajero.correo}</p>
           </div>
 
           {/* Teléfono */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Teléfono</p>
 
-            <p className="font-bold">{proveedor.telefono}</p>
+            <p className="font-bold">{pasajero.telefono}</p>
           </div>
 
           {/* Fecha de registro */}
@@ -143,30 +157,26 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
 
             <p className="font-bold">{fechaRegistro}</p>
           </div>
-          {/* Dirección fiscal */}
-          <div>
-            <p className="mb-1 text-sm text-fifth-gray">Dirección fiscal</p>
-
-            <p className="font-bold">{proveedor.direccionFiscal}</p>
-          </div>
         </div>
       </div>
       <div className="mt-6 rounded-lg bg-white p-6">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-black">Servicios asociados</h2>
+          <h2 className="text-xl font-bold text-fifth-gray">
+            Servicios asociados
+          </h2>
 
           <span className="text-sm text-fifth-gray">
-            {proveedor.servicios.length} servicios
+            {pasajero.servicios.length} servicios
           </span>
         </div>
 
-        {proveedor.servicios.length === 0 ? (
+        {pasajero.servicios.length === 0 ? (
           <p className="text-sm text-fifth-gray">
-            Este proveedor no tiene servicios asociados.
+            Este pasajero no tiene servicios asociados.
           </p>
         ) : (
           <div className="divide-y divide-gray-200">
-            {proveedor.servicios.map((servicio) => {
+            {pasajero.servicios.map((servicio) => {
               const servicioInfo = getServicioInfo(servicio);
 
               return (
@@ -177,14 +187,16 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
                       router.push(servicioInfo.href);
                     }
                   }}
-                  className={`flex items-center justify-between py-4 ${
+                  className={`flex items-center justify-between p-4 ${
                     servicioInfo.href
                       ? "cursor-pointer transition hover:bg-gray-50"
                       : ""
                   }`}
                 >
                   <div>
-                    <p className="font-bold text-fifth-gray">{servicio.tipo}</p>
+                    <p className="font-bold text-fifth-gray">
+                      {servicio.tipo.replace("_", " ")}
+                    </p>
 
                     <p className="mt-1 text-sm text-fifth-gray">
                       {servicio.proveedor?.razonSocial ?? "Sin proveedor"}
@@ -206,8 +218,7 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
 
                     <div className="text-right">
                       <p className="text-sm text-fifth-gray">Total</p>
-
-                      <p className="font-bold text-fifth-gray">
+                      <p className="font-bold text-fifth-gray">                        
                         {servicioInfo.totalPagar
                           ? new Intl.NumberFormat("es-CO", {
                               style: "currency",

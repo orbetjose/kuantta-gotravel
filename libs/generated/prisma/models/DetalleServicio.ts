@@ -50,7 +50,6 @@ export type DetalleServicioMinAggregateOutputType = {
   id: number | null
   servicioId: number | null
   descripcionServicio: string | null
-  pasajero: string | null
   codigoReserva: string | null
   valorPagadoProveedor: runtime.Decimal | null
   trm: runtime.Decimal | null
@@ -65,7 +64,6 @@ export type DetalleServicioMaxAggregateOutputType = {
   id: number | null
   servicioId: number | null
   descripcionServicio: string | null
-  pasajero: string | null
   codigoReserva: string | null
   valorPagadoProveedor: runtime.Decimal | null
   trm: runtime.Decimal | null
@@ -80,7 +78,6 @@ export type DetalleServicioCountAggregateOutputType = {
   id: number
   servicioId: number
   descripcionServicio: number
-  pasajero: number
   codigoReserva: number
   valorPagadoProveedor: number
   trm: number
@@ -117,7 +114,6 @@ export type DetalleServicioMinAggregateInputType = {
   id?: true
   servicioId?: true
   descripcionServicio?: true
-  pasajero?: true
   codigoReserva?: true
   valorPagadoProveedor?: true
   trm?: true
@@ -132,7 +128,6 @@ export type DetalleServicioMaxAggregateInputType = {
   id?: true
   servicioId?: true
   descripcionServicio?: true
-  pasajero?: true
   codigoReserva?: true
   valorPagadoProveedor?: true
   trm?: true
@@ -147,7 +142,6 @@ export type DetalleServicioCountAggregateInputType = {
   id?: true
   servicioId?: true
   descripcionServicio?: true
-  pasajero?: true
   codigoReserva?: true
   valorPagadoProveedor?: true
   trm?: true
@@ -249,7 +243,6 @@ export type DetalleServicioGroupByOutputType = {
   id: number
   servicioId: number
   descripcionServicio: string
-  pasajero: string
   codigoReserva: string
   valorPagadoProveedor: runtime.Decimal
   trm: runtime.Decimal
@@ -287,7 +280,6 @@ export type DetalleServicioWhereInput = {
   id?: Prisma.IntFilter<"DetalleServicio"> | number
   servicioId?: Prisma.IntFilter<"DetalleServicio"> | number
   descripcionServicio?: Prisma.StringFilter<"DetalleServicio"> | string
-  pasajero?: Prisma.StringFilter<"DetalleServicio"> | string
   codigoReserva?: Prisma.StringFilter<"DetalleServicio"> | string
   valorPagadoProveedor?: Prisma.DecimalFilter<"DetalleServicio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalFilter<"DetalleServicio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -303,7 +295,6 @@ export type DetalleServicioOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
   descripcionServicio?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   codigoReserva?: Prisma.SortOrder
   valorPagadoProveedor?: Prisma.SortOrder
   trm?: Prisma.SortOrder
@@ -322,7 +313,6 @@ export type DetalleServicioWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.DetalleServicioWhereInput[]
   NOT?: Prisma.DetalleServicioWhereInput | Prisma.DetalleServicioWhereInput[]
   descripcionServicio?: Prisma.StringFilter<"DetalleServicio"> | string
-  pasajero?: Prisma.StringFilter<"DetalleServicio"> | string
   codigoReserva?: Prisma.StringFilter<"DetalleServicio"> | string
   valorPagadoProveedor?: Prisma.DecimalFilter<"DetalleServicio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalFilter<"DetalleServicio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -338,7 +328,6 @@ export type DetalleServicioOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
   descripcionServicio?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   codigoReserva?: Prisma.SortOrder
   valorPagadoProveedor?: Prisma.SortOrder
   trm?: Prisma.SortOrder
@@ -361,7 +350,6 @@ export type DetalleServicioScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"DetalleServicio"> | number
   servicioId?: Prisma.IntWithAggregatesFilter<"DetalleServicio"> | number
   descripcionServicio?: Prisma.StringWithAggregatesFilter<"DetalleServicio"> | string
-  pasajero?: Prisma.StringWithAggregatesFilter<"DetalleServicio"> | string
   codigoReserva?: Prisma.StringWithAggregatesFilter<"DetalleServicio"> | string
   valorPagadoProveedor?: Prisma.DecimalWithAggregatesFilter<"DetalleServicio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalWithAggregatesFilter<"DetalleServicio"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -374,7 +362,6 @@ export type DetalleServicioScalarWhereWithAggregatesInput = {
 
 export type DetalleServicioCreateInput = {
   descripcionServicio: string
-  pasajero: string
   codigoReserva: string
   valorPagadoProveedor: runtime.Decimal | runtime.DecimalJsLike | number | string
   trm: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -390,7 +377,6 @@ export type DetalleServicioUncheckedCreateInput = {
   id?: number
   servicioId: number
   descripcionServicio: string
-  pasajero: string
   codigoReserva: string
   valorPagadoProveedor: runtime.Decimal | runtime.DecimalJsLike | number | string
   trm: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -403,7 +389,6 @@ export type DetalleServicioUncheckedCreateInput = {
 
 export type DetalleServicioUpdateInput = {
   descripcionServicio?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
   valorPagadoProveedor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -419,7 +404,6 @@ export type DetalleServicioUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servicioId?: Prisma.IntFieldUpdateOperationsInput | number
   descripcionServicio?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
   valorPagadoProveedor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -434,7 +418,6 @@ export type DetalleServicioCreateManyInput = {
   id?: number
   servicioId: number
   descripcionServicio: string
-  pasajero: string
   codigoReserva: string
   valorPagadoProveedor: runtime.Decimal | runtime.DecimalJsLike | number | string
   trm: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -447,7 +430,6 @@ export type DetalleServicioCreateManyInput = {
 
 export type DetalleServicioUpdateManyMutationInput = {
   descripcionServicio?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
   valorPagadoProveedor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -462,7 +444,6 @@ export type DetalleServicioUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servicioId?: Prisma.IntFieldUpdateOperationsInput | number
   descripcionServicio?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
   valorPagadoProveedor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -482,7 +463,6 @@ export type DetalleServicioCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
   descripcionServicio?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   codigoReserva?: Prisma.SortOrder
   valorPagadoProveedor?: Prisma.SortOrder
   trm?: Prisma.SortOrder
@@ -507,7 +487,6 @@ export type DetalleServicioMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
   descripcionServicio?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   codigoReserva?: Prisma.SortOrder
   valorPagadoProveedor?: Prisma.SortOrder
   trm?: Prisma.SortOrder
@@ -522,7 +501,6 @@ export type DetalleServicioMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
   descripcionServicio?: Prisma.SortOrder
-  pasajero?: Prisma.SortOrder
   codigoReserva?: Prisma.SortOrder
   valorPagadoProveedor?: Prisma.SortOrder
   trm?: Prisma.SortOrder
@@ -585,7 +563,6 @@ export type DecimalFieldUpdateOperationsInput = {
 
 export type DetalleServicioCreateWithoutServicioInput = {
   descripcionServicio: string
-  pasajero: string
   codigoReserva: string
   valorPagadoProveedor: runtime.Decimal | runtime.DecimalJsLike | number | string
   trm: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -599,7 +576,6 @@ export type DetalleServicioCreateWithoutServicioInput = {
 export type DetalleServicioUncheckedCreateWithoutServicioInput = {
   id?: number
   descripcionServicio: string
-  pasajero: string
   codigoReserva: string
   valorPagadoProveedor: runtime.Decimal | runtime.DecimalJsLike | number | string
   trm: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -628,7 +604,6 @@ export type DetalleServicioUpdateToOneWithWhereWithoutServicioInput = {
 
 export type DetalleServicioUpdateWithoutServicioInput = {
   descripcionServicio?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
   valorPagadoProveedor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -642,7 +617,6 @@ export type DetalleServicioUpdateWithoutServicioInput = {
 export type DetalleServicioUncheckedUpdateWithoutServicioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   descripcionServicio?: Prisma.StringFieldUpdateOperationsInput | string
-  pasajero?: Prisma.StringFieldUpdateOperationsInput | string
   codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
   valorPagadoProveedor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   trm?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -659,7 +633,6 @@ export type DetalleServicioSelect<ExtArgs extends runtime.Types.Extensions.Inter
   id?: boolean
   servicioId?: boolean
   descripcionServicio?: boolean
-  pasajero?: boolean
   codigoReserva?: boolean
   valorPagadoProveedor?: boolean
   trm?: boolean
@@ -675,7 +648,6 @@ export type DetalleServicioSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   servicioId?: boolean
   descripcionServicio?: boolean
-  pasajero?: boolean
   codigoReserva?: boolean
   valorPagadoProveedor?: boolean
   trm?: boolean
@@ -691,7 +663,6 @@ export type DetalleServicioSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   servicioId?: boolean
   descripcionServicio?: boolean
-  pasajero?: boolean
   codigoReserva?: boolean
   valorPagadoProveedor?: boolean
   trm?: boolean
@@ -707,7 +678,6 @@ export type DetalleServicioSelectScalar = {
   id?: boolean
   servicioId?: boolean
   descripcionServicio?: boolean
-  pasajero?: boolean
   codigoReserva?: boolean
   valorPagadoProveedor?: boolean
   trm?: boolean
@@ -718,7 +688,7 @@ export type DetalleServicioSelectScalar = {
   updatedAt?: boolean
 }
 
-export type DetalleServicioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "servicioId" | "descripcionServicio" | "pasajero" | "codigoReserva" | "valorPagadoProveedor" | "trm" | "feePagoTarjetaCredito" | "valorPagadoGoTravel" | "totalIngreso" | "createdAt" | "updatedAt", ExtArgs["result"]["detalleServicio"]>
+export type DetalleServicioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "servicioId" | "descripcionServicio" | "codigoReserva" | "valorPagadoProveedor" | "trm" | "feePagoTarjetaCredito" | "valorPagadoGoTravel" | "totalIngreso" | "createdAt" | "updatedAt", ExtArgs["result"]["detalleServicio"]>
 export type DetalleServicioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   servicio?: boolean | Prisma.ServicioDefaultArgs<ExtArgs>
 }
@@ -738,7 +708,6 @@ export type $DetalleServicioPayload<ExtArgs extends runtime.Types.Extensions.Int
     id: number
     servicioId: number
     descripcionServicio: string
-    pasajero: string
     codigoReserva: string
     valorPagadoProveedor: runtime.Decimal
     trm: runtime.Decimal
@@ -1174,7 +1143,6 @@ export interface DetalleServicioFieldRefs {
   readonly id: Prisma.FieldRef<"DetalleServicio", 'Int'>
   readonly servicioId: Prisma.FieldRef<"DetalleServicio", 'Int'>
   readonly descripcionServicio: Prisma.FieldRef<"DetalleServicio", 'String'>
-  readonly pasajero: Prisma.FieldRef<"DetalleServicio", 'String'>
   readonly codigoReserva: Prisma.FieldRef<"DetalleServicio", 'String'>
   readonly valorPagadoProveedor: Prisma.FieldRef<"DetalleServicio", 'Decimal'>
   readonly trm: Prisma.FieldRef<"DetalleServicio", 'Decimal'>

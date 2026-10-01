@@ -1,12 +1,13 @@
-import { getClientes, getProveedores, getRutas } from "@/actions/catalogos";
+import { getClientes, getProveedores, getRutas, getPasajeros } from "@/actions/catalogos";
 
 import TicketForm from "@/app/components/dashboard/ticket-form";
 
 export default async function pageTiquete() {
-    const [clientes, proveedores, rutas] = await Promise.all([
+    const [clientes, proveedores, rutas, pasajeros] = await Promise.all([
     getClientes(),
     getProveedores(),
     getRutas(),
+    getPasajeros(),
   ]);
   return (
     <div className="w-full  bg-fourth-gray p-4 rounded-lg ">
@@ -16,6 +17,7 @@ export default async function pageTiquete() {
       </div>
       <TicketForm clientes={clientes}
         proveedores={proveedores}
+        pasajeros={pasajeros}
         rutas={rutas} />
     </div>
   );

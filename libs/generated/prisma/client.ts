@@ -57,6 +57,11 @@ export type Account = Prisma.AccountModel
  */
 export type Cliente = Prisma.ClienteModel
 /**
+ * Model Pasajero
+ * 
+ */
+export type Pasajero = Prisma.PasajeroModel
+/**
  * Model Servicio
  * 
  */

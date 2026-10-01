@@ -14,8 +14,7 @@ export function SearchInput({
   className = "",
 }: SearchInputProps) {
   return (
-    <>
-      <span className="opacity-0">Buscador</span>
+    <>      
       <div className={`relative ${className}`}>
         <Search
           size={18}

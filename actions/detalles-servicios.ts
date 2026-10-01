@@ -18,6 +18,7 @@ type servicioData = {
 
   clienteId: number;
   proveedorId?: number;
+  pasajeroId: number;
 
   // Campos comunes de Servicio
   fechaEmision: string;
@@ -36,7 +37,6 @@ type servicioData = {
   pagadoProveedor: "SI" | "NO" | "NO_APLICA";
 
   codigoReserva: string;
-  pasajero: string;
   descripcionServicio: string;
   fechaPagoCliente?: string;
   fechaPagoProveedor?: string;
@@ -73,6 +73,19 @@ export async function createServicio(data: servicioData) {
         throw new Error("El cliente seleccionado no existe.");
       }
 
+      const pasajero = await tx.pasajero.findUnique({
+        where: {
+          id: data.pasajeroId,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!pasajero) {
+        throw new Error("El pasajero seleccionado no existe.");
+      }
+
       if (data.proveedorId) {
         const proveedor = await tx.proveedor.findUnique({
           where: {
@@ -95,6 +108,7 @@ export async function createServicio(data: servicioData) {
       const servicio = await tx.servicio.create({
         data: {
           clienteId: data.clienteId,
+          pasajeroId: data.pasajeroId,
           proveedorId: data.proveedorId ?? null,
 
           tipo: data.tipoServicio,
@@ -156,7 +170,6 @@ export async function createServicio(data: servicioData) {
 
           codigoReserva: data.codigoReserva,
           descripcionServicio: data.descripcionServicio,
-          pasajero: data.pasajero,
 
           valorPagadoProveedor: data.valorPagadoProveedor,
 
@@ -329,8 +342,6 @@ export async function updateServicio(
         id: detalleServicioId,
       },
       data: {
-        pasajero: data.pasajero,
-
         descripcionServicio: data.descripcionServicio,
 
         codigoReserva: data.codigoReserva,

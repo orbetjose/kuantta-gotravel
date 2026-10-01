@@ -46,3 +46,18 @@ export async function getRutas() {
     },
   });
 }
+
+export async function getPasajeros() {
+  return await prisma.pasajero.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 10,
+    select: {
+      id: true,
+      nombre: true,
+      apellido: true,
+      correo: true,
+    },
+  });
+}

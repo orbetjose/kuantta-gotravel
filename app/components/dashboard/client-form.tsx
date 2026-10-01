@@ -121,7 +121,7 @@ export default function ClientForm({
       <FormActions
         isLoading={isLoading}
         mode={mode}
-        createText="Registrar proveedor"
+        createText="Registrar cliente"
       />
     </form>
   );

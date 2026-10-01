@@ -30,6 +30,7 @@ export type ServicioAvgAggregateOutputType = {
   id: number | null
   clienteId: number | null
   proveedorId: number | null
+  pasajeroId: number | null
   creditoAgencia: number | null
 }
 
@@ -37,6 +38,7 @@ export type ServicioSumAggregateOutputType = {
   id: number | null
   clienteId: number | null
   proveedorId: number | null
+  pasajeroId: number | null
   creditoAgencia: number | null
 }
 
@@ -44,6 +46,7 @@ export type ServicioMinAggregateOutputType = {
   id: number | null
   clienteId: number | null
   proveedorId: number | null
+  pasajeroId: number | null
   tipo: $Enums.TipoServicio | null
   estado: $Enums.EstadoServicio | null
   fechaEmision: Date | null
@@ -76,6 +79,7 @@ export type ServicioMaxAggregateOutputType = {
   id: number | null
   clienteId: number | null
   proveedorId: number | null
+  pasajeroId: number | null
   tipo: $Enums.TipoServicio | null
   estado: $Enums.EstadoServicio | null
   fechaEmision: Date | null
@@ -108,6 +112,7 @@ export type ServicioCountAggregateOutputType = {
   id: number
   clienteId: number
   proveedorId: number
+  pasajeroId: number
   tipo: number
   estado: number
   fechaEmision: number
@@ -142,6 +147,7 @@ export type ServicioAvgAggregateInputType = {
   id?: true
   clienteId?: true
   proveedorId?: true
+  pasajeroId?: true
   creditoAgencia?: true
 }
 
@@ -149,6 +155,7 @@ export type ServicioSumAggregateInputType = {
   id?: true
   clienteId?: true
   proveedorId?: true
+  pasajeroId?: true
   creditoAgencia?: true
 }
 
@@ -156,6 +163,7 @@ export type ServicioMinAggregateInputType = {
   id?: true
   clienteId?: true
   proveedorId?: true
+  pasajeroId?: true
   tipo?: true
   estado?: true
   fechaEmision?: true
@@ -188,6 +196,7 @@ export type ServicioMaxAggregateInputType = {
   id?: true
   clienteId?: true
   proveedorId?: true
+  pasajeroId?: true
   tipo?: true
   estado?: true
   fechaEmision?: true
@@ -220,6 +229,7 @@ export type ServicioCountAggregateInputType = {
   id?: true
   clienteId?: true
   proveedorId?: true
+  pasajeroId?: true
   tipo?: true
   estado?: true
   fechaEmision?: true
@@ -339,6 +349,7 @@ export type ServicioGroupByOutputType = {
   id: number
   clienteId: number
   proveedorId: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado: $Enums.EstadoServicio
   fechaEmision: Date
@@ -394,6 +405,7 @@ export type ServicioWhereInput = {
   id?: Prisma.IntFilter<"Servicio"> | number
   clienteId?: Prisma.IntFilter<"Servicio"> | number
   proveedorId?: Prisma.IntNullableFilter<"Servicio"> | number | null
+  pasajeroId?: Prisma.IntFilter<"Servicio"> | number
   tipo?: Prisma.EnumTipoServicioFilter<"Servicio"> | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFilter<"Servicio"> | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFilter<"Servicio"> | Date | string
@@ -422,6 +434,7 @@ export type ServicioWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Servicio"> | Date | string
   cliente?: Prisma.XOR<Prisma.ClienteScalarRelationFilter, Prisma.ClienteWhereInput>
   proveedor?: Prisma.XOR<Prisma.ProveedorNullableScalarRelationFilter, Prisma.ProveedorWhereInput> | null
+  pasajero?: Prisma.XOR<Prisma.PasajeroScalarRelationFilter, Prisma.PasajeroWhereInput>
   creadoPor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   facturadoPor?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   tiquete?: Prisma.XOR<Prisma.TiqueteNullableScalarRelationFilter, Prisma.TiqueteWhereInput> | null
@@ -432,6 +445,7 @@ export type ServicioOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
   proveedorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  pasajeroId?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
@@ -460,6 +474,7 @@ export type ServicioOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   cliente?: Prisma.ClienteOrderByWithRelationInput
   proveedor?: Prisma.ProveedorOrderByWithRelationInput
+  pasajero?: Prisma.PasajeroOrderByWithRelationInput
   creadoPor?: Prisma.UserOrderByWithRelationInput
   facturadoPor?: Prisma.UserOrderByWithRelationInput
   tiquete?: Prisma.TiqueteOrderByWithRelationInput
@@ -474,6 +489,7 @@ export type ServicioWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ServicioWhereInput | Prisma.ServicioWhereInput[]
   clienteId?: Prisma.IntFilter<"Servicio"> | number
   proveedorId?: Prisma.IntNullableFilter<"Servicio"> | number | null
+  pasajeroId?: Prisma.IntFilter<"Servicio"> | number
   tipo?: Prisma.EnumTipoServicioFilter<"Servicio"> | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFilter<"Servicio"> | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFilter<"Servicio"> | Date | string
@@ -501,6 +517,7 @@ export type ServicioWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Servicio"> | Date | string
   cliente?: Prisma.XOR<Prisma.ClienteScalarRelationFilter, Prisma.ClienteWhereInput>
   proveedor?: Prisma.XOR<Prisma.ProveedorNullableScalarRelationFilter, Prisma.ProveedorWhereInput> | null
+  pasajero?: Prisma.XOR<Prisma.PasajeroScalarRelationFilter, Prisma.PasajeroWhereInput>
   creadoPor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   facturadoPor?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   tiquete?: Prisma.XOR<Prisma.TiqueteNullableScalarRelationFilter, Prisma.TiqueteWhereInput> | null
@@ -511,6 +528,7 @@ export type ServicioOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
   proveedorId?: Prisma.SortOrderInput | Prisma.SortOrder
+  pasajeroId?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
@@ -551,6 +569,7 @@ export type ServicioScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Servicio"> | number
   clienteId?: Prisma.IntWithAggregatesFilter<"Servicio"> | number
   proveedorId?: Prisma.IntNullableWithAggregatesFilter<"Servicio"> | number | null
+  pasajeroId?: Prisma.IntWithAggregatesFilter<"Servicio"> | number
   tipo?: Prisma.EnumTipoServicioWithAggregatesFilter<"Servicio"> | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioWithAggregatesFilter<"Servicio"> | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeWithAggregatesFilter<"Servicio"> | Date | string
@@ -606,6 +625,7 @@ export type ServicioCreateInput = {
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutServiciosInput
   proveedor?: Prisma.ProveedorCreateNestedOneWithoutServiciosInput
+  pasajero: Prisma.PasajeroCreateNestedOneWithoutServiciosInput
   creadoPor: Prisma.UserCreateNestedOneWithoutServiciosCreadosInput
   facturadoPor?: Prisma.UserCreateNestedOneWithoutServiciosFacturadosInput
   tiquete?: Prisma.TiqueteCreateNestedOneWithoutServicioInput
@@ -616,6 +636,7 @@ export type ServicioUncheckedCreateInput = {
   id?: number
   clienteId: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -673,6 +694,7 @@ export type ServicioUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosNestedInput
   proveedor?: Prisma.ProveedorUpdateOneWithoutServiciosNestedInput
+  pasajero?: Prisma.PasajeroUpdateOneRequiredWithoutServiciosNestedInput
   creadoPor?: Prisma.UserUpdateOneRequiredWithoutServiciosCreadosNestedInput
   facturadoPor?: Prisma.UserUpdateOneWithoutServiciosFacturadosNestedInput
   tiquete?: Prisma.TiqueteUpdateOneWithoutServicioNestedInput
@@ -683,6 +705,7 @@ export type ServicioUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -717,6 +740,7 @@ export type ServicioCreateManyInput = {
   id?: number
   clienteId: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -776,6 +800,7 @@ export type ServicioUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -818,6 +843,7 @@ export type ServicioCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
   proveedorId?: Prisma.SortOrder
+  pasajeroId?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
@@ -850,6 +876,7 @@ export type ServicioAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
   proveedorId?: Prisma.SortOrder
+  pasajeroId?: Prisma.SortOrder
   creditoAgencia?: Prisma.SortOrder
 }
 
@@ -857,6 +884,7 @@ export type ServicioMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
   proveedorId?: Prisma.SortOrder
+  pasajeroId?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
@@ -889,6 +917,7 @@ export type ServicioMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
   proveedorId?: Prisma.SortOrder
+  pasajeroId?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
@@ -921,6 +950,7 @@ export type ServicioSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   clienteId?: Prisma.SortOrder
   proveedorId?: Prisma.SortOrder
+  pasajeroId?: Prisma.SortOrder
   creditoAgencia?: Prisma.SortOrder
 }
 
@@ -1055,6 +1085,48 @@ export type ServicioUncheckedUpdateManyWithoutClienteNestedInput = {
   deleteMany?: Prisma.ServicioScalarWhereInput | Prisma.ServicioScalarWhereInput[]
 }
 
+export type ServicioCreateNestedManyWithoutPasajeroInput = {
+  create?: Prisma.XOR<Prisma.ServicioCreateWithoutPasajeroInput, Prisma.ServicioUncheckedCreateWithoutPasajeroInput> | Prisma.ServicioCreateWithoutPasajeroInput[] | Prisma.ServicioUncheckedCreateWithoutPasajeroInput[]
+  connectOrCreate?: Prisma.ServicioCreateOrConnectWithoutPasajeroInput | Prisma.ServicioCreateOrConnectWithoutPasajeroInput[]
+  createMany?: Prisma.ServicioCreateManyPasajeroInputEnvelope
+  connect?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+}
+
+export type ServicioUncheckedCreateNestedManyWithoutPasajeroInput = {
+  create?: Prisma.XOR<Prisma.ServicioCreateWithoutPasajeroInput, Prisma.ServicioUncheckedCreateWithoutPasajeroInput> | Prisma.ServicioCreateWithoutPasajeroInput[] | Prisma.ServicioUncheckedCreateWithoutPasajeroInput[]
+  connectOrCreate?: Prisma.ServicioCreateOrConnectWithoutPasajeroInput | Prisma.ServicioCreateOrConnectWithoutPasajeroInput[]
+  createMany?: Prisma.ServicioCreateManyPasajeroInputEnvelope
+  connect?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+}
+
+export type ServicioUpdateManyWithoutPasajeroNestedInput = {
+  create?: Prisma.XOR<Prisma.ServicioCreateWithoutPasajeroInput, Prisma.ServicioUncheckedCreateWithoutPasajeroInput> | Prisma.ServicioCreateWithoutPasajeroInput[] | Prisma.ServicioUncheckedCreateWithoutPasajeroInput[]
+  connectOrCreate?: Prisma.ServicioCreateOrConnectWithoutPasajeroInput | Prisma.ServicioCreateOrConnectWithoutPasajeroInput[]
+  upsert?: Prisma.ServicioUpsertWithWhereUniqueWithoutPasajeroInput | Prisma.ServicioUpsertWithWhereUniqueWithoutPasajeroInput[]
+  createMany?: Prisma.ServicioCreateManyPasajeroInputEnvelope
+  set?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+  disconnect?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+  delete?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+  connect?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+  update?: Prisma.ServicioUpdateWithWhereUniqueWithoutPasajeroInput | Prisma.ServicioUpdateWithWhereUniqueWithoutPasajeroInput[]
+  updateMany?: Prisma.ServicioUpdateManyWithWhereWithoutPasajeroInput | Prisma.ServicioUpdateManyWithWhereWithoutPasajeroInput[]
+  deleteMany?: Prisma.ServicioScalarWhereInput | Prisma.ServicioScalarWhereInput[]
+}
+
+export type ServicioUncheckedUpdateManyWithoutPasajeroNestedInput = {
+  create?: Prisma.XOR<Prisma.ServicioCreateWithoutPasajeroInput, Prisma.ServicioUncheckedCreateWithoutPasajeroInput> | Prisma.ServicioCreateWithoutPasajeroInput[] | Prisma.ServicioUncheckedCreateWithoutPasajeroInput[]
+  connectOrCreate?: Prisma.ServicioCreateOrConnectWithoutPasajeroInput | Prisma.ServicioCreateOrConnectWithoutPasajeroInput[]
+  upsert?: Prisma.ServicioUpsertWithWhereUniqueWithoutPasajeroInput | Prisma.ServicioUpsertWithWhereUniqueWithoutPasajeroInput[]
+  createMany?: Prisma.ServicioCreateManyPasajeroInputEnvelope
+  set?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+  disconnect?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+  delete?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+  connect?: Prisma.ServicioWhereUniqueInput | Prisma.ServicioWhereUniqueInput[]
+  update?: Prisma.ServicioUpdateWithWhereUniqueWithoutPasajeroInput | Prisma.ServicioUpdateWithWhereUniqueWithoutPasajeroInput[]
+  updateMany?: Prisma.ServicioUpdateManyWithWhereWithoutPasajeroInput | Prisma.ServicioUpdateManyWithWhereWithoutPasajeroInput[]
+  deleteMany?: Prisma.ServicioScalarWhereInput | Prisma.ServicioScalarWhereInput[]
+}
+
 export type EnumTipoServicioFieldUpdateOperationsInput = {
   set?: $Enums.TipoServicio
 }
@@ -1176,6 +1248,7 @@ export type ServicioCreateWithoutCreadoPorInput = {
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutServiciosInput
   proveedor?: Prisma.ProveedorCreateNestedOneWithoutServiciosInput
+  pasajero: Prisma.PasajeroCreateNestedOneWithoutServiciosInput
   facturadoPor?: Prisma.UserCreateNestedOneWithoutServiciosFacturadosInput
   tiquete?: Prisma.TiqueteCreateNestedOneWithoutServicioInput
   detalleServicio?: Prisma.DetalleServicioCreateNestedOneWithoutServicioInput
@@ -1185,6 +1258,7 @@ export type ServicioUncheckedCreateWithoutCreadoPorInput = {
   id?: number
   clienteId: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1251,6 +1325,7 @@ export type ServicioCreateWithoutFacturadoPorInput = {
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutServiciosInput
   proveedor?: Prisma.ProveedorCreateNestedOneWithoutServiciosInput
+  pasajero: Prisma.PasajeroCreateNestedOneWithoutServiciosInput
   creadoPor: Prisma.UserCreateNestedOneWithoutServiciosCreadosInput
   tiquete?: Prisma.TiqueteCreateNestedOneWithoutServicioInput
   detalleServicio?: Prisma.DetalleServicioCreateNestedOneWithoutServicioInput
@@ -1260,6 +1335,7 @@ export type ServicioUncheckedCreateWithoutFacturadoPorInput = {
   id?: number
   clienteId: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1322,6 +1398,7 @@ export type ServicioScalarWhereInput = {
   id?: Prisma.IntFilter<"Servicio"> | number
   clienteId?: Prisma.IntFilter<"Servicio"> | number
   proveedorId?: Prisma.IntNullableFilter<"Servicio"> | number | null
+  pasajeroId?: Prisma.IntFilter<"Servicio"> | number
   tipo?: Prisma.EnumTipoServicioFilter<"Servicio"> | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFilter<"Servicio"> | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFilter<"Servicio"> | Date | string
@@ -1392,6 +1469,7 @@ export type ServicioCreateWithoutClienteInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   proveedor?: Prisma.ProveedorCreateNestedOneWithoutServiciosInput
+  pasajero: Prisma.PasajeroCreateNestedOneWithoutServiciosInput
   creadoPor: Prisma.UserCreateNestedOneWithoutServiciosCreadosInput
   facturadoPor?: Prisma.UserCreateNestedOneWithoutServiciosFacturadosInput
   tiquete?: Prisma.TiqueteCreateNestedOneWithoutServicioInput
@@ -1401,6 +1479,7 @@ export type ServicioCreateWithoutClienteInput = {
 export type ServicioUncheckedCreateWithoutClienteInput = {
   id?: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1457,7 +1536,7 @@ export type ServicioUpdateManyWithWhereWithoutClienteInput = {
   data: Prisma.XOR<Prisma.ServicioUpdateManyMutationInput, Prisma.ServicioUncheckedUpdateManyWithoutClienteInput>
 }
 
-export type ServicioCreateWithoutDetalleServicioInput = {
+export type ServicioCreateWithoutPasajeroInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1487,12 +1566,107 @@ export type ServicioCreateWithoutDetalleServicioInput = {
   creadoPor: Prisma.UserCreateNestedOneWithoutServiciosCreadosInput
   facturadoPor?: Prisma.UserCreateNestedOneWithoutServiciosFacturadosInput
   tiquete?: Prisma.TiqueteCreateNestedOneWithoutServicioInput
+  detalleServicio?: Prisma.DetalleServicioCreateNestedOneWithoutServicioInput
+}
+
+export type ServicioUncheckedCreateWithoutPasajeroInput = {
+  id?: number
+  clienteId: number
+  proveedorId?: number | null
+  tipo: $Enums.TipoServicio
+  estado?: $Enums.EstadoServicio
+  fechaEmision: Date | string
+  facturaProveedorUrl?: string | null
+  facturaGoTravelUrl?: string | null
+  soporteTiqueteElectronicoUrl?: string | null
+  observaciones?: string | null
+  formaPago: $Enums.TipoPago
+  tipoCash?: $Enums.TipoCash | null
+  numeroTarjeta?: string | null
+  numeroAprobacion?: string | null
+  creditoAgencia?: number | null
+  proyectoFCDS?: string | null
+  ceCos?: string | null
+  vencimientoFacturaProveedor?: Date | string | null
+  pagadoProveedor?: $Enums.TipoPagadoProveedor | null
+  fechaPagoProveedor?: Date | string | null
+  fechaPagoCliente?: Date | string | null
+  pagadoCliente?: boolean
+  creadoPorId: string
+  facturadoPorId?: string | null
+  fechaFacturacion?: Date | string | null
+  motivoDevolucion?: string | null
+  uuid?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tiquete?: Prisma.TiqueteUncheckedCreateNestedOneWithoutServicioInput
+  detalleServicio?: Prisma.DetalleServicioUncheckedCreateNestedOneWithoutServicioInput
+}
+
+export type ServicioCreateOrConnectWithoutPasajeroInput = {
+  where: Prisma.ServicioWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServicioCreateWithoutPasajeroInput, Prisma.ServicioUncheckedCreateWithoutPasajeroInput>
+}
+
+export type ServicioCreateManyPasajeroInputEnvelope = {
+  data: Prisma.ServicioCreateManyPasajeroInput | Prisma.ServicioCreateManyPasajeroInput[]
+  skipDuplicates?: boolean
+}
+
+export type ServicioUpsertWithWhereUniqueWithoutPasajeroInput = {
+  where: Prisma.ServicioWhereUniqueInput
+  update: Prisma.XOR<Prisma.ServicioUpdateWithoutPasajeroInput, Prisma.ServicioUncheckedUpdateWithoutPasajeroInput>
+  create: Prisma.XOR<Prisma.ServicioCreateWithoutPasajeroInput, Prisma.ServicioUncheckedCreateWithoutPasajeroInput>
+}
+
+export type ServicioUpdateWithWhereUniqueWithoutPasajeroInput = {
+  where: Prisma.ServicioWhereUniqueInput
+  data: Prisma.XOR<Prisma.ServicioUpdateWithoutPasajeroInput, Prisma.ServicioUncheckedUpdateWithoutPasajeroInput>
+}
+
+export type ServicioUpdateManyWithWhereWithoutPasajeroInput = {
+  where: Prisma.ServicioScalarWhereInput
+  data: Prisma.XOR<Prisma.ServicioUpdateManyMutationInput, Prisma.ServicioUncheckedUpdateManyWithoutPasajeroInput>
+}
+
+export type ServicioCreateWithoutDetalleServicioInput = {
+  tipo: $Enums.TipoServicio
+  estado?: $Enums.EstadoServicio
+  fechaEmision: Date | string
+  facturaProveedorUrl?: string | null
+  facturaGoTravelUrl?: string | null
+  soporteTiqueteElectronicoUrl?: string | null
+  observaciones?: string | null
+  formaPago: $Enums.TipoPago
+  tipoCash?: $Enums.TipoCash | null
+  numeroTarjeta?: string | null
+  numeroAprobacion?: string | null
+  creditoAgencia?: number | null
+  proyectoFCDS?: string | null
+  ceCos?: string | null
+  vencimientoFacturaProveedor?: Date | string | null
+  pagadoProveedor?: $Enums.TipoPagadoProveedor | null
+  fechaPagoProveedor?: Date | string | null
+  fechaPagoCliente?: Date | string | null
+  pagadoCliente?: boolean
+  fechaFacturacion?: Date | string | null
+  motivoDevolucion?: string | null
+  uuid?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  cliente: Prisma.ClienteCreateNestedOneWithoutServiciosInput
+  proveedor?: Prisma.ProveedorCreateNestedOneWithoutServiciosInput
+  pasajero: Prisma.PasajeroCreateNestedOneWithoutServiciosInput
+  creadoPor: Prisma.UserCreateNestedOneWithoutServiciosCreadosInput
+  facturadoPor?: Prisma.UserCreateNestedOneWithoutServiciosFacturadosInput
+  tiquete?: Prisma.TiqueteCreateNestedOneWithoutServicioInput
 }
 
 export type ServicioUncheckedCreateWithoutDetalleServicioInput = {
   id?: number
   clienteId: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1565,6 +1739,7 @@ export type ServicioUpdateWithoutDetalleServicioInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosNestedInput
   proveedor?: Prisma.ProveedorUpdateOneWithoutServiciosNestedInput
+  pasajero?: Prisma.PasajeroUpdateOneRequiredWithoutServiciosNestedInput
   creadoPor?: Prisma.UserUpdateOneRequiredWithoutServiciosCreadosNestedInput
   facturadoPor?: Prisma.UserUpdateOneWithoutServiciosFacturadosNestedInput
   tiquete?: Prisma.TiqueteUpdateOneWithoutServicioNestedInput
@@ -1574,6 +1749,7 @@ export type ServicioUncheckedUpdateWithoutDetalleServicioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1630,6 +1806,7 @@ export type ServicioCreateWithoutTiqueteInput = {
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutServiciosInput
   proveedor?: Prisma.ProveedorCreateNestedOneWithoutServiciosInput
+  pasajero: Prisma.PasajeroCreateNestedOneWithoutServiciosInput
   creadoPor: Prisma.UserCreateNestedOneWithoutServiciosCreadosInput
   facturadoPor?: Prisma.UserCreateNestedOneWithoutServiciosFacturadosInput
   detalleServicio?: Prisma.DetalleServicioCreateNestedOneWithoutServicioInput
@@ -1639,6 +1816,7 @@ export type ServicioUncheckedCreateWithoutTiqueteInput = {
   id?: number
   clienteId: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1711,6 +1889,7 @@ export type ServicioUpdateWithoutTiqueteInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosNestedInput
   proveedor?: Prisma.ProveedorUpdateOneWithoutServiciosNestedInput
+  pasajero?: Prisma.PasajeroUpdateOneRequiredWithoutServiciosNestedInput
   creadoPor?: Prisma.UserUpdateOneRequiredWithoutServiciosCreadosNestedInput
   facturadoPor?: Prisma.UserUpdateOneWithoutServiciosFacturadosNestedInput
   detalleServicio?: Prisma.DetalleServicioUpdateOneWithoutServicioNestedInput
@@ -1720,6 +1899,7 @@ export type ServicioUncheckedUpdateWithoutTiqueteInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1775,6 +1955,7 @@ export type ServicioCreateWithoutProveedorInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   cliente: Prisma.ClienteCreateNestedOneWithoutServiciosInput
+  pasajero: Prisma.PasajeroCreateNestedOneWithoutServiciosInput
   creadoPor: Prisma.UserCreateNestedOneWithoutServiciosCreadosInput
   facturadoPor?: Prisma.UserCreateNestedOneWithoutServiciosFacturadosInput
   tiquete?: Prisma.TiqueteCreateNestedOneWithoutServicioInput
@@ -1784,6 +1965,7 @@ export type ServicioCreateWithoutProveedorInput = {
 export type ServicioUncheckedCreateWithoutProveedorInput = {
   id?: number
   clienteId: number
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1844,6 +2026,7 @@ export type ServicioCreateManyCreadoPorInput = {
   id?: number
   clienteId: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1875,6 +2058,7 @@ export type ServicioCreateManyFacturadoPorInput = {
   id?: number
   clienteId: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -1929,6 +2113,7 @@ export type ServicioUpdateWithoutCreadoPorInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosNestedInput
   proveedor?: Prisma.ProveedorUpdateOneWithoutServiciosNestedInput
+  pasajero?: Prisma.PasajeroUpdateOneRequiredWithoutServiciosNestedInput
   facturadoPor?: Prisma.UserUpdateOneWithoutServiciosFacturadosNestedInput
   tiquete?: Prisma.TiqueteUpdateOneWithoutServicioNestedInput
   detalleServicio?: Prisma.DetalleServicioUpdateOneWithoutServicioNestedInput
@@ -1938,6 +2123,7 @@ export type ServicioUncheckedUpdateWithoutCreadoPorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1971,6 +2157,7 @@ export type ServicioUncheckedUpdateManyWithoutCreadoPorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2025,6 +2212,7 @@ export type ServicioUpdateWithoutFacturadoPorInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosNestedInput
   proveedor?: Prisma.ProveedorUpdateOneWithoutServiciosNestedInput
+  pasajero?: Prisma.PasajeroUpdateOneRequiredWithoutServiciosNestedInput
   creadoPor?: Prisma.UserUpdateOneRequiredWithoutServiciosCreadosNestedInput
   tiquete?: Prisma.TiqueteUpdateOneWithoutServicioNestedInput
   detalleServicio?: Prisma.DetalleServicioUpdateOneWithoutServicioNestedInput
@@ -2034,6 +2222,7 @@ export type ServicioUncheckedUpdateWithoutFacturadoPorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2067,6 +2256,7 @@ export type ServicioUncheckedUpdateManyWithoutFacturadoPorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2097,6 +2287,7 @@ export type ServicioUncheckedUpdateManyWithoutFacturadoPorInput = {
 export type ServicioCreateManyClienteInput = {
   id?: number
   proveedorId?: number | null
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -2151,6 +2342,7 @@ export type ServicioUpdateWithoutClienteInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   proveedor?: Prisma.ProveedorUpdateOneWithoutServiciosNestedInput
+  pasajero?: Prisma.PasajeroUpdateOneRequiredWithoutServiciosNestedInput
   creadoPor?: Prisma.UserUpdateOneRequiredWithoutServiciosCreadosNestedInput
   facturadoPor?: Prisma.UserUpdateOneWithoutServiciosFacturadosNestedInput
   tiquete?: Prisma.TiqueteUpdateOneWithoutServicioNestedInput
@@ -2160,6 +2352,7 @@ export type ServicioUpdateWithoutClienteInput = {
 export type ServicioUncheckedUpdateWithoutClienteInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2193,6 +2386,138 @@ export type ServicioUncheckedUpdateWithoutClienteInput = {
 export type ServicioUncheckedUpdateManyWithoutClienteInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
+  tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
+  estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
+  fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formaPago?: Prisma.EnumTipoPagoFieldUpdateOperationsInput | $Enums.TipoPago
+  tipoCash?: Prisma.NullableEnumTipoCashFieldUpdateOperationsInput | $Enums.TipoCash | null
+  numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pagadoProveedor?: Prisma.NullableEnumTipoPagadoProveedorFieldUpdateOperationsInput | $Enums.TipoPagadoProveedor | null
+  fechaPagoProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaPagoCliente?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pagadoCliente?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creadoPorId?: Prisma.StringFieldUpdateOperationsInput | string
+  facturadoPorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fechaFacturacion?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  motivoDevolucion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uuid?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ServicioCreateManyPasajeroInput = {
+  id?: number
+  clienteId: number
+  proveedorId?: number | null
+  tipo: $Enums.TipoServicio
+  estado?: $Enums.EstadoServicio
+  fechaEmision: Date | string
+  facturaProveedorUrl?: string | null
+  facturaGoTravelUrl?: string | null
+  soporteTiqueteElectronicoUrl?: string | null
+  observaciones?: string | null
+  formaPago: $Enums.TipoPago
+  tipoCash?: $Enums.TipoCash | null
+  numeroTarjeta?: string | null
+  numeroAprobacion?: string | null
+  creditoAgencia?: number | null
+  proyectoFCDS?: string | null
+  ceCos?: string | null
+  vencimientoFacturaProveedor?: Date | string | null
+  pagadoProveedor?: $Enums.TipoPagadoProveedor | null
+  fechaPagoProveedor?: Date | string | null
+  fechaPagoCliente?: Date | string | null
+  pagadoCliente?: boolean
+  creadoPorId: string
+  facturadoPorId?: string | null
+  fechaFacturacion?: Date | string | null
+  motivoDevolucion?: string | null
+  uuid?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ServicioUpdateWithoutPasajeroInput = {
+  tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
+  estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
+  fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formaPago?: Prisma.EnumTipoPagoFieldUpdateOperationsInput | $Enums.TipoPago
+  tipoCash?: Prisma.NullableEnumTipoCashFieldUpdateOperationsInput | $Enums.TipoCash | null
+  numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pagadoProveedor?: Prisma.NullableEnumTipoPagadoProveedorFieldUpdateOperationsInput | $Enums.TipoPagadoProveedor | null
+  fechaPagoProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaPagoCliente?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pagadoCliente?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fechaFacturacion?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  motivoDevolucion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uuid?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosNestedInput
+  proveedor?: Prisma.ProveedorUpdateOneWithoutServiciosNestedInput
+  creadoPor?: Prisma.UserUpdateOneRequiredWithoutServiciosCreadosNestedInput
+  facturadoPor?: Prisma.UserUpdateOneWithoutServiciosFacturadosNestedInput
+  tiquete?: Prisma.TiqueteUpdateOneWithoutServicioNestedInput
+  detalleServicio?: Prisma.DetalleServicioUpdateOneWithoutServicioNestedInput
+}
+
+export type ServicioUncheckedUpdateWithoutPasajeroInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  clienteId?: Prisma.IntFieldUpdateOperationsInput | number
+  proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
+  estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
+  fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  observaciones?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  formaPago?: Prisma.EnumTipoPagoFieldUpdateOperationsInput | $Enums.TipoPago
+  tipoCash?: Prisma.NullableEnumTipoCashFieldUpdateOperationsInput | $Enums.TipoCash | null
+  numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pagadoProveedor?: Prisma.NullableEnumTipoPagadoProveedorFieldUpdateOperationsInput | $Enums.TipoPagadoProveedor | null
+  fechaPagoProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  fechaPagoCliente?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pagadoCliente?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  creadoPorId?: Prisma.StringFieldUpdateOperationsInput | string
+  facturadoPorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fechaFacturacion?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  motivoDevolucion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  uuid?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tiquete?: Prisma.TiqueteUncheckedUpdateOneWithoutServicioNestedInput
+  detalleServicio?: Prisma.DetalleServicioUncheckedUpdateOneWithoutServicioNestedInput
+}
+
+export type ServicioUncheckedUpdateManyWithoutPasajeroInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  clienteId?: Prisma.IntFieldUpdateOperationsInput | number
+  proveedorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2224,6 +2549,7 @@ export type ServicioUncheckedUpdateManyWithoutClienteInput = {
 export type ServicioCreateManyProveedorInput = {
   id?: number
   clienteId: number
+  pasajeroId: number
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
@@ -2278,6 +2604,7 @@ export type ServicioUpdateWithoutProveedorInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cliente?: Prisma.ClienteUpdateOneRequiredWithoutServiciosNestedInput
+  pasajero?: Prisma.PasajeroUpdateOneRequiredWithoutServiciosNestedInput
   creadoPor?: Prisma.UserUpdateOneRequiredWithoutServiciosCreadosNestedInput
   facturadoPor?: Prisma.UserUpdateOneWithoutServiciosFacturadosNestedInput
   tiquete?: Prisma.TiqueteUpdateOneWithoutServicioNestedInput
@@ -2287,6 +2614,7 @@ export type ServicioUpdateWithoutProveedorInput = {
 export type ServicioUncheckedUpdateWithoutProveedorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2320,6 +2648,7 @@ export type ServicioUncheckedUpdateWithoutProveedorInput = {
 export type ServicioUncheckedUpdateManyWithoutProveedorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   clienteId?: Prisma.IntFieldUpdateOperationsInput | number
+  pasajeroId?: Prisma.IntFieldUpdateOperationsInput | number
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2354,6 +2683,7 @@ export type ServicioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   clienteId?: boolean
   proveedorId?: boolean
+  pasajeroId?: boolean
   tipo?: boolean
   estado?: boolean
   fechaEmision?: boolean
@@ -2382,6 +2712,7 @@ export type ServicioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updatedAt?: boolean
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
   proveedor?: boolean | Prisma.Servicio$proveedorArgs<ExtArgs>
+  pasajero?: boolean | Prisma.PasajeroDefaultArgs<ExtArgs>
   creadoPor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   facturadoPor?: boolean | Prisma.Servicio$facturadoPorArgs<ExtArgs>
   tiquete?: boolean | Prisma.Servicio$tiqueteArgs<ExtArgs>
@@ -2392,6 +2723,7 @@ export type ServicioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   clienteId?: boolean
   proveedorId?: boolean
+  pasajeroId?: boolean
   tipo?: boolean
   estado?: boolean
   fechaEmision?: boolean
@@ -2420,6 +2752,7 @@ export type ServicioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   updatedAt?: boolean
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
   proveedor?: boolean | Prisma.Servicio$proveedorArgs<ExtArgs>
+  pasajero?: boolean | Prisma.PasajeroDefaultArgs<ExtArgs>
   creadoPor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   facturadoPor?: boolean | Prisma.Servicio$facturadoPorArgs<ExtArgs>
 }, ExtArgs["result"]["servicio"]>
@@ -2428,6 +2761,7 @@ export type ServicioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   clienteId?: boolean
   proveedorId?: boolean
+  pasajeroId?: boolean
   tipo?: boolean
   estado?: boolean
   fechaEmision?: boolean
@@ -2456,6 +2790,7 @@ export type ServicioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   updatedAt?: boolean
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
   proveedor?: boolean | Prisma.Servicio$proveedorArgs<ExtArgs>
+  pasajero?: boolean | Prisma.PasajeroDefaultArgs<ExtArgs>
   creadoPor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   facturadoPor?: boolean | Prisma.Servicio$facturadoPorArgs<ExtArgs>
 }, ExtArgs["result"]["servicio"]>
@@ -2464,6 +2799,7 @@ export type ServicioSelectScalar = {
   id?: boolean
   clienteId?: boolean
   proveedorId?: boolean
+  pasajeroId?: boolean
   tipo?: boolean
   estado?: boolean
   fechaEmision?: boolean
@@ -2492,10 +2828,11 @@ export type ServicioSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ServicioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clienteId" | "proveedorId" | "tipo" | "estado" | "fechaEmision" | "facturaProveedorUrl" | "facturaGoTravelUrl" | "soporteTiqueteElectronicoUrl" | "observaciones" | "formaPago" | "tipoCash" | "numeroTarjeta" | "numeroAprobacion" | "creditoAgencia" | "proyectoFCDS" | "ceCos" | "vencimientoFacturaProveedor" | "pagadoProveedor" | "fechaPagoProveedor" | "fechaPagoCliente" | "pagadoCliente" | "creadoPorId" | "facturadoPorId" | "fechaFacturacion" | "motivoDevolucion" | "uuid" | "createdAt" | "updatedAt", ExtArgs["result"]["servicio"]>
+export type ServicioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clienteId" | "proveedorId" | "pasajeroId" | "tipo" | "estado" | "fechaEmision" | "facturaProveedorUrl" | "facturaGoTravelUrl" | "soporteTiqueteElectronicoUrl" | "observaciones" | "formaPago" | "tipoCash" | "numeroTarjeta" | "numeroAprobacion" | "creditoAgencia" | "proyectoFCDS" | "ceCos" | "vencimientoFacturaProveedor" | "pagadoProveedor" | "fechaPagoProveedor" | "fechaPagoCliente" | "pagadoCliente" | "creadoPorId" | "facturadoPorId" | "fechaFacturacion" | "motivoDevolucion" | "uuid" | "createdAt" | "updatedAt", ExtArgs["result"]["servicio"]>
 export type ServicioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
   proveedor?: boolean | Prisma.Servicio$proveedorArgs<ExtArgs>
+  pasajero?: boolean | Prisma.PasajeroDefaultArgs<ExtArgs>
   creadoPor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   facturadoPor?: boolean | Prisma.Servicio$facturadoPorArgs<ExtArgs>
   tiquete?: boolean | Prisma.Servicio$tiqueteArgs<ExtArgs>
@@ -2504,12 +2841,14 @@ export type ServicioInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ServicioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
   proveedor?: boolean | Prisma.Servicio$proveedorArgs<ExtArgs>
+  pasajero?: boolean | Prisma.PasajeroDefaultArgs<ExtArgs>
   creadoPor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   facturadoPor?: boolean | Prisma.Servicio$facturadoPorArgs<ExtArgs>
 }
 export type ServicioIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
   proveedor?: boolean | Prisma.Servicio$proveedorArgs<ExtArgs>
+  pasajero?: boolean | Prisma.PasajeroDefaultArgs<ExtArgs>
   creadoPor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   facturadoPor?: boolean | Prisma.Servicio$facturadoPorArgs<ExtArgs>
 }
@@ -2519,6 +2858,7 @@ export type $ServicioPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     cliente: Prisma.$ClientePayload<ExtArgs>
     proveedor: Prisma.$ProveedorPayload<ExtArgs> | null
+    pasajero: Prisma.$PasajeroPayload<ExtArgs>
     creadoPor: Prisma.$UserPayload<ExtArgs>
     facturadoPor: Prisma.$UserPayload<ExtArgs> | null
     tiquete: Prisma.$TiquetePayload<ExtArgs> | null
@@ -2528,6 +2868,7 @@ export type $ServicioPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: number
     clienteId: number
     proveedorId: number | null
+    pasajeroId: number
     tipo: $Enums.TipoServicio
     estado: $Enums.EstadoServicio
     fechaEmision: Date
@@ -2950,6 +3291,7 @@ export interface Prisma__ServicioClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   cliente<T extends Prisma.ClienteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClienteDefaultArgs<ExtArgs>>): Prisma.Prisma__ClienteClient<runtime.Types.Result.GetResult<Prisma.$ClientePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   proveedor<T extends Prisma.Servicio$proveedorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Servicio$proveedorArgs<ExtArgs>>): Prisma.Prisma__ProveedorClient<runtime.Types.Result.GetResult<Prisma.$ProveedorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  pasajero<T extends Prisma.PasajeroDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PasajeroDefaultArgs<ExtArgs>>): Prisma.Prisma__PasajeroClient<runtime.Types.Result.GetResult<Prisma.$PasajeroPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   creadoPor<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   facturadoPor<T extends Prisma.Servicio$facturadoPorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Servicio$facturadoPorArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   tiquete<T extends Prisma.Servicio$tiqueteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Servicio$tiqueteArgs<ExtArgs>>): Prisma.Prisma__TiqueteClient<runtime.Types.Result.GetResult<Prisma.$TiquetePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2986,6 +3328,7 @@ export interface ServicioFieldRefs {
   readonly id: Prisma.FieldRef<"Servicio", 'Int'>
   readonly clienteId: Prisma.FieldRef<"Servicio", 'Int'>
   readonly proveedorId: Prisma.FieldRef<"Servicio", 'Int'>
+  readonly pasajeroId: Prisma.FieldRef<"Servicio", 'Int'>
   readonly tipo: Prisma.FieldRef<"Servicio", 'TipoServicio'>
   readonly estado: Prisma.FieldRef<"Servicio", 'EstadoServicio'>
   readonly fechaEmision: Prisma.FieldRef<"Servicio", 'DateTime'>

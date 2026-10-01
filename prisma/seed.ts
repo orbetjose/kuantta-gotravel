@@ -1,11 +1,13 @@
 import "dotenv/config";
 import { prisma } from "@/libs/prisma";
 import { fakerES as faker } from "@faker-js/faker";
+import bcrypt from "bcryptjs";
 
 const CANTIDAD_CLIENTES = 15;
 const CANTIDAD_PROVEEDORES = 10;
 const CANTIDAD_RUTAS = 20;
 const CANTIDAD_SERVICIOS = 100;
+const CANTIDAD_PASAJEROS = 30;
 
 const TIPOS_SERVICIO = [
   "TIQUETE",
@@ -29,11 +31,7 @@ const ESTADOS = [
   "ANULADO",
 ] as const;
 
-const FORMAS_PAGO = [
-  "CASH",
-  "TARJETA_CREDITO",
-  "CREDITO_AGENCIA",
-] as const;
+const FORMAS_PAGO = ["CASH", "TARJETA_CREDITO", "CREDITO_AGENCIA"] as const;
 
 function randomItem<T>(array: readonly T[]): T {
   return array[Math.floor(Math.random() * array.length)];
@@ -71,6 +69,7 @@ async function main() {
   await prisma.ruta.deleteMany();
   await prisma.proveedor.deleteMany();
   await prisma.cliente.deleteMany();
+  await prisma.pasajero.deleteMany();
 
   console.log("🧹 Datos anteriores eliminados");
 
@@ -78,17 +77,46 @@ async function main() {
   // USUARIO
   // ---------------------------------------------------------
 
-  const usuario = await prisma.user.findFirst({
-    select: {
-      id: true,
+  const password = await bcrypt.hash("123456", 10);
+
+  const admin = await prisma.user.upsert({
+    where: {
+      email: "admin@kuantta.com",
+    },
+    update: {},
+    create: {
+      name: "Administrador",
+      email: "admin@kuantta.com",
+      password,
+      role: "ADMINISTRADOR",
     },
   });
 
-  if (!usuario) {
-    throw new Error(
-      "No existe ningún usuario. Crea al menos un usuario antes de ejecutar el seed.",
-    );
-  }
+  const asesor = await prisma.user.upsert({
+    where: {
+      email: "asesor@kuantta.com",
+    },
+    update: {},
+    create: {
+      name: "Asesor",
+      email: "asesor@kuantta.com",
+      password,
+      role: "ASESOR",
+    },
+  });
+
+  const facturador = await prisma.user.upsert({
+    where: {
+      email: "facturador@kuantta.com",
+    },
+    update: {},
+    create: {
+      name: "Facturador",
+      email: "facturador@kuantta.com",
+      password,
+      role: "FACTURADOR",
+    },
+  });
 
   // ---------------------------------------------------------
   // CLIENTES
@@ -116,6 +144,33 @@ async function main() {
   }
 
   console.log(`👥 ${clientes.length} clientes creados`);
+
+  // ---------------------------------------------------------
+  // PASAJEROS
+  // ---------------------------------------------------------
+
+  const pasajeros = [];
+
+  for (let i = 0; i < CANTIDAD_PASAJEROS; i++) {
+    const nombre = faker.person.firstName();
+    const apellido = faker.person.lastName();
+
+    const pasajero = await prisma.pasajero.create({
+      data: {
+        nombre,
+        apellido,
+        correo: faker.internet.email({
+          firstName: nombre,
+          lastName: apellido,
+        }),
+        telefono: faker.phone.number(),
+      },
+    });
+
+    pasajeros.push(pasajero);
+  }
+
+  console.log(`🧳 ${pasajeros.length} pasajeros creados`);
 
   // ---------------------------------------------------------
   // PROVEEDORES
@@ -237,12 +292,12 @@ async function main() {
 
     const cliente = randomItem(clientes);
 
-    // 10% de los servicios no tienen proveedor
+    const pasajero = randomItem(pasajeros);
+
+    // 5% de los servicios no tienen proveedor
     const tieneProveedor = Math.random() > 0.05;
 
-    const proveedor = tieneProveedor
-      ? randomItem(proveedores)
-      : null;
+    const proveedor = tieneProveedor ? randomItem(proveedores) : null;
 
     const estado = randomItem(ESTADOS);
 
@@ -254,10 +309,7 @@ async function main() {
 
     const formaPago = randomItem(FORMAS_PAGO);
 
-    let tipoCash:
-      | "EFECTIVO"
-      | "TRANSFERENCIA"
-      | null = null;
+    let tipoCash: "EFECTIVO" | "TRANSFERENCIA" | null = null;
 
     let creditoAgencia: number | null = null;
 
@@ -266,10 +318,7 @@ async function main() {
     let numeroAprobacion: string | null = null;
 
     if (formaPago === "CASH") {
-      tipoCash = randomItem([
-        "EFECTIVO",
-        "TRANSFERENCIA",
-      ] as const);
+      tipoCash = randomItem(["EFECTIVO", "TRANSFERENCIA"] as const);
     }
 
     if (formaPago === "CREDITO_AGENCIA") {
@@ -285,26 +334,17 @@ async function main() {
     // PAGO AL PROVEEDOR
     // -------------------------------------------------------
 
-    let pagadoProveedor:
-      | "SI"
-      | "NO"
-      | "NO_APLICA";
+    let pagadoProveedor: "SI" | "NO" | "NO_APLICA";
 
     let fechaPagoProveedor: Date | null = null;
 
     if (!proveedor) {
       pagadoProveedor = "NO_APLICA";
     } else {
-      pagadoProveedor = randomItem([
-        "SI",
-        "NO",
-      ] as const);
+      pagadoProveedor = randomItem(["SI", "NO"] as const);
 
       if (pagadoProveedor === "SI") {
-        fechaPagoProveedor = randomDate(
-          fechaEmision,
-          ahora,
-        );
+        fechaPagoProveedor = randomDate(fechaEmision, ahora);
       }
     }
 
@@ -325,18 +365,19 @@ async function main() {
     // -------------------------------------------------------
 
     const fechaFacturacion =
-      estado === "FACTURADO"
-        ? randomDate(fechaEmision, ahora)
-        : null;
+      estado === "FACTURADO" ? randomDate(fechaEmision, ahora) : null;
 
     // -------------------------------------------------------
     // CREAR SERVICIO
     // -------------------------------------------------------
 
+    const creadoPor = randomItem([admin, asesor]);
+    const facturadoPor = estado === "FACTURADO" ? facturador : null;
+
     const servicio = await prisma.servicio.create({
       data: {
         clienteId: cliente.id,
-
+        pasajeroId: pasajero.id,
         proveedorId: proveedor?.id ?? null,
 
         tipo,
@@ -364,14 +405,9 @@ async function main() {
         // ---------------------------------------------------
 
         proyectoFCDS:
-          Math.random() > 0.5
-            ? `FCDS-${faker.string.numeric(4)}`
-            : null,
+          Math.random() > 0.5 ? `FCDS-${faker.string.numeric(4)}` : null,
 
-        ceCos:
-          Math.random() > 0.5
-            ? `CC-${faker.string.numeric(4)}`
-            : null,
+        ceCos: Math.random() > 0.5 ? `CC-${faker.string.numeric(4)}` : null,
 
         vencimientoFacturaProveedor:
           proveedor && tipo !== "TIQUETE"
@@ -387,10 +423,9 @@ async function main() {
 
         fechaPagoCliente,
 
-        observaciones:
-          Math.random() > 0.7
-            ? faker.lorem.sentence()
-            : null,
+        pagadoCliente: clienteYaPago,
+
+        observaciones: Math.random() > 0.7 ? faker.lorem.sentence() : null,
 
         // ---------------------------------------------------
         // DOCUMENTOS
@@ -407,27 +442,19 @@ async function main() {
             : null,
 
         soporteTiqueteElectronicoUrl:
-          tipo === "TIQUETE"
-            ? "https://example.com/soporte-tiquete.pdf"
-            : null,
+          tipo === "TIQUETE" ? "https://example.com/soporte-tiquete.pdf" : null,
 
         // ---------------------------------------------------
         // FACTURACIÓN
         // ---------------------------------------------------
 
-        creadoPorId: usuario.id,
+        creadoPorId: creadoPor.id,
 
-        facturadoPorId:
-          estado === "FACTURADO"
-            ? usuario.id
-            : null,
+        facturadoPorId: facturadoPor?.id ?? null,
 
         fechaFacturacion,
 
-        motivoDevolucion:
-          estado === "DEVUELTO"
-            ? faker.lorem.sentence()
-            : null,
+        motivoDevolucion: estado === "DEVUELTO" ? faker.lorem.sentence() : null,
       },
     });
 
@@ -438,37 +465,22 @@ async function main() {
     if (tipo === "TIQUETE") {
       const ruta = randomItem(rutas);
 
-      const tarifaNeta = randomMoney(
-        300_000,
-        2_500_000,
-      );
+      const tarifaNeta = randomMoney(300_000, 2_500_000);
 
       const ivaTarifa = tarifaNeta * 0.19;
 
-      const otrosImpuestos = randomMoney(
-        20_000,
-        300_000,
-      );
+      const otrosImpuestos = randomMoney(20_000, 300_000);
 
-      const tarifaAdministrativaNeta = randomMoney(
-        20_000,
-        100_000,
-      );
+      const tarifaAdministrativaNeta = randomMoney(20_000, 100_000);
 
-      const ivaTarifaAdministrativa =
-        tarifaAdministrativaNeta * 0.19;
+      const ivaTarifaAdministrativa = tarifaAdministrativaNeta * 0.19;
 
-      const feeAgenciaNeta = randomMoney(
-        20_000,
-        150_000,
-      );
+      const feeAgenciaNeta = randomMoney(20_000, 150_000);
 
       const ivaFeeAgencia = feeAgenciaNeta * 0.19;
 
       const feePagoTarjeta =
-        formaPago === "TARJETA_CREDITO"
-          ? randomMoney(10_000, 80_000)
-          : 0;
+        formaPago === "TARJETA_CREDITO" ? randomMoney(10_000, 80_000) : 0;
 
       const totalPagar =
         tarifaNeta +
@@ -504,9 +516,7 @@ async function main() {
 
       const revision = Math.random() > 0.85;
 
-      const numeroTiqueteRevision = revision
-        ? faker.string.numeric(13)
-        : null;
+      const numeroTiqueteRevision = revision ? faker.string.numeric(13) : null;
 
       // -----------------------------------------------------
       // CREAR TIQUETE
@@ -524,15 +534,7 @@ async function main() {
 
           numeroTiqueteRevision,
 
-          clase: randomItem([
-            "E",
-            "B",
-            "M",
-            "Y",
-            "J",
-          ]),
-
-          pasajero: `${faker.person.firstName()} ${faker.person.lastName()}`,
+          clase: randomItem(["E", "B", "M", "Y", "J"]),
 
           fechaIda,
 
@@ -540,13 +542,9 @@ async function main() {
 
           tarifaNeta: decimal(tarifaNeta),
 
-          tarifaAdministrativaNeta: decimal(
-            tarifaAdministrativaNeta,
-          ),
+          tarifaAdministrativaNeta: decimal(tarifaAdministrativaNeta),
 
-          ivaTarifaAdministrativa: decimal(
-            ivaTarifaAdministrativa,
-          ),
+          ivaTarifaAdministrativa: decimal(ivaTarifaAdministrativa),
 
           feeAgenciaNeta: decimal(feeAgenciaNeta),
 
@@ -556,10 +554,7 @@ async function main() {
 
           totalPagar: decimal(totalPagar),
 
-          aph: randomItem([
-            "NACIONAL",
-            "INTERNACIONAL",
-          ]),
+          aph: randomItem(["NACIONAL", "INTERNACIONAL"]),
 
           ivaTarifa: decimal(ivaTarifa),
 
@@ -575,62 +570,38 @@ async function main() {
     // =======================================================
     // DETALLE SERVICIO
     // =======================================================
-
     else {
       // Primero generamos lo que GoTravel cobra.
-      const valorPagadoGoTravel = randomMoney(
-        100_000,
-        3_500_000,
-      );
+      const valorPagadoGoTravel = randomMoney(100_000, 3_500_000);
 
       // El proveedor nunca puede costar más que lo cobrado
       // al cliente/GoTravel.
-      const valorPagadoProveedor = randomMoney(
-        100_000,
-        valorPagadoGoTravel,
-      );
+      const valorPagadoProveedor = randomMoney(100_000, valorPagadoGoTravel);
 
-      const trm = randomMoney(
-        3_500,
-        4_500,
-      );
+      const trm = randomMoney(3_500, 4_500);
 
       const feePagoTarjetaCredito =
-        formaPago === "TARJETA_CREDITO"
-          ? randomMoney(10_000, 100_000)
-          : 0;
+        formaPago === "TARJETA_CREDITO" ? randomMoney(10_000, 100_000) : 0;
 
-      const totalIngreso =
-        valorPagadoGoTravel -
-        valorPagadoProveedor;
+      const totalIngreso = valorPagadoGoTravel - valorPagadoProveedor;
 
       await prisma.detalleServicio.create({
         data: {
           servicioId: servicio.id,
 
-          descripcionServicio:
-            faker.lorem.sentence(),
+          descripcionServicio: faker.lorem.sentence(),
 
-          pasajero: `${faker.person.firstName()} ${faker.person.lastName()}`,
+          codigoReserva: faker.string.alphanumeric(8).toUpperCase(),
 
-          codigoReserva:
-            faker.string
-              .alphanumeric(8)
-              .toUpperCase(),
-
-          valorPagadoProveedor:
-            decimal(valorPagadoProveedor),
+          valorPagadoProveedor: decimal(valorPagadoProveedor),
 
           trm: decimal(trm),
 
-          feePagoTarjetaCredito:
-            decimal(feePagoTarjetaCredito),
+          feePagoTarjetaCredito: decimal(feePagoTarjetaCredito),
 
-          valorPagadoGoTravel:
-            decimal(valorPagadoGoTravel),
+          valorPagadoGoTravel: decimal(valorPagadoGoTravel),
 
-          totalIngreso:
-            decimal(totalIngreso),
+          totalIngreso: decimal(totalIngreso),
         },
       });
 
