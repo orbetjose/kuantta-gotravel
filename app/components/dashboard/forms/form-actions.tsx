@@ -2,7 +2,7 @@ interface FormActionsProps {
   isLoading: boolean;
   mode: "create" | "edit";
   createText: string;
-  facturarText: string;
+  facturarText?: string;
   editText?: string;
   cancelText?: string;
 }

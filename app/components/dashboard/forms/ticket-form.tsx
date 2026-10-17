@@ -32,6 +32,7 @@ import {
   getProveedoresOptions,
   getRutasOptions,
 } from "@/libs/form-options";
+import { init } from "next/dist/compiled/webpack/webpack";
 
 type TicketFormProps = {
   clientes: ClienteOption[];
@@ -159,6 +160,13 @@ export default function TicketForm({
     "cliente",
   );
 
+  const resolvedCliente = clienteSeleccionado
+    ? {
+        value: String(clienteSeleccionado.id),
+        label: clienteSeleccionado.nombre,
+      }
+    : null;
+
   const proveedorSeleccionado = useSelectedEntity(
     proveedorId,
     proveedores,
@@ -166,12 +174,26 @@ export default function TicketForm({
     "proveedor",
   );
 
+  const resolvedProveedor = proveedorSeleccionado
+    ? {
+        value: String(proveedorSeleccionado.id),
+        label: proveedorSeleccionado.razonSocial,
+      }
+    : null;
+
   const pasajeroSeleccionado = useSelectedEntity(
     pasajeroId,
     pasajeros,
     "/api/pasajeros/search",
     "pasajero",
   );
+
+  const resolvedPasajero = pasajeroSeleccionado
+    ? {
+        value: String(pasajeroSeleccionado.id),
+        label: pasajeroSeleccionado.nombre + pasajeroSeleccionado.apellido,
+      }
+    : null;
 
   const cambiarTipoItinerario = (
     tipo: "SOLO_IDA" | "IDA_VUELTA" | "MULTIDESTINO",
@@ -261,6 +283,8 @@ export default function TicketForm({
   ) => {
     setIsLoading(true);
 
+    console.log(values.trayectos);
+
     try {
       const data = {
         ...values,
@@ -330,7 +354,13 @@ export default function TicketForm({
   };
 
   return (
-    <form className="space-y-6 pt-4" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="space-y-6 pt-4"
+      onSubmit={handleSubmit(onSubmit, (errors) => {
+        console.log("Errores del formulario:", errors);
+        console.log("Detalle:", JSON.stringify(errors, null, 2));
+      })}
+    >
       {/* =====================================================
           INFORMACIÓN GENERAL
       ===================================================== */}
@@ -351,6 +381,7 @@ export default function TicketForm({
                   name={field.name}
                   value={String(field.value ?? "")}
                   onChange={field.onChange}
+                  resolvedOption={resolvedCliente}
                   searchEndpoint="/api/clientes/search"
                   required
                   placeholder="Seleccionar cliente"
@@ -415,6 +446,7 @@ export default function TicketForm({
                   name={field.name}
                   value={String(field.value ?? "")}
                   onChange={field.onChange}
+                  resolvedOption={resolvedProveedor}
                   searchEndpoint="/api/proveedores/search"
                   required
                   placeholder="Seleccionar proveedor"
@@ -483,6 +515,7 @@ export default function TicketForm({
                   name={field.name}
                   value={String(field.value ?? "")}
                   onChange={field.onChange}
+                  resolvedOption={resolvedPasajero}
                   searchEndpoint="/api/pasajeros/search"
                   required
                   placeholder="Seleccionar pasajero"

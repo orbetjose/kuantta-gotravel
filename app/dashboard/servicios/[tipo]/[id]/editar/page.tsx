@@ -63,6 +63,7 @@ export default async function EditarServicioPage({
     clienteId: String(servicio.cliente.id),
     proveedorId: String(servicio.proveedor?.id),
     pasajeroId: String(servicio.pasajero.id),
+    estado: servicio.estado,
     fechaEmision: servicio.fechaEmision.toISOString().split("T")[0],
     fechaSolicitud: servicio.fechaSolicitud.toISOString().split("T")[0],
     descripcionServicio: servicio.detalleServicio?.descripcionServicio ?? "",

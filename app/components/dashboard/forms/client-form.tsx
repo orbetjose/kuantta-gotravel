@@ -90,7 +90,10 @@ export default function ClientForm({
   const tipoPersona = watch("tipoPersona");
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pt-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 pt-4"
+    >
       <section className="rounded-xl bg-white p-6 shadow-sm">
         <h2 className="mb-6 font-inter text-lg font-semibold text-fifth-gray">
           Información del cliente

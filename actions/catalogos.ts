@@ -25,7 +25,7 @@ export async function getProveedores() {
     orderBy: {
       createdAt: "desc",
     },
-    take: 10,
+    take: 6,
     select: {
       id: true,
       razonSocial: true,
@@ -42,7 +42,7 @@ export async function getRutas() {
     orderBy: {
       createdAt: "desc",
     },
-    take: 10,
+    take: 6,
     select: {
       id: true,
       codigoIATA: true,
@@ -58,7 +58,7 @@ export async function getPasajeros() {
     orderBy: {
       createdAt: "desc",
     },
-    take: 10,
+    take: 6,
     select: {
       id: true,
       nombre: true,

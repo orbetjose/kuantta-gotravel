@@ -14,6 +14,7 @@ type FormComboBoxProps = {
   value: string;
   searchEndpoint?: string;
   onChange: (value: string) => void;
+  resolvedOption?: FormComboBoxOption | null;
   options: FormComboBoxOption[];
   placeholder?: string;
   searchPlaceholder?: string;
@@ -28,6 +29,7 @@ export default function FormComboBox({
   value,
   searchEndpoint,
   onChange,
+  resolvedOption,
   options,
   placeholder = "Seleccionar...",
   searchPlaceholder = "Buscar...",
@@ -43,10 +45,12 @@ export default function FormComboBox({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [selectedOptionCache, setSelectedOptionCache] =
     useState<FormComboBoxOption | null>(null);
+
   const selectedOption =
-    options.find((option) => option.value === value) ??
-    searchResults.find((option) => option.value === value) ??
-    (selectedOptionCache?.value === value ? selectedOptionCache : undefined);
+    options.find((option) => String(option.value) === String(value)) ??
+    searchResults.find((option) => String(option.value) === String(value)) ??
+    (selectedOptionCache?.value === value ? selectedOptionCache : undefined) ??
+    (resolvedOption?.value === value ? resolvedOption : undefined);
 
   const filteredOptions = isSearching ? searchResults : options;
 

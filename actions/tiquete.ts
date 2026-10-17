@@ -266,7 +266,7 @@ export async function updateTiquete(tiqueteId: number, data: TiqueteData) {
         clienteId: data.clienteId,
         proveedorId: data.proveedorId ?? null,
         pasajeroId: data.pasajeroId,
-        estado: data.estado,
+        estado: data.estado, 
 
         fechaEmision: new Date(data.fechaEmision),
         fechaSolicitud: new Date(data.fechaSolicitud),

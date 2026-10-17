@@ -39,6 +39,8 @@ export function useSelectedEntity<T extends EntityWithId>(
           `${endpoint}?id=${encodeURIComponent(String(id))}`,
         );
 
+        
+
         if (!response.ok) {
           if (!cancelled) {
             setSelected(null);
@@ -47,6 +49,7 @@ export function useSelectedEntity<T extends EntityWithId>(
         }
 
         const entity: T = await response.json();
+
 
         if (!cancelled) {
           setSelected(entity);

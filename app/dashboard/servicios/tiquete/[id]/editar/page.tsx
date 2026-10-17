@@ -72,6 +72,7 @@ export default async function EditarTiquetePage({
     proveedorId: String(tiquete.servicio.proveedor?.id),
 
     pasajeroId: String(tiquete.servicio.pasajero.id),
+    estado: tiquete.servicio.estado,
 
     fechaEmision: tiquete.servicio.fechaEmision.toISOString().split("T")[0],
     fechaSolicitud: tiquete.servicio.fechaSolicitud.toISOString().split("T")[0],
@@ -79,7 +80,7 @@ export default async function EditarTiquetePage({
     formaPago: tiquete.servicio.formaPago,
 
     creditoAgencia: tiquete.servicio.creditoAgencia
-      ? (String(tiquete.servicio.creditoAgencia) as "3" | "8" | "15" | "30")
+      ? tiquete.servicio.creditoAgencia
       : undefined,
 
     numeroTarjeta: tiquete.servicio.numeroTarjeta ?? "",

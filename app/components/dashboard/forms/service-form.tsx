@@ -139,6 +139,13 @@ export default function ServiceForm({
     "cliente",
   );
 
+  const resolvedCliente = clienteSeleccionado
+    ? {
+        value: String(clienteSeleccionado.id),
+        label: clienteSeleccionado.nombre,
+      }
+    : null;
+
   const proveedorSeleccionado = useSelectedEntity(
     proveedorId,
     proveedores,
@@ -146,12 +153,26 @@ export default function ServiceForm({
     "proveedor",
   );
 
+  const resolvedProveedor = proveedorSeleccionado
+    ? {
+        value: String(proveedorSeleccionado.id),
+        label: proveedorSeleccionado.razonSocial,
+      }
+    : null;
+
   const pasajeroSeleccionado = useSelectedEntity(
     pasajeroId,
     pasajeros,
     "/api/pasajeros/search",
     "pasajero",
   );
+
+  const resolvedPasajero = pasajeroSeleccionado
+    ? {
+        value: String(pasajeroSeleccionado.id),
+        label: pasajeroSeleccionado.nombre + pasajeroSeleccionado.apellido,
+      }
+    : null;
 
   const formaPago = watch("formaPago");
   const tipo = watch("tipo");
@@ -206,7 +227,7 @@ export default function ServiceForm({
           : accion === "BORRADOR"
             ? "BORRADOR"
             : undefined;
-            
+
       if (mode === "edit") {
         if (!detalleServicioId) {
           throw new Error("No se encontró el ID del tiquete.");
@@ -270,6 +291,7 @@ export default function ServiceForm({
                   name={field.name}
                   value={String(field.value ?? "")}
                   onChange={field.onChange}
+                  resolvedOption={resolvedCliente}
                   searchEndpoint="/api/clientes/search"
                   required
                   placeholder="Seleccionar cliente"
@@ -334,6 +356,7 @@ export default function ServiceForm({
                   name={field.name}
                   value={String(field.value ?? "")}
                   onChange={field.onChange}
+                  resolvedOption={resolvedProveedor}
                   searchEndpoint="/api/proveedores/search"
                   required
                   placeholder="Seleccionar proveedor"
@@ -450,6 +473,7 @@ export default function ServiceForm({
                   name={field.name}
                   value={String(field.value ?? "")}
                   onChange={field.onChange}
+                  resolvedOption={resolvedPasajero}
                   searchEndpoint="/api/pasajeros/search"
                   required
                   placeholder="Seleccionar pasajero"
