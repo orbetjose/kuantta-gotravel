@@ -9,6 +9,99 @@
 * 🟢 You can import this file directly.
 */
 
+export const TipoPersona = {
+  NATURAL: 'NATURAL',
+  JURIDICA: 'JURIDICA'
+} as const
+
+export type TipoPersona = (typeof TipoPersona)[keyof typeof TipoPersona]
+
+
+export const TipoDocumento = {
+  NIT: 'NIT',
+  CEDULA: 'CEDULA',
+  PASAPORTE: 'PASAPORTE'
+} as const
+
+export type TipoDocumento = (typeof TipoDocumento)[keyof typeof TipoDocumento]
+
+
+export const PreferenciaSilla = {
+  VENTANA: 'VENTANA',
+  PASILLO: 'PASILLO'
+} as const
+
+export type PreferenciaSilla = (typeof PreferenciaSilla)[keyof typeof PreferenciaSilla]
+
+
+export const TipoViaje = {
+  NACIONAL: 'NACIONAL',
+  INTERNACIONAL: 'INTERNACIONAL'
+} as const
+
+export type TipoViaje = (typeof TipoViaje)[keyof typeof TipoViaje]
+
+
+export const TipoItinerario = {
+  SOLO_IDA: 'SOLO_IDA',
+  IDA_VUELTA: 'IDA_VUELTA',
+  MULTIDESTINO: 'MULTIDESTINO'
+} as const
+
+export type TipoItinerario = (typeof TipoItinerario)[keyof typeof TipoItinerario]
+
+
+export const CanalVenta = {
+  AMADEUS: 'AMADEUS',
+  SABRE: 'SABRE',
+  KONTROL_TRAVEL: 'KONTROL_TRAVEL',
+  KIU_TRAVEL: 'KIU_TRAVEL',
+  NDC: 'NDC',
+  OTROS: 'OTROS'
+} as const
+
+export type CanalVenta = (typeof CanalVenta)[keyof typeof CanalVenta]
+
+
+export const CategoriaProveedor = {
+  HOTEL_CADENA: 'HOTEL_CADENA',
+  ASISTENCIA_MEDICA: 'ASISTENCIA_MEDICA',
+  TECNOLOGIA_GDS: 'TECNOLOGIA_GDS',
+  CONSOLIDADOR: 'CONSOLIDADOR',
+  MAYORISTA: 'MAYORISTA',
+  AEROLINEA: 'AEROLINEA',
+  HOTEL_PLATAFORMA: 'HOTEL_PLATAFORMA',
+  TRANSPORTE_TERRESTRE: 'TRANSPORTE_TERRESTRE'
+} as const
+
+export type CategoriaProveedor = (typeof CategoriaProveedor)[keyof typeof CategoriaProveedor]
+
+
+export const RemuneracionProveedor = {
+  COMISION: 'COMISION',
+  NETO_MARKUP: 'NETO_MARKUP'
+} as const
+
+export type RemuneracionProveedor = (typeof RemuneracionProveedor)[keyof typeof RemuneracionProveedor]
+
+
+export const Moneda = {
+  COP: 'COP',
+  USD: 'USD',
+  EUR: 'EUR'
+} as const
+
+export type Moneda = (typeof Moneda)[keyof typeof Moneda]
+
+
+export const CondicionPago = {
+  INMEDIATO: 'INMEDIATO',
+  CREDITO: 'CREDITO'
+} as const
+
+export type CondicionPago = (typeof CondicionPago)[keyof typeof CondicionPago]
+
+
 export const Role = {
   ADMINISTRADOR: 'ADMINISTRADOR',
   ASESOR: 'ASESOR',
@@ -64,18 +157,11 @@ export const EstadoServicio = {
 export type EstadoServicio = (typeof EstadoServicio)[keyof typeof EstadoServicio]
 
 
-export const TipoAPH = {
-  NACIONAL: 'NACIONAL',
-  INTERNACIONAL: 'INTERNACIONAL'
-} as const
-
-export type TipoAPH = (typeof TipoAPH)[keyof typeof TipoAPH]
-
-
 export const TipoPago = {
   CASH: 'CASH',
   TARJETA_CREDITO: 'TARJETA_CREDITO',
-  CREDITO_AGENCIA: 'CREDITO_AGENCIA'
+  CREDITO_AGENCIA: 'CREDITO_AGENCIA',
+  OTROS: 'OTROS'
 } as const
 
 export type TipoPago = (typeof TipoPago)[keyof typeof TipoPago]

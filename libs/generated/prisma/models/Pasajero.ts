@@ -38,8 +38,12 @@ export type PasajeroMinAggregateOutputType = {
   id: number | null
   nombre: string | null
   apellido: string | null
+  documento: string | null
+  fechaNacimiento: Date | null
   correo: string | null
   telefono: string | null
+  preferenciaSilla: $Enums.PreferenciaSilla | null
+  activo: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,8 +52,12 @@ export type PasajeroMaxAggregateOutputType = {
   id: number | null
   nombre: string | null
   apellido: string | null
+  documento: string | null
+  fechaNacimiento: Date | null
   correo: string | null
   telefono: string | null
+  preferenciaSilla: $Enums.PreferenciaSilla | null
+  activo: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,8 +66,12 @@ export type PasajeroCountAggregateOutputType = {
   id: number
   nombre: number
   apellido: number
+  documento: number
+  fechaNacimiento: number
   correo: number
   telefono: number
+  preferenciaSilla: number
+  activo: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -78,8 +90,12 @@ export type PasajeroMinAggregateInputType = {
   id?: true
   nombre?: true
   apellido?: true
+  documento?: true
+  fechaNacimiento?: true
   correo?: true
   telefono?: true
+  preferenciaSilla?: true
+  activo?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,8 +104,12 @@ export type PasajeroMaxAggregateInputType = {
   id?: true
   nombre?: true
   apellido?: true
+  documento?: true
+  fechaNacimiento?: true
   correo?: true
   telefono?: true
+  preferenciaSilla?: true
+  activo?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -98,8 +118,12 @@ export type PasajeroCountAggregateInputType = {
   id?: true
   nombre?: true
   apellido?: true
+  documento?: true
+  fechaNacimiento?: true
   correo?: true
   telefono?: true
+  preferenciaSilla?: true
+  activo?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -195,8 +219,12 @@ export type PasajeroGroupByOutputType = {
   id: number
   nombre: string
   apellido: string
+  documento: string
+  fechaNacimiento: Date
   correo: string
   telefono: string
+  preferenciaSilla: $Enums.PreferenciaSilla
+  activo: boolean
   createdAt: Date
   updatedAt: Date
   _count: PasajeroCountAggregateOutputType | null
@@ -228,8 +256,12 @@ export type PasajeroWhereInput = {
   id?: Prisma.IntFilter<"Pasajero"> | number
   nombre?: Prisma.StringFilter<"Pasajero"> | string
   apellido?: Prisma.StringFilter<"Pasajero"> | string
+  documento?: Prisma.StringFilter<"Pasajero"> | string
+  fechaNacimiento?: Prisma.DateTimeFilter<"Pasajero"> | Date | string
   correo?: Prisma.StringFilter<"Pasajero"> | string
   telefono?: Prisma.StringFilter<"Pasajero"> | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaFilter<"Pasajero"> | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolFilter<"Pasajero"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Pasajero"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Pasajero"> | Date | string
   servicios?: Prisma.ServicioListRelationFilter
@@ -239,8 +271,12 @@ export type PasajeroOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  documento?: Prisma.SortOrder
+  fechaNacimiento?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   telefono?: Prisma.SortOrder
+  preferenciaSilla?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   servicios?: Prisma.ServicioOrderByRelationAggregateInput
@@ -248,24 +284,32 @@ export type PasajeroOrderByWithRelationInput = {
 
 export type PasajeroWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  correo?: string
+  documento?: string
   AND?: Prisma.PasajeroWhereInput | Prisma.PasajeroWhereInput[]
   OR?: Prisma.PasajeroWhereInput[]
   NOT?: Prisma.PasajeroWhereInput | Prisma.PasajeroWhereInput[]
   nombre?: Prisma.StringFilter<"Pasajero"> | string
   apellido?: Prisma.StringFilter<"Pasajero"> | string
+  fechaNacimiento?: Prisma.DateTimeFilter<"Pasajero"> | Date | string
+  correo?: Prisma.StringFilter<"Pasajero"> | string
   telefono?: Prisma.StringFilter<"Pasajero"> | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaFilter<"Pasajero"> | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolFilter<"Pasajero"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Pasajero"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Pasajero"> | Date | string
   servicios?: Prisma.ServicioListRelationFilter
-}, "id" | "correo">
+}, "id" | "documento">
 
 export type PasajeroOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  documento?: Prisma.SortOrder
+  fechaNacimiento?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   telefono?: Prisma.SortOrder
+  preferenciaSilla?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PasajeroCountOrderByAggregateInput
@@ -282,8 +326,12 @@ export type PasajeroScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Pasajero"> | number
   nombre?: Prisma.StringWithAggregatesFilter<"Pasajero"> | string
   apellido?: Prisma.StringWithAggregatesFilter<"Pasajero"> | string
+  documento?: Prisma.StringWithAggregatesFilter<"Pasajero"> | string
+  fechaNacimiento?: Prisma.DateTimeWithAggregatesFilter<"Pasajero"> | Date | string
   correo?: Prisma.StringWithAggregatesFilter<"Pasajero"> | string
   telefono?: Prisma.StringWithAggregatesFilter<"Pasajero"> | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaWithAggregatesFilter<"Pasajero"> | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolWithAggregatesFilter<"Pasajero"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Pasajero"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Pasajero"> | Date | string
 }
@@ -291,8 +339,12 @@ export type PasajeroScalarWhereWithAggregatesInput = {
 export type PasajeroCreateInput = {
   nombre: string
   apellido: string
+  documento: string
+  fechaNacimiento: Date | string
   correo: string
   telefono: string
+  preferenciaSilla: $Enums.PreferenciaSilla
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   servicios?: Prisma.ServicioCreateNestedManyWithoutPasajeroInput
@@ -302,8 +354,12 @@ export type PasajeroUncheckedCreateInput = {
   id?: number
   nombre: string
   apellido: string
+  documento: string
+  fechaNacimiento: Date | string
   correo: string
   telefono: string
+  preferenciaSilla: $Enums.PreferenciaSilla
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   servicios?: Prisma.ServicioUncheckedCreateNestedManyWithoutPasajeroInput
@@ -312,8 +368,12 @@ export type PasajeroUncheckedCreateInput = {
 export type PasajeroUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  documento?: Prisma.StringFieldUpdateOperationsInput | string
+  fechaNacimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   telefono?: Prisma.StringFieldUpdateOperationsInput | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaFieldUpdateOperationsInput | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   servicios?: Prisma.ServicioUpdateManyWithoutPasajeroNestedInput
@@ -323,8 +383,12 @@ export type PasajeroUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  documento?: Prisma.StringFieldUpdateOperationsInput | string
+  fechaNacimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   telefono?: Prisma.StringFieldUpdateOperationsInput | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaFieldUpdateOperationsInput | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   servicios?: Prisma.ServicioUncheckedUpdateManyWithoutPasajeroNestedInput
@@ -334,8 +398,12 @@ export type PasajeroCreateManyInput = {
   id?: number
   nombre: string
   apellido: string
+  documento: string
+  fechaNacimiento: Date | string
   correo: string
   telefono: string
+  preferenciaSilla: $Enums.PreferenciaSilla
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -343,8 +411,12 @@ export type PasajeroCreateManyInput = {
 export type PasajeroUpdateManyMutationInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  documento?: Prisma.StringFieldUpdateOperationsInput | string
+  fechaNacimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   telefono?: Prisma.StringFieldUpdateOperationsInput | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaFieldUpdateOperationsInput | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -353,8 +425,12 @@ export type PasajeroUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  documento?: Prisma.StringFieldUpdateOperationsInput | string
+  fechaNacimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   telefono?: Prisma.StringFieldUpdateOperationsInput | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaFieldUpdateOperationsInput | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -363,8 +439,12 @@ export type PasajeroCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  documento?: Prisma.SortOrder
+  fechaNacimiento?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   telefono?: Prisma.SortOrder
+  preferenciaSilla?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -377,8 +457,12 @@ export type PasajeroMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  documento?: Prisma.SortOrder
+  fechaNacimiento?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   telefono?: Prisma.SortOrder
+  preferenciaSilla?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -387,8 +471,12 @@ export type PasajeroMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nombre?: Prisma.SortOrder
   apellido?: Prisma.SortOrder
+  documento?: Prisma.SortOrder
+  fechaNacimiento?: Prisma.SortOrder
   correo?: Prisma.SortOrder
   telefono?: Prisma.SortOrder
+  preferenciaSilla?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -400,6 +488,10 @@ export type PasajeroSumOrderByAggregateInput = {
 export type PasajeroScalarRelationFilter = {
   is?: Prisma.PasajeroWhereInput
   isNot?: Prisma.PasajeroWhereInput
+}
+
+export type EnumPreferenciaSillaFieldUpdateOperationsInput = {
+  set?: $Enums.PreferenciaSilla
 }
 
 export type PasajeroCreateNestedOneWithoutServiciosInput = {
@@ -419,8 +511,12 @@ export type PasajeroUpdateOneRequiredWithoutServiciosNestedInput = {
 export type PasajeroCreateWithoutServiciosInput = {
   nombre: string
   apellido: string
+  documento: string
+  fechaNacimiento: Date | string
   correo: string
   telefono: string
+  preferenciaSilla: $Enums.PreferenciaSilla
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -429,8 +525,12 @@ export type PasajeroUncheckedCreateWithoutServiciosInput = {
   id?: number
   nombre: string
   apellido: string
+  documento: string
+  fechaNacimiento: Date | string
   correo: string
   telefono: string
+  preferenciaSilla: $Enums.PreferenciaSilla
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -454,8 +554,12 @@ export type PasajeroUpdateToOneWithWhereWithoutServiciosInput = {
 export type PasajeroUpdateWithoutServiciosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  documento?: Prisma.StringFieldUpdateOperationsInput | string
+  fechaNacimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   telefono?: Prisma.StringFieldUpdateOperationsInput | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaFieldUpdateOperationsInput | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -464,8 +568,12 @@ export type PasajeroUncheckedUpdateWithoutServiciosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   apellido?: Prisma.StringFieldUpdateOperationsInput | string
+  documento?: Prisma.StringFieldUpdateOperationsInput | string
+  fechaNacimiento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   correo?: Prisma.StringFieldUpdateOperationsInput | string
   telefono?: Prisma.StringFieldUpdateOperationsInput | string
+  preferenciaSilla?: Prisma.EnumPreferenciaSillaFieldUpdateOperationsInput | $Enums.PreferenciaSilla
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -505,8 +613,12 @@ export type PasajeroSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   nombre?: boolean
   apellido?: boolean
+  documento?: boolean
+  fechaNacimiento?: boolean
   correo?: boolean
   telefono?: boolean
+  preferenciaSilla?: boolean
+  activo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   servicios?: boolean | Prisma.Pasajero$serviciosArgs<ExtArgs>
@@ -517,8 +629,12 @@ export type PasajeroSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   nombre?: boolean
   apellido?: boolean
+  documento?: boolean
+  fechaNacimiento?: boolean
   correo?: boolean
   telefono?: boolean
+  preferenciaSilla?: boolean
+  activo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["pasajero"]>
@@ -527,8 +643,12 @@ export type PasajeroSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   nombre?: boolean
   apellido?: boolean
+  documento?: boolean
+  fechaNacimiento?: boolean
   correo?: boolean
   telefono?: boolean
+  preferenciaSilla?: boolean
+  activo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["pasajero"]>
@@ -537,13 +657,17 @@ export type PasajeroSelectScalar = {
   id?: boolean
   nombre?: boolean
   apellido?: boolean
+  documento?: boolean
+  fechaNacimiento?: boolean
   correo?: boolean
   telefono?: boolean
+  preferenciaSilla?: boolean
+  activo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PasajeroOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "apellido" | "correo" | "telefono" | "createdAt" | "updatedAt", ExtArgs["result"]["pasajero"]>
+export type PasajeroOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "apellido" | "documento" | "fechaNacimiento" | "correo" | "telefono" | "preferenciaSilla" | "activo" | "createdAt" | "updatedAt", ExtArgs["result"]["pasajero"]>
 export type PasajeroInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   servicios?: boolean | Prisma.Pasajero$serviciosArgs<ExtArgs>
   _count?: boolean | Prisma.PasajeroCountOutputTypeDefaultArgs<ExtArgs>
@@ -560,8 +684,12 @@ export type $PasajeroPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: number
     nombre: string
     apellido: string
+    documento: string
+    fechaNacimiento: Date
     correo: string
     telefono: string
+    preferenciaSilla: $Enums.PreferenciaSilla
+    activo: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["pasajero"]>
@@ -991,8 +1119,12 @@ export interface PasajeroFieldRefs {
   readonly id: Prisma.FieldRef<"Pasajero", 'Int'>
   readonly nombre: Prisma.FieldRef<"Pasajero", 'String'>
   readonly apellido: Prisma.FieldRef<"Pasajero", 'String'>
+  readonly documento: Prisma.FieldRef<"Pasajero", 'String'>
+  readonly fechaNacimiento: Prisma.FieldRef<"Pasajero", 'DateTime'>
   readonly correo: Prisma.FieldRef<"Pasajero", 'String'>
   readonly telefono: Prisma.FieldRef<"Pasajero", 'String'>
+  readonly preferenciaSilla: Prisma.FieldRef<"Pasajero", 'PreferenciaSilla'>
+  readonly activo: Prisma.FieldRef<"Pasajero", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Pasajero", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Pasajero", 'DateTime'>
 }

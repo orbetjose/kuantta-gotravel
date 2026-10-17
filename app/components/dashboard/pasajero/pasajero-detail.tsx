@@ -2,15 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { TipoServicio, EstadoServicio } from "@/libs/generated/prisma/client";
-import { formatCurrency, getEstadoStyles } from "@/libs/helpers";
+import { formatCurrency, getEstadoStyles, formatDate } from "@/libs/helpers";
 
 type PasajeroDetailProps = {
   pasajero: {
     id: number;
     nombre: string;
+    documento: string;
     apellido: string;
     correo: string;
     telefono: string;
+    preferenciaSilla: string;
+    fechaNacimiento: Date;
     createdAt: Date;
     updatedAt: Date;
 
@@ -32,7 +35,7 @@ type PasajeroDetailProps = {
       } | null;
       detalleServicio: {
         id: number;
-        totalIngreso: number;
+        totalVentaAgencia: number;
       } | null;
     }[];
   };
@@ -41,9 +44,7 @@ type PasajeroDetailProps = {
 export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
   const router = useRouter();
 
-  const fechaRegistro = new Intl.DateTimeFormat("es-CO", {
-    dateStyle: "long",
-  }).format(new Date(pasajero.createdAt));
+
 
   const getServicioInfo = (
     servicio: PasajeroDetailProps["pasajero"]["servicios"][number],
@@ -70,7 +71,7 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
       case "PLAN_VACACIONAL":
         return {
           id: servicio.detalleServicio?.id ?? null,
-          totalPagar: servicio.detalleServicio?.totalIngreso ?? null,
+          totalPagar: servicio.detalleServicio?.totalVentaAgencia ?? null,
           href: servicio.detalleServicio
             ? `/dashboard/servicios/${servicio.tipo.toLowerCase().replace("_", "-")}/${servicio.detalleServicio.id}`
             : null,
@@ -80,7 +81,7 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
         return {
           id: null,
           totalPagar: null,
-          href: null,
+          href: null, 
         };
     }
   };
@@ -122,7 +123,14 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
       <div className="rounded-lg bg-white p-6">
         <h2 className="mb-6 text-xl font-bold">Información del pasajero</h2>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray"># Documento</p>
+
+            <p className="font-bold">{pasajero.documento}</p>
+          </div>
+
           {/* Nombre */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Nombre</p>
@@ -135,6 +143,12 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
             <p className="mb-1 text-sm text-fifth-gray">Apellido</p>
 
             <p className="font-bold">{pasajero.apellido}</p>
+          </div>
+
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Fecha de nacimiento</p>
+
+            <p className="font-bold">{formatDate(pasajero.fechaNacimiento)}</p>
           </div>
 
           {/* Correo */}
@@ -151,11 +165,17 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
             <p className="font-bold">{pasajero.telefono}</p>
           </div>
 
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Silla de preferencia</p>
+
+            <p className="font-bold">{pasajero.preferenciaSilla}</p>
+          </div>
+
           {/* Fecha de registro */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Fecha de registro</p>
 
-            <p className="font-bold">{fechaRegistro}</p>
+            <p className="font-bold">{formatDate(pasajero.createdAt)}</p>
           </div>
         </div>
       </div>
@@ -218,13 +238,9 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
 
                     <div className="text-right">
                       <p className="text-sm text-fifth-gray">Total</p>
-                      <p className="font-bold text-fifth-gray">                        
+                      <p className="font-bold text-fifth-gray">
                         {servicioInfo.totalPagar
-                          ? new Intl.NumberFormat("es-CO", {
-                              style: "currency",
-                              currency: "COP",
-                              maximumFractionDigits: 0,
-                            }).format(Number(servicioInfo.totalPagar))
+                          ? formatCurrency(Number(servicioInfo.totalPagar))
                           : "—"}
                       </p>
                     </div>

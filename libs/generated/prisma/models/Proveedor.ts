@@ -37,10 +37,19 @@ export type ProveedorSumAggregateOutputType = {
 export type ProveedorMinAggregateOutputType = {
   id: number | null
   razonSocial: string | null
-  ruc: string | null
-  direccionFiscal: string | null
+  nombreComercial: string | null
+  nit: string | null
+  categoria: $Enums.CategoriaProveedor | null
+  ciudad: string | null
+  direccion: string | null
   telefono: string | null
-  correo: string | null
+  correoComercial: string | null
+  correoFacturacion: string | null
+  contacto: string | null
+  remuneracion: $Enums.RemuneracionProveedor | null
+  monedaBase: $Enums.Moneda | null
+  condicionPago: $Enums.CondicionPago | null
+  activo: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,10 +57,19 @@ export type ProveedorMinAggregateOutputType = {
 export type ProveedorMaxAggregateOutputType = {
   id: number | null
   razonSocial: string | null
-  ruc: string | null
-  direccionFiscal: string | null
+  nombreComercial: string | null
+  nit: string | null
+  categoria: $Enums.CategoriaProveedor | null
+  ciudad: string | null
+  direccion: string | null
   telefono: string | null
-  correo: string | null
+  correoComercial: string | null
+  correoFacturacion: string | null
+  contacto: string | null
+  remuneracion: $Enums.RemuneracionProveedor | null
+  monedaBase: $Enums.Moneda | null
+  condicionPago: $Enums.CondicionPago | null
+  activo: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,10 +77,20 @@ export type ProveedorMaxAggregateOutputType = {
 export type ProveedorCountAggregateOutputType = {
   id: number
   razonSocial: number
-  ruc: number
-  direccionFiscal: number
+  nombreComercial: number
+  nit: number
+  categoria: number
+  ciudad: number
+  direccion: number
   telefono: number
-  correo: number
+  correoComercial: number
+  correoFacturacion: number
+  contacto: number
+  remuneracion: number
+  monedaBase: number
+  condicionPago: number
+  documentosPdf: number
+  activo: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -80,10 +108,19 @@ export type ProveedorSumAggregateInputType = {
 export type ProveedorMinAggregateInputType = {
   id?: true
   razonSocial?: true
-  ruc?: true
-  direccionFiscal?: true
+  nombreComercial?: true
+  nit?: true
+  categoria?: true
+  ciudad?: true
+  direccion?: true
   telefono?: true
-  correo?: true
+  correoComercial?: true
+  correoFacturacion?: true
+  contacto?: true
+  remuneracion?: true
+  monedaBase?: true
+  condicionPago?: true
+  activo?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -91,10 +128,19 @@ export type ProveedorMinAggregateInputType = {
 export type ProveedorMaxAggregateInputType = {
   id?: true
   razonSocial?: true
-  ruc?: true
-  direccionFiscal?: true
+  nombreComercial?: true
+  nit?: true
+  categoria?: true
+  ciudad?: true
+  direccion?: true
   telefono?: true
-  correo?: true
+  correoComercial?: true
+  correoFacturacion?: true
+  contacto?: true
+  remuneracion?: true
+  monedaBase?: true
+  condicionPago?: true
+  activo?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,10 +148,20 @@ export type ProveedorMaxAggregateInputType = {
 export type ProveedorCountAggregateInputType = {
   id?: true
   razonSocial?: true
-  ruc?: true
-  direccionFiscal?: true
+  nombreComercial?: true
+  nit?: true
+  categoria?: true
+  ciudad?: true
+  direccion?: true
   telefono?: true
-  correo?: true
+  correoComercial?: true
+  correoFacturacion?: true
+  contacto?: true
+  remuneracion?: true
+  monedaBase?: true
+  condicionPago?: true
+  documentosPdf?: true
+  activo?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -200,10 +256,20 @@ export type ProveedorGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type ProveedorGroupByOutputType = {
   id: number
   razonSocial: string
-  ruc: string
-  direccionFiscal: string
-  telefono: string
-  correo: string
+  nombreComercial: string | null
+  nit: string
+  categoria: $Enums.CategoriaProveedor
+  ciudad: string | null
+  direccion: string | null
+  telefono: string | null
+  correoComercial: string | null
+  correoFacturacion: string | null
+  contacto: string | null
+  remuneracion: $Enums.RemuneracionProveedor
+  monedaBase: $Enums.Moneda
+  condicionPago: $Enums.CondicionPago
+  documentosPdf: string[]
+  activo: boolean
   createdAt: Date
   updatedAt: Date
   _count: ProveedorCountAggregateOutputType | null
@@ -234,10 +300,20 @@ export type ProveedorWhereInput = {
   NOT?: Prisma.ProveedorWhereInput | Prisma.ProveedorWhereInput[]
   id?: Prisma.IntFilter<"Proveedor"> | number
   razonSocial?: Prisma.StringFilter<"Proveedor"> | string
-  ruc?: Prisma.StringFilter<"Proveedor"> | string
-  direccionFiscal?: Prisma.StringFilter<"Proveedor"> | string
-  telefono?: Prisma.StringFilter<"Proveedor"> | string
-  correo?: Prisma.StringFilter<"Proveedor"> | string
+  nombreComercial?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  nit?: Prisma.StringFilter<"Proveedor"> | string
+  categoria?: Prisma.EnumCategoriaProveedorFilter<"Proveedor"> | $Enums.CategoriaProveedor
+  ciudad?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  direccion?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  telefono?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  correoComercial?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  correoFacturacion?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  contacto?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorFilter<"Proveedor"> | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaFilter<"Proveedor"> | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoFilter<"Proveedor"> | $Enums.CondicionPago
+  documentosPdf?: Prisma.StringNullableListFilter<"Proveedor">
+  activo?: Prisma.BoolFilter<"Proveedor"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Proveedor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Proveedor"> | Date | string
   servicios?: Prisma.ServicioListRelationFilter
@@ -246,10 +322,20 @@ export type ProveedorWhereInput = {
 export type ProveedorOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
-  ruc?: Prisma.SortOrder
-  direccionFiscal?: Prisma.SortOrder
-  telefono?: Prisma.SortOrder
-  correo?: Prisma.SortOrder
+  nombreComercial?: Prisma.SortOrderInput | Prisma.SortOrder
+  nit?: Prisma.SortOrder
+  categoria?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrderInput | Prisma.SortOrder
+  direccion?: Prisma.SortOrderInput | Prisma.SortOrder
+  telefono?: Prisma.SortOrderInput | Prisma.SortOrder
+  correoComercial?: Prisma.SortOrderInput | Prisma.SortOrder
+  correoFacturacion?: Prisma.SortOrderInput | Prisma.SortOrder
+  contacto?: Prisma.SortOrderInput | Prisma.SortOrder
+  remuneracion?: Prisma.SortOrder
+  monedaBase?: Prisma.SortOrder
+  condicionPago?: Prisma.SortOrder
+  documentosPdf?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   servicios?: Prisma.ServicioOrderByRelationAggregateInput
@@ -257,26 +343,46 @@ export type ProveedorOrderByWithRelationInput = {
 
 export type ProveedorWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  ruc?: string
+  nit?: string
   AND?: Prisma.ProveedorWhereInput | Prisma.ProveedorWhereInput[]
   OR?: Prisma.ProveedorWhereInput[]
   NOT?: Prisma.ProveedorWhereInput | Prisma.ProveedorWhereInput[]
   razonSocial?: Prisma.StringFilter<"Proveedor"> | string
-  direccionFiscal?: Prisma.StringFilter<"Proveedor"> | string
-  telefono?: Prisma.StringFilter<"Proveedor"> | string
-  correo?: Prisma.StringFilter<"Proveedor"> | string
+  nombreComercial?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  categoria?: Prisma.EnumCategoriaProveedorFilter<"Proveedor"> | $Enums.CategoriaProveedor
+  ciudad?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  direccion?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  telefono?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  correoComercial?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  correoFacturacion?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  contacto?: Prisma.StringNullableFilter<"Proveedor"> | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorFilter<"Proveedor"> | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaFilter<"Proveedor"> | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoFilter<"Proveedor"> | $Enums.CondicionPago
+  documentosPdf?: Prisma.StringNullableListFilter<"Proveedor">
+  activo?: Prisma.BoolFilter<"Proveedor"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Proveedor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Proveedor"> | Date | string
   servicios?: Prisma.ServicioListRelationFilter
-}, "id" | "ruc">
+}, "id" | "nit">
 
 export type ProveedorOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
-  ruc?: Prisma.SortOrder
-  direccionFiscal?: Prisma.SortOrder
-  telefono?: Prisma.SortOrder
-  correo?: Prisma.SortOrder
+  nombreComercial?: Prisma.SortOrderInput | Prisma.SortOrder
+  nit?: Prisma.SortOrder
+  categoria?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrderInput | Prisma.SortOrder
+  direccion?: Prisma.SortOrderInput | Prisma.SortOrder
+  telefono?: Prisma.SortOrderInput | Prisma.SortOrder
+  correoComercial?: Prisma.SortOrderInput | Prisma.SortOrder
+  correoFacturacion?: Prisma.SortOrderInput | Prisma.SortOrder
+  contacto?: Prisma.SortOrderInput | Prisma.SortOrder
+  remuneracion?: Prisma.SortOrder
+  monedaBase?: Prisma.SortOrder
+  condicionPago?: Prisma.SortOrder
+  documentosPdf?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProveedorCountOrderByAggregateInput
@@ -292,20 +398,40 @@ export type ProveedorScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ProveedorScalarWhereWithAggregatesInput | Prisma.ProveedorScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Proveedor"> | number
   razonSocial?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
-  ruc?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
-  direccionFiscal?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
-  telefono?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
-  correo?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
+  nombreComercial?: Prisma.StringNullableWithAggregatesFilter<"Proveedor"> | string | null
+  nit?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
+  categoria?: Prisma.EnumCategoriaProveedorWithAggregatesFilter<"Proveedor"> | $Enums.CategoriaProveedor
+  ciudad?: Prisma.StringNullableWithAggregatesFilter<"Proveedor"> | string | null
+  direccion?: Prisma.StringNullableWithAggregatesFilter<"Proveedor"> | string | null
+  telefono?: Prisma.StringNullableWithAggregatesFilter<"Proveedor"> | string | null
+  correoComercial?: Prisma.StringNullableWithAggregatesFilter<"Proveedor"> | string | null
+  correoFacturacion?: Prisma.StringNullableWithAggregatesFilter<"Proveedor"> | string | null
+  contacto?: Prisma.StringNullableWithAggregatesFilter<"Proveedor"> | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorWithAggregatesFilter<"Proveedor"> | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaWithAggregatesFilter<"Proveedor"> | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoWithAggregatesFilter<"Proveedor"> | $Enums.CondicionPago
+  documentosPdf?: Prisma.StringNullableListFilter<"Proveedor">
+  activo?: Prisma.BoolWithAggregatesFilter<"Proveedor"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Proveedor"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Proveedor"> | Date | string
 }
 
 export type ProveedorCreateInput = {
   razonSocial: string
-  ruc: string
-  direccionFiscal: string
-  telefono: string
-  correo: string
+  nombreComercial?: string | null
+  nit: string
+  categoria: $Enums.CategoriaProveedor
+  ciudad?: string | null
+  direccion?: string | null
+  telefono?: string | null
+  correoComercial?: string | null
+  correoFacturacion?: string | null
+  contacto?: string | null
+  remuneracion: $Enums.RemuneracionProveedor
+  monedaBase: $Enums.Moneda
+  condicionPago: $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorCreatedocumentosPdfInput | string[]
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   servicios?: Prisma.ServicioCreateNestedManyWithoutProveedorInput
@@ -314,10 +440,20 @@ export type ProveedorCreateInput = {
 export type ProveedorUncheckedCreateInput = {
   id?: number
   razonSocial: string
-  ruc: string
-  direccionFiscal: string
-  telefono: string
-  correo: string
+  nombreComercial?: string | null
+  nit: string
+  categoria: $Enums.CategoriaProveedor
+  ciudad?: string | null
+  direccion?: string | null
+  telefono?: string | null
+  correoComercial?: string | null
+  correoFacturacion?: string | null
+  contacto?: string | null
+  remuneracion: $Enums.RemuneracionProveedor
+  monedaBase: $Enums.Moneda
+  condicionPago: $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorCreatedocumentosPdfInput | string[]
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   servicios?: Prisma.ServicioUncheckedCreateNestedManyWithoutProveedorInput
@@ -325,10 +461,20 @@ export type ProveedorUncheckedCreateInput = {
 
 export type ProveedorUpdateInput = {
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
-  ruc?: Prisma.StringFieldUpdateOperationsInput | string
-  direccionFiscal?: Prisma.StringFieldUpdateOperationsInput | string
-  telefono?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nit?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaProveedorFieldUpdateOperationsInput | $Enums.CategoriaProveedor
+  ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoFacturacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contacto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorFieldUpdateOperationsInput | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaFieldUpdateOperationsInput | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoFieldUpdateOperationsInput | $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorUpdatedocumentosPdfInput | string[]
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   servicios?: Prisma.ServicioUpdateManyWithoutProveedorNestedInput
@@ -337,10 +483,20 @@ export type ProveedorUpdateInput = {
 export type ProveedorUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
-  ruc?: Prisma.StringFieldUpdateOperationsInput | string
-  direccionFiscal?: Prisma.StringFieldUpdateOperationsInput | string
-  telefono?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nit?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaProveedorFieldUpdateOperationsInput | $Enums.CategoriaProveedor
+  ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoFacturacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contacto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorFieldUpdateOperationsInput | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaFieldUpdateOperationsInput | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoFieldUpdateOperationsInput | $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorUpdatedocumentosPdfInput | string[]
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   servicios?: Prisma.ServicioUncheckedUpdateManyWithoutProveedorNestedInput
@@ -349,20 +505,40 @@ export type ProveedorUncheckedUpdateInput = {
 export type ProveedorCreateManyInput = {
   id?: number
   razonSocial: string
-  ruc: string
-  direccionFiscal: string
-  telefono: string
-  correo: string
+  nombreComercial?: string | null
+  nit: string
+  categoria: $Enums.CategoriaProveedor
+  ciudad?: string | null
+  direccion?: string | null
+  telefono?: string | null
+  correoComercial?: string | null
+  correoFacturacion?: string | null
+  contacto?: string | null
+  remuneracion: $Enums.RemuneracionProveedor
+  monedaBase: $Enums.Moneda
+  condicionPago: $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorCreatedocumentosPdfInput | string[]
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ProveedorUpdateManyMutationInput = {
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
-  ruc?: Prisma.StringFieldUpdateOperationsInput | string
-  direccionFiscal?: Prisma.StringFieldUpdateOperationsInput | string
-  telefono?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nit?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaProveedorFieldUpdateOperationsInput | $Enums.CategoriaProveedor
+  ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoFacturacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contacto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorFieldUpdateOperationsInput | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaFieldUpdateOperationsInput | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoFieldUpdateOperationsInput | $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorUpdatedocumentosPdfInput | string[]
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -370,10 +546,20 @@ export type ProveedorUpdateManyMutationInput = {
 export type ProveedorUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
-  ruc?: Prisma.StringFieldUpdateOperationsInput | string
-  direccionFiscal?: Prisma.StringFieldUpdateOperationsInput | string
-  telefono?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nit?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaProveedorFieldUpdateOperationsInput | $Enums.CategoriaProveedor
+  ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoFacturacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contacto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorFieldUpdateOperationsInput | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaFieldUpdateOperationsInput | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoFieldUpdateOperationsInput | $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorUpdatedocumentosPdfInput | string[]
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -383,13 +569,31 @@ export type ProveedorNullableScalarRelationFilter = {
   isNot?: Prisma.ProveedorWhereInput | null
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type ProveedorCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
-  ruc?: Prisma.SortOrder
-  direccionFiscal?: Prisma.SortOrder
+  nombreComercial?: Prisma.SortOrder
+  nit?: Prisma.SortOrder
+  categoria?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrder
+  direccion?: Prisma.SortOrder
   telefono?: Prisma.SortOrder
-  correo?: Prisma.SortOrder
+  correoComercial?: Prisma.SortOrder
+  correoFacturacion?: Prisma.SortOrder
+  contacto?: Prisma.SortOrder
+  remuneracion?: Prisma.SortOrder
+  monedaBase?: Prisma.SortOrder
+  condicionPago?: Prisma.SortOrder
+  documentosPdf?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -401,10 +605,19 @@ export type ProveedorAvgOrderByAggregateInput = {
 export type ProveedorMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
-  ruc?: Prisma.SortOrder
-  direccionFiscal?: Prisma.SortOrder
+  nombreComercial?: Prisma.SortOrder
+  nit?: Prisma.SortOrder
+  categoria?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrder
+  direccion?: Prisma.SortOrder
   telefono?: Prisma.SortOrder
-  correo?: Prisma.SortOrder
+  correoComercial?: Prisma.SortOrder
+  correoFacturacion?: Prisma.SortOrder
+  contacto?: Prisma.SortOrder
+  remuneracion?: Prisma.SortOrder
+  monedaBase?: Prisma.SortOrder
+  condicionPago?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -412,10 +625,19 @@ export type ProveedorMaxOrderByAggregateInput = {
 export type ProveedorMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
-  ruc?: Prisma.SortOrder
-  direccionFiscal?: Prisma.SortOrder
+  nombreComercial?: Prisma.SortOrder
+  nit?: Prisma.SortOrder
+  categoria?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrder
+  direccion?: Prisma.SortOrder
   telefono?: Prisma.SortOrder
-  correo?: Prisma.SortOrder
+  correoComercial?: Prisma.SortOrder
+  correoFacturacion?: Prisma.SortOrder
+  contacto?: Prisma.SortOrder
+  remuneracion?: Prisma.SortOrder
+  monedaBase?: Prisma.SortOrder
+  condicionPago?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -440,12 +662,47 @@ export type ProveedorUpdateOneWithoutServiciosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProveedorUpdateToOneWithWhereWithoutServiciosInput, Prisma.ProveedorUpdateWithoutServiciosInput>, Prisma.ProveedorUncheckedUpdateWithoutServiciosInput>
 }
 
+export type ProveedorCreatedocumentosPdfInput = {
+  set: string[]
+}
+
+export type EnumCategoriaProveedorFieldUpdateOperationsInput = {
+  set?: $Enums.CategoriaProveedor
+}
+
+export type EnumRemuneracionProveedorFieldUpdateOperationsInput = {
+  set?: $Enums.RemuneracionProveedor
+}
+
+export type EnumMonedaFieldUpdateOperationsInput = {
+  set?: $Enums.Moneda
+}
+
+export type EnumCondicionPagoFieldUpdateOperationsInput = {
+  set?: $Enums.CondicionPago
+}
+
+export type ProveedorUpdatedocumentosPdfInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
 export type ProveedorCreateWithoutServiciosInput = {
   razonSocial: string
-  ruc: string
-  direccionFiscal: string
-  telefono: string
-  correo: string
+  nombreComercial?: string | null
+  nit: string
+  categoria: $Enums.CategoriaProveedor
+  ciudad?: string | null
+  direccion?: string | null
+  telefono?: string | null
+  correoComercial?: string | null
+  correoFacturacion?: string | null
+  contacto?: string | null
+  remuneracion: $Enums.RemuneracionProveedor
+  monedaBase: $Enums.Moneda
+  condicionPago: $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorCreatedocumentosPdfInput | string[]
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -453,10 +710,20 @@ export type ProveedorCreateWithoutServiciosInput = {
 export type ProveedorUncheckedCreateWithoutServiciosInput = {
   id?: number
   razonSocial: string
-  ruc: string
-  direccionFiscal: string
-  telefono: string
-  correo: string
+  nombreComercial?: string | null
+  nit: string
+  categoria: $Enums.CategoriaProveedor
+  ciudad?: string | null
+  direccion?: string | null
+  telefono?: string | null
+  correoComercial?: string | null
+  correoFacturacion?: string | null
+  contacto?: string | null
+  remuneracion: $Enums.RemuneracionProveedor
+  monedaBase: $Enums.Moneda
+  condicionPago: $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorCreatedocumentosPdfInput | string[]
+  activo?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -479,10 +746,20 @@ export type ProveedorUpdateToOneWithWhereWithoutServiciosInput = {
 
 export type ProveedorUpdateWithoutServiciosInput = {
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
-  ruc?: Prisma.StringFieldUpdateOperationsInput | string
-  direccionFiscal?: Prisma.StringFieldUpdateOperationsInput | string
-  telefono?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nit?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaProveedorFieldUpdateOperationsInput | $Enums.CategoriaProveedor
+  ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoFacturacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contacto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorFieldUpdateOperationsInput | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaFieldUpdateOperationsInput | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoFieldUpdateOperationsInput | $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorUpdatedocumentosPdfInput | string[]
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -490,10 +767,20 @@ export type ProveedorUpdateWithoutServiciosInput = {
 export type ProveedorUncheckedUpdateWithoutServiciosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
-  ruc?: Prisma.StringFieldUpdateOperationsInput | string
-  direccionFiscal?: Prisma.StringFieldUpdateOperationsInput | string
-  telefono?: Prisma.StringFieldUpdateOperationsInput | string
-  correo?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nit?: Prisma.StringFieldUpdateOperationsInput | string
+  categoria?: Prisma.EnumCategoriaProveedorFieldUpdateOperationsInput | $Enums.CategoriaProveedor
+  ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  correoFacturacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contacto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remuneracion?: Prisma.EnumRemuneracionProveedorFieldUpdateOperationsInput | $Enums.RemuneracionProveedor
+  monedaBase?: Prisma.EnumMonedaFieldUpdateOperationsInput | $Enums.Moneda
+  condicionPago?: Prisma.EnumCondicionPagoFieldUpdateOperationsInput | $Enums.CondicionPago
+  documentosPdf?: Prisma.ProveedorUpdatedocumentosPdfInput | string[]
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -532,10 +819,20 @@ export type ProveedorCountOutputTypeCountServiciosArgs<ExtArgs extends runtime.T
 export type ProveedorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   razonSocial?: boolean
-  ruc?: boolean
-  direccionFiscal?: boolean
+  nombreComercial?: boolean
+  nit?: boolean
+  categoria?: boolean
+  ciudad?: boolean
+  direccion?: boolean
   telefono?: boolean
-  correo?: boolean
+  correoComercial?: boolean
+  correoFacturacion?: boolean
+  contacto?: boolean
+  remuneracion?: boolean
+  monedaBase?: boolean
+  condicionPago?: boolean
+  documentosPdf?: boolean
+  activo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   servicios?: boolean | Prisma.Proveedor$serviciosArgs<ExtArgs>
@@ -545,10 +842,20 @@ export type ProveedorSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ProveedorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   razonSocial?: boolean
-  ruc?: boolean
-  direccionFiscal?: boolean
+  nombreComercial?: boolean
+  nit?: boolean
+  categoria?: boolean
+  ciudad?: boolean
+  direccion?: boolean
   telefono?: boolean
-  correo?: boolean
+  correoComercial?: boolean
+  correoFacturacion?: boolean
+  contacto?: boolean
+  remuneracion?: boolean
+  monedaBase?: boolean
+  condicionPago?: boolean
+  documentosPdf?: boolean
+  activo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["proveedor"]>
@@ -556,10 +863,20 @@ export type ProveedorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type ProveedorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   razonSocial?: boolean
-  ruc?: boolean
-  direccionFiscal?: boolean
+  nombreComercial?: boolean
+  nit?: boolean
+  categoria?: boolean
+  ciudad?: boolean
+  direccion?: boolean
   telefono?: boolean
-  correo?: boolean
+  correoComercial?: boolean
+  correoFacturacion?: boolean
+  contacto?: boolean
+  remuneracion?: boolean
+  monedaBase?: boolean
+  condicionPago?: boolean
+  documentosPdf?: boolean
+  activo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["proveedor"]>
@@ -567,15 +884,25 @@ export type ProveedorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type ProveedorSelectScalar = {
   id?: boolean
   razonSocial?: boolean
-  ruc?: boolean
-  direccionFiscal?: boolean
+  nombreComercial?: boolean
+  nit?: boolean
+  categoria?: boolean
+  ciudad?: boolean
+  direccion?: boolean
   telefono?: boolean
-  correo?: boolean
+  correoComercial?: boolean
+  correoFacturacion?: boolean
+  contacto?: boolean
+  remuneracion?: boolean
+  monedaBase?: boolean
+  condicionPago?: boolean
+  documentosPdf?: boolean
+  activo?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProveedorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "razonSocial" | "ruc" | "direccionFiscal" | "telefono" | "correo" | "createdAt" | "updatedAt", ExtArgs["result"]["proveedor"]>
+export type ProveedorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "razonSocial" | "nombreComercial" | "nit" | "categoria" | "ciudad" | "direccion" | "telefono" | "correoComercial" | "correoFacturacion" | "contacto" | "remuneracion" | "monedaBase" | "condicionPago" | "documentosPdf" | "activo" | "createdAt" | "updatedAt", ExtArgs["result"]["proveedor"]>
 export type ProveedorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   servicios?: boolean | Prisma.Proveedor$serviciosArgs<ExtArgs>
   _count?: boolean | Prisma.ProveedorCountOutputTypeDefaultArgs<ExtArgs>
@@ -591,10 +918,20 @@ export type $ProveedorPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     razonSocial: string
-    ruc: string
-    direccionFiscal: string
-    telefono: string
-    correo: string
+    nombreComercial: string | null
+    nit: string
+    categoria: $Enums.CategoriaProveedor
+    ciudad: string | null
+    direccion: string | null
+    telefono: string | null
+    correoComercial: string | null
+    correoFacturacion: string | null
+    contacto: string | null
+    remuneracion: $Enums.RemuneracionProveedor
+    monedaBase: $Enums.Moneda
+    condicionPago: $Enums.CondicionPago
+    documentosPdf: string[]
+    activo: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["proveedor"]>
@@ -1023,10 +1360,20 @@ export interface Prisma__ProveedorClient<T, Null = never, ExtArgs extends runtim
 export interface ProveedorFieldRefs {
   readonly id: Prisma.FieldRef<"Proveedor", 'Int'>
   readonly razonSocial: Prisma.FieldRef<"Proveedor", 'String'>
-  readonly ruc: Prisma.FieldRef<"Proveedor", 'String'>
-  readonly direccionFiscal: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly nombreComercial: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly nit: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly categoria: Prisma.FieldRef<"Proveedor", 'CategoriaProveedor'>
+  readonly ciudad: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly direccion: Prisma.FieldRef<"Proveedor", 'String'>
   readonly telefono: Prisma.FieldRef<"Proveedor", 'String'>
-  readonly correo: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly correoComercial: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly correoFacturacion: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly contacto: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly remuneracion: Prisma.FieldRef<"Proveedor", 'RemuneracionProveedor'>
+  readonly monedaBase: Prisma.FieldRef<"Proveedor", 'Moneda'>
+  readonly condicionPago: Prisma.FieldRef<"Proveedor", 'CondicionPago'>
+  readonly documentosPdf: Prisma.FieldRef<"Proveedor", 'String[]'>
+  readonly activo: Prisma.FieldRef<"Proveedor", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Proveedor", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Proveedor", 'DateTime'>
 }

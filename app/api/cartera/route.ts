@@ -128,7 +128,6 @@ export async function GET(request: Request) {
             select: {
               id: true,
               nombre: true,
-              apellido: true,
             },
           },
           tiquete: {
@@ -140,7 +139,7 @@ export async function GET(request: Request) {
           detalleServicio: {
             select: {
               id: true,
-              totalIngreso: true,
+              totalVentaAgencia: true,
             },
           },
         },
@@ -167,14 +166,14 @@ export async function GET(request: Request) {
           },
         },
         _sum: {
-          totalIngreso: true,
+          totalVentaAgencia: true,
         },
       }),
     ]);
 
     const totalCartera =
       Number(totalTiquetes._sum.totalPagar ?? 0) +
-      Number(totalDetalles._sum.totalIngreso ?? 0);
+      Number(totalDetalles._sum?.totalVentaAgencia ?? 0);
     const serviciosFormateados = servicios.map((servicio) => {
       const { fechaVencimiento, estado, dias } = getEstadoCartera(
         servicio.fechaEmision,
@@ -195,11 +194,11 @@ export async function GET(request: Request) {
         dias: dias,
         cliente: {
           id: servicio.cliente.id,
-          nombre: `${servicio.cliente.nombre} ${servicio.cliente.apellido}`,
+          nombre: `${servicio.cliente.nombre}`,
         },
         total: servicio.tiquete
           ? Number(servicio.tiquete.totalPagar)
-          : Number(servicio.detalleServicio?.totalIngreso),
+          : Number(servicio.detalleServicio?.totalVentaAgencia),
       };
     });
 

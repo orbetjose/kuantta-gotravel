@@ -1,5 +1,5 @@
 import { getClientes, getProveedores, getPasajeros } from "@/actions/catalogos";
-import ServiceForm from "@/app/components/dashboard/service-form";
+import ServiceForm from "@/app/components/dashboard/forms/service-form";
 
 export default async function page() {
   const [clientes, proveedores, pasajeros] = await Promise.all([
@@ -11,7 +11,7 @@ export default async function page() {
     <div className="w-full  bg-fourth-gray p-4 rounded-lg ">
       <div className="font-inter font-bold">
         <span className="text-primary-blue">Creación de servicios</span>
-        <h2 className="text-third-gray text-5xl">Servicio</h2>
+        <h2 className="text-third-gray text-4xl">Servicio</h2>
       </div>
       <ServiceForm clientes={clientes} proveedores={proveedores} pasajeros={pasajeros} />
     </div>

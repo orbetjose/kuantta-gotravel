@@ -15,25 +15,25 @@ export async function GET(request: Request) {
       where: {
         OR: [
           {
-            origen: {
+            codigoIATA: {
               contains: search,
               mode: "insensitive",
             },
           },
           {
-            codigoOrigen: {
+            nombreAeropuerto: {
               contains: search,
               mode: "insensitive",
             },
           },
           {
-            destino: {
+            ciudad: {
               contains: search,
               mode: "insensitive",
             },
           },
           {
-            codigoDestino: {
+            pais: {
               contains: search,
               mode: "insensitive",
             },
@@ -46,17 +46,17 @@ export async function GET(request: Request) {
       take: 10,
       select: {
         id: true,
-        origen: true,
-        codigoOrigen: true,
-        destino: true,
-        codigoDestino: true,
+        codigoIATA: true,
+        nombreAeropuerto: true,
+        ciudad: true,
+        pais: true,
       },
     });
 
     return NextResponse.json(
       rutas.map((ruta) => ({
         value: String(ruta.id),
-        label: `${ruta.origen} (${ruta.codigoOrigen}) → ${ruta.destino} (${ruta.codigoDestino})`,
+        label: `${ruta.codigoIATA} — ${ruta.ciudad}, ${ruta.pais}`,
       })),
     );
   } catch (error) {

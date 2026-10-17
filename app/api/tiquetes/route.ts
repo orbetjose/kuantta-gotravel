@@ -96,7 +96,6 @@ export async function GET(request: Request) {
               cliente: {
                 select: {
                   nombre: true,
-                  apellido: true,
                 },
               },
 
@@ -122,7 +121,7 @@ export async function GET(request: Request) {
         fechaEmision: tiquete.servicio.fechaEmision,
         totalPagar: tiquete.totalPagar.toString(),
 
-        cliente: `${tiquete.servicio.cliente.nombre} ${tiquete.servicio.cliente.apellido}`,
+        cliente: `${tiquete.servicio.cliente.nombre}`,
 
         proveedor:
           tiquete.servicio.proveedor?.razonSocial ?? "Sin proveedor",

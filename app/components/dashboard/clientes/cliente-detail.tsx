@@ -8,9 +8,15 @@ type ClienteDetailProps = {
   cliente: {
     id: number;
     nombre: string;
-    apellido: string;
+    razonSocial: string | null;
+    tipoDocumento: "NIT" | "CEDULA" | "PASAPORTE";
+    documento: string;
+    direccion: string | null;
+    ciudad: string | null;
+    tipoPersona: "NATURAL" | "JURIDICA";
     correo: string;
     telefono: string;
+    observaciones: string | null;
     createdAt: Date;
     updatedAt: Date;
 
@@ -32,7 +38,7 @@ type ClienteDetailProps = {
       } | null;
       detalleServicio: {
         id: number;
-        totalIngreso: number;
+        totalVentaAgencia: number;
       } | null;
     }[];
   };
@@ -70,7 +76,7 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
       case "PLAN_VACACIONAL":
         return {
           id: servicio.detalleServicio?.id ?? null,
-          totalPagar: servicio.detalleServicio?.totalIngreso ?? null,
+          totalPagar: servicio.detalleServicio?.totalVentaAgencia ?? null,
           href: servicio.detalleServicio
             ? `/dashboard/servicios/${servicio.tipo.toLowerCase().replace("_", "-")}/${servicio.detalleServicio.id}`
             : null,
@@ -92,9 +98,7 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
         <div>
           <p className="text-sm text-fifth-gray">Detalle del cliente</p>
 
-          <h1 className="text-4xl font-bold">
-            {cliente.nombre} {cliente.apellido}
-          </h1>
+          <h1 className="text-3xl font-bold">{cliente.nombre}</h1>
         </div>
         <div>
           <div className="flex gap-4">
@@ -122,19 +126,42 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
       <div className="rounded-lg bg-white p-6">
         <h2 className="mb-6 text-xl font-bold">Información del cliente</h2>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
+          {/* Tipo documento */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Tipo de documento</p>
+
+            <p className="font-bold">{cliente.tipoDocumento}</p>
+          </div>
+
+          {/* Documento */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray"># Documento</p>
+
+            <p className="font-bold">{cliente.documento}</p>
+          </div>
+
+          {/* Tipo persona */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Tipo de persona</p>
+
+            <p className="font-bold">{cliente.tipoPersona}</p>
+          </div>
+
+          {/* Tipo razon social */}
+          {cliente.razonSocial && (
+            <div>
+              <p className="mb-1 text-sm text-fifth-gray">Razón Social</p>
+
+              <p className="font-bold">{cliente.razonSocial}</p>
+            </div>
+          )}
+
           {/* Nombre */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Nombre</p>
 
             <p className="font-bold">{cliente.nombre}</p>
-          </div>
-
-          {/* Apellido */}
-          <div>
-            <p className="mb-1 text-sm text-fifth-gray">Apellido</p>
-
-            <p className="font-bold">{cliente.apellido}</p>
           </div>
 
           {/* Correo */}
@@ -144,11 +171,32 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
             <p className="font-bold">{cliente.correo}</p>
           </div>
 
+          {/* Direccion */}
+          <div className="xl:col-span-2">
+            <p className="mb-1 text-sm text-fifth-gray">Dirección</p>
+
+            <p className="font-bold">{cliente.direccion}</p>
+          </div>
+
+          {/* Ciudad */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Ciudad</p>
+
+            <p className="font-bold">{cliente.ciudad}</p>
+          </div>
+
           {/* Teléfono */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Teléfono</p>
 
             <p className="font-bold">{cliente.telefono}</p>
+          </div>
+
+          {/* Observaciones */}
+          <div className="xl:col-span-2">
+            <p className="mb-1 text-sm text-fifth-gray">Observaciones</p>
+
+            <p className="font-bold">{cliente.observaciones}</p>
           </div>
 
           {/* Fecha de registro */}

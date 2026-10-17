@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/libs/prisma";
-import PasajeroForm from "@/app/components/dashboard/pasajero-form";
+import PasajeroForm from "@/app/components/dashboard/forms/pasajero-form";
 
 export default async function EditarPasajeroPage({
   params,
@@ -31,8 +31,11 @@ export default async function EditarPasajeroPage({
         mode="edit"
         pasajeroId={pasajero.id}
         initialData={{
+          documento: pasajero.documento,
           nombre: pasajero.nombre,
           apellido: pasajero.apellido,
+          fechaNacimiento: pasajero.fechaNacimiento.toISOString().split("T")[0],
+          preferenciaSilla: pasajero.preferenciaSilla,
           correo: pasajero.correo,
           telefono: pasajero.telefono,
         }}

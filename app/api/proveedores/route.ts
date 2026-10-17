@@ -21,13 +21,25 @@ export async function GET(request: Request) {
               },
             },
             {
-              ruc: {
+              nombreComercial: {
                 contains: search,
                 mode: "insensitive" as const,
               },
             },
             {
-              correo: {
+              nit: {
+                contains: search,
+                mode: "insensitive" as const,
+              },
+            },
+            {
+              correoComercial: {
+                contains: search,
+                mode: "insensitive" as const,
+              },
+            },
+            {
+              correoFacturacion: {
                 contains: search,
                 mode: "insensitive" as const,
               },
@@ -47,8 +59,12 @@ export async function GET(request: Request) {
         select: {
           id: true,
           razonSocial: true,
-          ruc: true,
-          correo: true,
+          nombreComercial: true,
+          categoria: true,
+          correoComercial: true,
+          correoFacturacion: true,
+          contacto: true,
+          nit: true,
           telefono: true,
           createdAt: true,
         },

@@ -1,15 +1,14 @@
 "use client";
 
-import { act, useEffect, useState } from "react";
-import BtnAdd from "@/app/components/dashboard/btn-add";
+import { useEffect, useState } from "react";
+import BtnAdd from "@/app/components/dashboard/ui/btn-add";
 import { formatCurrency, getEstadoStyles } from "@/libs/helpers";
-import Pagination from "../pagination";
+import Pagination from "../ui/pagination";
 import { getActions } from "@/libs/helpers";
-import TableActions from "../table-actions";
+import TableActions from "../ui/table-actions";
 import { TableFilterValues } from "@/types";
-import TableFilters from "../table-filters";
+import TableFilters from "../ui/table-filters";
 import { handleTableFiltersChange } from "@/libs/helpers";
-import { SearchInput } from "../search";
 
 type Tiquetes = {
   id: number;
@@ -195,60 +194,68 @@ export default function TiquetesTable() {
                 </td>
               </tr>
             ) : (
-              tiquetes.map((tiquete) => (
-                <tr
-                  key={tiquete.id}
-                  className="bg-fifth-gray/11 border-b border-gray-100 last:border-0 rounded-lg"
-                >
-                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray rounded-l-lg">
-                    <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">
-                      {tiquete.numeroTiquete}
-                    </span>
-                  </td>
+              tiquetes.map((tiquete) => {
+                const canEdit =
+                  tiquete.estado !== "FACTURADO" &&
+                  tiquete.estado !== "ANULADO" &&
+                  tiquete.estado !== "POR_FACTURAR";
+                return (
+                  <tr
+                    key={tiquete.id}
+                    className="bg-fifth-gray/11 border-b border-gray-100 last:border-0 rounded-lg"
+                  >
+                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray rounded-l-lg">
+                      <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">
+                        {tiquete.numeroTiquete}
+                      </span>
+                    </td>
 
-                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
-                    {tiquete.cliente}
-                  </td>
+                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
+                      {tiquete.cliente}
+                    </td>
 
-                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
-                    {formatCurrency(tiquete.totalPagar)}
-                  </td>
+                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
+                      {formatCurrency(tiquete.totalPagar)}
+                    </td>
 
-                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
-                    {new Date(tiquete.fechaEmision).toLocaleDateString("es-CO")}
-                  </td>
-                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray md:max-w-55 3xl:max-w-full">
-                    <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">
-                      {tiquete.proveedor}
-                    </span>
-                  </td>
-                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
-                    <span
-                      className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${getEstadoStyles(
-                        tiquete.estado,
-                      )}`}
-                    >
-                      {tiquete.estado.replace("_", " ")}
-                    </span>
-                  </td>
+                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
+                      {new Date(tiquete.fechaEmision).toLocaleDateString(
+                        "es-CO",
+                      )}
+                    </td>
+                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray md:max-w-55 3xl:max-w-full">
+                      <span className="block truncate 3xl:overflow-visible 3xl:whitespace-normal">
+                        {tiquete.proveedor}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
+                      <span
+                        className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${getEstadoStyles(
+                          tiquete.estado,
+                        )}`}
+                      >
+                        {tiquete.estado.replace("_", " ")}
+                      </span>
+                    </td>
 
-                  <td className="px-4 py-2 rounded-r-lg">
-                    <div className="flex gap-2">
-                      <TableActions
-                        actions={getActions(
-                          {
-                            tipo: "TIQUETE",
-                            idTiquete: tiquete.id,
-                          },
-                          {
-                            edit: true,
-                          },
-                        )}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))
+                    <td className="px-4 py-2 rounded-r-lg">
+                      <div className="flex gap-2">
+                        <TableActions
+                          actions={getActions(
+                            {
+                              tipo: "TIQUETE",
+                              idTiquete: tiquete.id,
+                            },
+                            {
+                              edit: canEdit,
+                            },
+                          )}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>

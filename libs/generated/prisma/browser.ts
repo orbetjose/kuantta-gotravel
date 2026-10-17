@@ -53,6 +53,11 @@ export type DetalleServicio = Prisma.DetalleServicioModel
  */
 export type Tiquete = Prisma.TiqueteModel
 /**
+ * Model TrayectoTiquete
+ * 
+ */
+export type TrayectoTiquete = Prisma.TrayectoTiqueteModel
+/**
  * Model Proveedor
  * 
  */

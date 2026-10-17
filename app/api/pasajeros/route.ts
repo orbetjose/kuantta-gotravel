@@ -27,6 +27,12 @@ export async function GET(request: Request) {
               },
             },
             {
+              documento: {
+                contains: search,
+                mode: "insensitive" as const,
+              },
+            },
+            {
               correo: {
                 contains: search,
                 mode: "insensitive" as const,
@@ -54,6 +60,7 @@ export async function GET(request: Request) {
           id: true,
           nombre: true,
           apellido: true,
+          documento: true,
           correo: true,
           telefono: true,
           createdAt: true,

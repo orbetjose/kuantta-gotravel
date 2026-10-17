@@ -39,3 +39,37 @@ export interface DashboardFilterValues {
 }
 
 export type TableFilter = "date" | "tipo" | "estado" | "credito";
+
+ 
+export type ClienteOption = {
+  id: number;
+  nombre: string;
+  tipoDocumento: string;
+  documento: string;
+  razonSocial?: string | null;
+  correo: string;
+  telefono: string;
+};
+export type PasajeroOption = {
+  id: number;
+  nombre: string;
+  apellido: string;
+  correo: string;
+  telefono: string;
+  documento: string;
+};
+export type ProveedorOption = {
+  id: number;
+  razonSocial: string;
+  nit: string;
+  telefono: string | null;
+  nombreComercial: string | null;
+  correoComercial: string | null;
+};
+export type RutaOption = {
+  id: number;
+  codigoIATA: string;
+  nombreAeropuerto: string;
+  ciudad: string;
+  pais: string;
+};

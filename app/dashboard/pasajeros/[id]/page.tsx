@@ -37,7 +37,7 @@ export default async function PasajeroDetailPage({
           detalleServicio: {
             select: {
               id: true,
-              totalIngreso: true,
+              totalVentaAgencia: true,
             },
           },
         },
@@ -64,7 +64,7 @@ const pasajeroData = {
     detalleServicio: servicio.detalleServicio
       ? {
           ...servicio.detalleServicio,
-          totalIngreso: Number(servicio.detalleServicio.totalIngreso),
+          totalVentaAgencia: Number(servicio.detalleServicio.totalVentaAgencia),
         }
       : null,
   })),

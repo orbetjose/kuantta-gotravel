@@ -404,6 +404,7 @@ export const ModelName = {
   Servicio: 'Servicio',
   DetalleServicio: 'DetalleServicio',
   Tiquete: 'Tiquete',
+  TrayectoTiquete: 'TrayectoTiquete',
   Proveedor: 'Proveedor',
   Ruta: 'Ruta'
 } as const
@@ -421,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "cliente" | "pasajero" | "servicio" | "detalleServicio" | "tiquete" | "proveedor" | "ruta"
+    modelProps: "user" | "account" | "cliente" | "pasajero" | "servicio" | "detalleServicio" | "tiquete" | "trayectoTiquete" | "proveedor" | "ruta"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -943,6 +944,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TrayectoTiquete: {
+      payload: Prisma.$TrayectoTiquetePayload<ExtArgs>
+      fields: Prisma.TrayectoTiqueteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TrayectoTiqueteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TrayectoTiqueteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>
+        }
+        findFirst: {
+          args: Prisma.TrayectoTiqueteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TrayectoTiqueteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>
+        }
+        findMany: {
+          args: Prisma.TrayectoTiqueteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>[]
+        }
+        create: {
+          args: Prisma.TrayectoTiqueteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>
+        }
+        createMany: {
+          args: Prisma.TrayectoTiqueteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TrayectoTiqueteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>[]
+        }
+        delete: {
+          args: Prisma.TrayectoTiqueteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>
+        }
+        update: {
+          args: Prisma.TrayectoTiqueteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>
+        }
+        deleteMany: {
+          args: Prisma.TrayectoTiqueteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TrayectoTiqueteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TrayectoTiqueteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>[]
+        }
+        upsert: {
+          args: Prisma.TrayectoTiqueteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrayectoTiquetePayload>
+        }
+        aggregate: {
+          args: Prisma.TrayectoTiqueteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTrayectoTiquete>
+        }
+        groupBy: {
+          args: Prisma.TrayectoTiqueteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TrayectoTiqueteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TrayectoTiqueteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TrayectoTiqueteCountAggregateOutputType> | number
+        }
+      }
+    }
     Proveedor: {
       payload: Prisma.$ProveedorPayload<ExtArgs>
       fields: Prisma.ProveedorFieldRefs
@@ -1167,9 +1242,16 @@ export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeo
 export const ClienteScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
-  apellido: 'apellido',
-  correo: 'correo',
+  razonSocial: 'razonSocial',
+  tipoDocumento: 'tipoDocumento',
+  documento: 'documento',
+  direccion: 'direccion',
+  ciudad: 'ciudad',
   telefono: 'telefono',
+  correo: 'correo',
+  tipoPersona: 'tipoPersona',
+  observaciones: 'observaciones',
+  activo: 'activo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1181,8 +1263,12 @@ export const PasajeroScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
   apellido: 'apellido',
+  documento: 'documento',
+  fechaNacimiento: 'fechaNacimiento',
   correo: 'correo',
   telefono: 'telefono',
+  preferenciaSilla: 'preferenciaSilla',
+  activo: 'activo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1198,6 +1284,7 @@ export const ServicioScalarFieldEnum = {
   tipo: 'tipo',
   estado: 'estado',
   fechaEmision: 'fechaEmision',
+  fechaSolicitud: 'fechaSolicitud',
   facturaProveedorUrl: 'facturaProveedorUrl',
   facturaGoTravelUrl: 'facturaGoTravelUrl',
   soporteTiqueteElectronicoUrl: 'soporteTiqueteElectronicoUrl',
@@ -1207,6 +1294,7 @@ export const ServicioScalarFieldEnum = {
   numeroTarjeta: 'numeroTarjeta',
   numeroAprobacion: 'numeroAprobacion',
   creditoAgencia: 'creditoAgencia',
+  comprobantePagoUrl: 'comprobantePagoUrl',
   proyectoFCDS: 'proyectoFCDS',
   ceCos: 'ceCos',
   vencimientoFacturaProveedor: 'vencimientoFacturaProveedor',
@@ -1231,11 +1319,18 @@ export const DetalleServicioScalarFieldEnum = {
   servicioId: 'servicioId',
   descripcionServicio: 'descripcionServicio',
   codigoReserva: 'codigoReserva',
-  valorPagadoProveedor: 'valorPagadoProveedor',
-  trm: 'trm',
+  ciudad: 'ciudad',
+  pais: 'pais',
+  fechaIngreso: 'fechaIngreso',
+  fechaSalida: 'fechaSalida',
+  tarifaNeta: 'tarifaNeta',
+  ivaTarifa: 'ivaTarifa',
   feePagoTarjetaCredito: 'feePagoTarjetaCredito',
-  valorPagadoGoTravel: 'valorPagadoGoTravel',
-  totalIngreso: 'totalIngreso',
+  totalVentaAgencia: 'totalVentaAgencia',
+  tarifaNetaProveedor: 'tarifaNetaProveedor',
+  ivaTarifaProveedor: 'ivaTarifaProveedor',
+  comisionAgencia: 'comisionAgencia',
+  totalPagado: 'totalPagado',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1246,23 +1341,24 @@ export type DetalleServicioScalarFieldEnum = (typeof DetalleServicioScalarFieldE
 export const TiqueteScalarFieldEnum = {
   id: 'id',
   servicioId: 'servicioId',
-  rutaId: 'rutaId',
   numeroTiquete: 'numeroTiquete',
+  codigoReserva: 'codigoReserva',
+  canalVenta: 'canalVenta',
+  tipoViaje: 'tipoViaje',
+  tipoItinerario: 'tipoItinerario',
   revision: 'revision',
   numeroTiqueteRevision: 'numeroTiqueteRevision',
   clase: 'clase',
-  fechaIda: 'fechaIda',
-  fechaRegreso: 'fechaRegreso',
   tarifaNeta: 'tarifaNeta',
+  ivaTarifa: 'ivaTarifa',
+  otrosImpuestos: 'otrosImpuestos',
   tarifaAdministrativaNeta: 'tarifaAdministrativaNeta',
   ivaTarifaAdministrativa: 'ivaTarifaAdministrativa',
   feeAgenciaNeta: 'feeAgenciaNeta',
   ivaFeeAgencia: 'ivaFeeAgencia',
-  feePagoTarjeta: 'feePagoTarjeta',
+  tarifaAPH: 'tarifaAPH',
+  ivaTarifaAPH: 'ivaTarifaAPH',
   totalPagar: 'totalPagar',
-  aph: 'aph',
-  ivaTarifa: 'ivaTarifa',
-  otrosImpuestos: 'otrosImpuestos',
   fechaEmisionTiqueteFES: 'fechaEmisionTiqueteFES',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1271,13 +1367,36 @@ export const TiqueteScalarFieldEnum = {
 export type TiqueteScalarFieldEnum = (typeof TiqueteScalarFieldEnum)[keyof typeof TiqueteScalarFieldEnum]
 
 
+export const TrayectoTiqueteScalarFieldEnum = {
+  id: 'id',
+  tiqueteId: 'tiqueteId',
+  orden: 'orden',
+  origenId: 'origenId',
+  destinoId: 'destinoId',
+  fechaSalida: 'fechaSalida',
+  fechaRegreso: 'fechaRegreso'
+} as const
+
+export type TrayectoTiqueteScalarFieldEnum = (typeof TrayectoTiqueteScalarFieldEnum)[keyof typeof TrayectoTiqueteScalarFieldEnum]
+
+
 export const ProveedorScalarFieldEnum = {
   id: 'id',
   razonSocial: 'razonSocial',
-  ruc: 'ruc',
-  direccionFiscal: 'direccionFiscal',
+  nombreComercial: 'nombreComercial',
+  nit: 'nit',
+  categoria: 'categoria',
+  ciudad: 'ciudad',
+  direccion: 'direccion',
   telefono: 'telefono',
-  correo: 'correo',
+  correoComercial: 'correoComercial',
+  correoFacturacion: 'correoFacturacion',
+  contacto: 'contacto',
+  remuneracion: 'remuneracion',
+  monedaBase: 'monedaBase',
+  condicionPago: 'condicionPago',
+  documentosPdf: 'documentosPdf',
+  activo: 'activo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1287,10 +1406,11 @@ export type ProveedorScalarFieldEnum = (typeof ProveedorScalarFieldEnum)[keyof t
 
 export const RutaScalarFieldEnum = {
   id: 'id',
-  origen: 'origen',
-  codigoOrigen: 'codigoOrigen',
-  destino: 'destino',
-  codigoDestino: 'codigoDestino',
+  codigoIATA: 'codigoIATA',
+  nombreAeropuerto: 'nombreAeropuerto',
+  ciudad: 'ciudad',
+  pais: 'pais',
+  region: 'region',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1385,6 +1505,55 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'TipoDocumento'
+ */
+export type EnumTipoDocumentoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoDocumento'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoDocumento[]'
+ */
+export type ListEnumTipoDocumentoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoDocumento[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoPersona'
+ */
+export type EnumTipoPersonaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoPersona'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoPersona[]'
+ */
+export type ListEnumTipoPersonaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoPersona[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'PreferenciaSilla'
+ */
+export type EnumPreferenciaSillaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreferenciaSilla'>
+    
+
+
+/**
+ * Reference to a field of type 'PreferenciaSilla[]'
+ */
+export type ListEnumPreferenciaSillaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreferenciaSilla[]'>
+    
+
+
+/**
  * Reference to a field of type 'TipoServicio'
  */
 export type EnumTipoServicioFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoServicio'>
@@ -1455,13 +1624,6 @@ export type ListEnumTipoPagadoProveedorFieldRefInput<$PrismaModel> = FieldRefInp
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -1476,16 +1638,100 @@ export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMo
 
 
 /**
- * Reference to a field of type 'TipoAPH'
+ * Reference to a field of type 'CanalVenta'
  */
-export type EnumTipoAPHFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoAPH'>
+export type EnumCanalVentaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CanalVenta'>
     
 
 
 /**
- * Reference to a field of type 'TipoAPH[]'
+ * Reference to a field of type 'CanalVenta[]'
  */
-export type ListEnumTipoAPHFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoAPH[]'>
+export type ListEnumCanalVentaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CanalVenta[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoViaje'
+ */
+export type EnumTipoViajeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoViaje'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoViaje[]'
+ */
+export type ListEnumTipoViajeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoViaje[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoItinerario'
+ */
+export type EnumTipoItinerarioFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoItinerario'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoItinerario[]'
+ */
+export type ListEnumTipoItinerarioFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoItinerario[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CategoriaProveedor'
+ */
+export type EnumCategoriaProveedorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CategoriaProveedor'>
+    
+
+
+/**
+ * Reference to a field of type 'CategoriaProveedor[]'
+ */
+export type ListEnumCategoriaProveedorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CategoriaProveedor[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RemuneracionProveedor'
+ */
+export type EnumRemuneracionProveedorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RemuneracionProveedor'>
+    
+
+
+/**
+ * Reference to a field of type 'RemuneracionProveedor[]'
+ */
+export type ListEnumRemuneracionProveedorFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RemuneracionProveedor[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Moneda'
+ */
+export type EnumMonedaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Moneda'>
+    
+
+
+/**
+ * Reference to a field of type 'Moneda[]'
+ */
+export type ListEnumMonedaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Moneda[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CondicionPago'
+ */
+export type EnumCondicionPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CondicionPago'>
+    
+
+
+/**
+ * Reference to a field of type 'CondicionPago[]'
+ */
+export type ListEnumCondicionPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CondicionPago[]'>
     
 
 
@@ -1660,6 +1906,7 @@ export type GlobalOmitConfig = {
   servicio?: Prisma.ServicioOmit
   detalleServicio?: Prisma.DetalleServicioOmit
   tiquete?: Prisma.TiqueteOmit
+  trayectoTiquete?: Prisma.TrayectoTiqueteOmit
   proveedor?: Prisma.ProveedorOmit
   ruta?: Prisma.RutaOmit
 }

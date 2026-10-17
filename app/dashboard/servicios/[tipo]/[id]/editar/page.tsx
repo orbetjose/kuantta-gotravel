@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/libs/prisma";
 import { getClientes, getPasajeros, getProveedores } from "@/actions/catalogos";
 import { ServiceFormInitialData } from "@/libs/schemas/serviceSchema";
-import ServiceForm from "@/app/components/dashboard/service-form";
+import ServiceForm from "@/app/components/dashboard/forms/service-form";
 
 export default async function EditarServicioPage({
   params,
@@ -47,7 +47,7 @@ export default async function EditarServicioPage({
   }
 
   const initialData: ServiceFormInitialData = {
-    tipoServicio: servicio.tipo
+    tipo: servicio.tipo
       ? (String(servicio.tipo) as
           | "HOTEL"
           | "ALQUILER_AUTO"
@@ -60,23 +60,17 @@ export default async function EditarServicioPage({
           | "WEB_CHECKIN"
           | "PLAN_VACACIONAL")
       : "HOTEL",
-    clienteId: servicio.cliente.id,
-    proveedorId: servicio.proveedor?.id,
-    pasajeroId: servicio.pasajero.id,
+    clienteId: String(servicio.cliente.id),
+    proveedorId: String(servicio.proveedor?.id),
+    pasajeroId: String(servicio.pasajero.id),
     fechaEmision: servicio.fechaEmision.toISOString().split("T")[0],
+    fechaSolicitud: servicio.fechaSolicitud.toISOString().split("T")[0],
     descripcionServicio: servicio.detalleServicio?.descripcionServicio ?? "",
     codigoReserva: servicio.detalleServicio?.codigoReserva ?? "",
-    valorPagadoProveedor: Number(
-      servicio.detalleServicio?.valorPagadoProveedor,
-    ),
-    trm: Number(servicio.detalleServicio?.trm),
-    feePagoTarjetaCredito: Number(
-      servicio.detalleServicio?.feePagoTarjetaCredito,
-    ),
+    ciudad: servicio.detalleServicio?.ciudad ?? "",
+    pais: servicio.detalleServicio?.pais ?? "",
     formaPago: servicio.formaPago,
-    creditoAgencia: servicio.creditoAgencia
-      ? (String(servicio.creditoAgencia) as "3" | "8" | "15" | "30")
-      : undefined,
+    creditoAgencia: servicio.creditoAgencia ?? undefined,
     numeroTarjeta: servicio.numeroTarjeta ?? "",
     numeroAprobacion: servicio.numeroAprobacion ?? "",
     tipoCash: servicio.tipoCash
@@ -86,6 +80,7 @@ export default async function EditarServicioPage({
     proyectoFCDS: servicio.proyectoFCDS ?? "",
     vencimientoFacturaProveedor:
       servicio.vencimientoFacturaProveedor?.toISOString().split("T")[0] ?? "",
+    pagadoCliente: servicio.pagadoCliente,
     pagadoProveedor: servicio.pagadoProveedor
       ? (String(servicio.pagadoProveedor) as "SI" | "NO" | "NO_APLICA")
       : "NO_APLICA",
@@ -94,7 +89,19 @@ export default async function EditarServicioPage({
     fechaPagoCliente:
       servicio.fechaPagoCliente?.toISOString().split("T")[0] ?? "",
     observaciones: servicio.observaciones ?? "",
-    totalIngreso: Number(servicio.detalleServicio?.totalIngreso),
+    tarifaNeta: Number(servicio.detalleServicio?.tarifaNeta),
+    ivaTarifa: Number(servicio.detalleServicio?.ivaTarifa),
+    feePagoTarjetaCredito: Number(
+      servicio.detalleServicio?.feePagoTarjetaCredito,
+    ),
+    tarifaNetaProveedor: Number(servicio.detalleServicio?.tarifaNetaProveedor),
+    ivaTarifaProveedor: Number(servicio.detalleServicio?.ivaTarifaProveedor),
+    comisionAgencia: Number(servicio.detalleServicio?.comisionAgencia),
+    totalPagado: Number(servicio.detalleServicio?.totalPagado),
+    totalVentaAgencia: Number(servicio.detalleServicio?.totalVentaAgencia),
+    totalIngreso:
+      Number(servicio.detalleServicio?.totalVentaAgencia) -
+      Number(servicio.detalleServicio?.totalPagado),
   };
 
   return (

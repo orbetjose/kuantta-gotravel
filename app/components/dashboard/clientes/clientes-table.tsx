@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Pagination from "../pagination";
-import TableActions from "../table-actions";
-import { SearchInput } from "../search";
+import Pagination from "../ui/pagination";
+import TableActions from "../ui/table-actions";
+import { SearchInput } from "../ui/search";
 
 type Cliente = {
   id: number;
   nombre: string;
-  apellido: string;
+  documento: string;
+  tipoDocumento: string;
   correo: string;
   telefono: string;
   createdAt: string;
@@ -128,6 +129,14 @@ export default function ClientesTable() {
               </th>
 
               <th className="px-4 pb-2 font-inter text-sm font-bold text-fifth-gray">
+                Tipo documento
+              </th>
+
+              <th className="px-4 pb-2 font-inter text-sm font-bold text-fifth-gray">
+                # Documento
+              </th>
+
+              <th className="px-4 pb-2 font-inter text-sm font-bold text-fifth-gray">
                 Correo
               </th>
 
@@ -173,7 +182,15 @@ export default function ClientesTable() {
                   className="bg-fifth-gray/11 border-b border-gray-100 last:border-0 rounded-lg"
                 >
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray rounded-l-lg">
-                    {cliente.nombre} {cliente.apellido}
+                    {cliente.nombre}
+                  </td>
+
+                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
+                    {cliente.tipoDocumento}
+                  </td>
+
+                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
+                    {cliente.documento}
                   </td>
 
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray">

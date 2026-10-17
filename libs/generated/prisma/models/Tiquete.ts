@@ -29,53 +29,54 @@ export type AggregateTiquete = {
 export type TiqueteAvgAggregateOutputType = {
   id: number | null
   servicioId: number | null
-  rutaId: number | null
   tarifaNeta: runtime.Decimal | null
+  ivaTarifa: runtime.Decimal | null
+  otrosImpuestos: runtime.Decimal | null
   tarifaAdministrativaNeta: runtime.Decimal | null
   ivaTarifaAdministrativa: runtime.Decimal | null
   feeAgenciaNeta: runtime.Decimal | null
   ivaFeeAgencia: runtime.Decimal | null
-  feePagoTarjeta: runtime.Decimal | null
+  tarifaAPH: runtime.Decimal | null
+  ivaTarifaAPH: runtime.Decimal | null
   totalPagar: runtime.Decimal | null
-  ivaTarifa: runtime.Decimal | null
-  otrosImpuestos: runtime.Decimal | null
 }
 
 export type TiqueteSumAggregateOutputType = {
   id: number | null
   servicioId: number | null
-  rutaId: number | null
   tarifaNeta: runtime.Decimal | null
+  ivaTarifa: runtime.Decimal | null
+  otrosImpuestos: runtime.Decimal | null
   tarifaAdministrativaNeta: runtime.Decimal | null
   ivaTarifaAdministrativa: runtime.Decimal | null
   feeAgenciaNeta: runtime.Decimal | null
   ivaFeeAgencia: runtime.Decimal | null
-  feePagoTarjeta: runtime.Decimal | null
+  tarifaAPH: runtime.Decimal | null
+  ivaTarifaAPH: runtime.Decimal | null
   totalPagar: runtime.Decimal | null
-  ivaTarifa: runtime.Decimal | null
-  otrosImpuestos: runtime.Decimal | null
 }
 
 export type TiqueteMinAggregateOutputType = {
   id: number | null
   servicioId: number | null
-  rutaId: number | null
   numeroTiquete: string | null
+  codigoReserva: string | null
+  canalVenta: $Enums.CanalVenta | null
+  tipoViaje: $Enums.TipoViaje | null
+  tipoItinerario: $Enums.TipoItinerario | null
   revision: boolean | null
   numeroTiqueteRevision: string | null
   clase: string | null
-  fechaIda: Date | null
-  fechaRegreso: Date | null
   tarifaNeta: runtime.Decimal | null
+  ivaTarifa: runtime.Decimal | null
+  otrosImpuestos: runtime.Decimal | null
   tarifaAdministrativaNeta: runtime.Decimal | null
   ivaTarifaAdministrativa: runtime.Decimal | null
   feeAgenciaNeta: runtime.Decimal | null
   ivaFeeAgencia: runtime.Decimal | null
-  feePagoTarjeta: runtime.Decimal | null
+  tarifaAPH: runtime.Decimal | null
+  ivaTarifaAPH: runtime.Decimal | null
   totalPagar: runtime.Decimal | null
-  aph: $Enums.TipoAPH | null
-  ivaTarifa: runtime.Decimal | null
-  otrosImpuestos: runtime.Decimal | null
   fechaEmisionTiqueteFES: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -84,23 +85,24 @@ export type TiqueteMinAggregateOutputType = {
 export type TiqueteMaxAggregateOutputType = {
   id: number | null
   servicioId: number | null
-  rutaId: number | null
   numeroTiquete: string | null
+  codigoReserva: string | null
+  canalVenta: $Enums.CanalVenta | null
+  tipoViaje: $Enums.TipoViaje | null
+  tipoItinerario: $Enums.TipoItinerario | null
   revision: boolean | null
   numeroTiqueteRevision: string | null
   clase: string | null
-  fechaIda: Date | null
-  fechaRegreso: Date | null
   tarifaNeta: runtime.Decimal | null
+  ivaTarifa: runtime.Decimal | null
+  otrosImpuestos: runtime.Decimal | null
   tarifaAdministrativaNeta: runtime.Decimal | null
   ivaTarifaAdministrativa: runtime.Decimal | null
   feeAgenciaNeta: runtime.Decimal | null
   ivaFeeAgencia: runtime.Decimal | null
-  feePagoTarjeta: runtime.Decimal | null
+  tarifaAPH: runtime.Decimal | null
+  ivaTarifaAPH: runtime.Decimal | null
   totalPagar: runtime.Decimal | null
-  aph: $Enums.TipoAPH | null
-  ivaTarifa: runtime.Decimal | null
-  otrosImpuestos: runtime.Decimal | null
   fechaEmisionTiqueteFES: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -109,23 +111,24 @@ export type TiqueteMaxAggregateOutputType = {
 export type TiqueteCountAggregateOutputType = {
   id: number
   servicioId: number
-  rutaId: number
   numeroTiquete: number
+  codigoReserva: number
+  canalVenta: number
+  tipoViaje: number
+  tipoItinerario: number
   revision: number
   numeroTiqueteRevision: number
   clase: number
-  fechaIda: number
-  fechaRegreso: number
   tarifaNeta: number
+  ivaTarifa: number
+  otrosImpuestos: number
   tarifaAdministrativaNeta: number
   ivaTarifaAdministrativa: number
   feeAgenciaNeta: number
   ivaFeeAgencia: number
-  feePagoTarjeta: number
+  tarifaAPH: number
+  ivaTarifaAPH: number
   totalPagar: number
-  aph: number
-  ivaTarifa: number
-  otrosImpuestos: number
   fechaEmisionTiqueteFES: number
   createdAt: number
   updatedAt: number
@@ -136,53 +139,54 @@ export type TiqueteCountAggregateOutputType = {
 export type TiqueteAvgAggregateInputType = {
   id?: true
   servicioId?: true
-  rutaId?: true
   tarifaNeta?: true
+  ivaTarifa?: true
+  otrosImpuestos?: true
   tarifaAdministrativaNeta?: true
   ivaTarifaAdministrativa?: true
   feeAgenciaNeta?: true
   ivaFeeAgencia?: true
-  feePagoTarjeta?: true
+  tarifaAPH?: true
+  ivaTarifaAPH?: true
   totalPagar?: true
-  ivaTarifa?: true
-  otrosImpuestos?: true
 }
 
 export type TiqueteSumAggregateInputType = {
   id?: true
   servicioId?: true
-  rutaId?: true
   tarifaNeta?: true
+  ivaTarifa?: true
+  otrosImpuestos?: true
   tarifaAdministrativaNeta?: true
   ivaTarifaAdministrativa?: true
   feeAgenciaNeta?: true
   ivaFeeAgencia?: true
-  feePagoTarjeta?: true
+  tarifaAPH?: true
+  ivaTarifaAPH?: true
   totalPagar?: true
-  ivaTarifa?: true
-  otrosImpuestos?: true
 }
 
 export type TiqueteMinAggregateInputType = {
   id?: true
   servicioId?: true
-  rutaId?: true
   numeroTiquete?: true
+  codigoReserva?: true
+  canalVenta?: true
+  tipoViaje?: true
+  tipoItinerario?: true
   revision?: true
   numeroTiqueteRevision?: true
   clase?: true
-  fechaIda?: true
-  fechaRegreso?: true
   tarifaNeta?: true
+  ivaTarifa?: true
+  otrosImpuestos?: true
   tarifaAdministrativaNeta?: true
   ivaTarifaAdministrativa?: true
   feeAgenciaNeta?: true
   ivaFeeAgencia?: true
-  feePagoTarjeta?: true
+  tarifaAPH?: true
+  ivaTarifaAPH?: true
   totalPagar?: true
-  aph?: true
-  ivaTarifa?: true
-  otrosImpuestos?: true
   fechaEmisionTiqueteFES?: true
   createdAt?: true
   updatedAt?: true
@@ -191,23 +195,24 @@ export type TiqueteMinAggregateInputType = {
 export type TiqueteMaxAggregateInputType = {
   id?: true
   servicioId?: true
-  rutaId?: true
   numeroTiquete?: true
+  codigoReserva?: true
+  canalVenta?: true
+  tipoViaje?: true
+  tipoItinerario?: true
   revision?: true
   numeroTiqueteRevision?: true
   clase?: true
-  fechaIda?: true
-  fechaRegreso?: true
   tarifaNeta?: true
+  ivaTarifa?: true
+  otrosImpuestos?: true
   tarifaAdministrativaNeta?: true
   ivaTarifaAdministrativa?: true
   feeAgenciaNeta?: true
   ivaFeeAgencia?: true
-  feePagoTarjeta?: true
+  tarifaAPH?: true
+  ivaTarifaAPH?: true
   totalPagar?: true
-  aph?: true
-  ivaTarifa?: true
-  otrosImpuestos?: true
   fechaEmisionTiqueteFES?: true
   createdAt?: true
   updatedAt?: true
@@ -216,23 +221,24 @@ export type TiqueteMaxAggregateInputType = {
 export type TiqueteCountAggregateInputType = {
   id?: true
   servicioId?: true
-  rutaId?: true
   numeroTiquete?: true
+  codigoReserva?: true
+  canalVenta?: true
+  tipoViaje?: true
+  tipoItinerario?: true
   revision?: true
   numeroTiqueteRevision?: true
   clase?: true
-  fechaIda?: true
-  fechaRegreso?: true
   tarifaNeta?: true
+  ivaTarifa?: true
+  otrosImpuestos?: true
   tarifaAdministrativaNeta?: true
   ivaTarifaAdministrativa?: true
   feeAgenciaNeta?: true
   ivaFeeAgencia?: true
-  feePagoTarjeta?: true
+  tarifaAPH?: true
+  ivaTarifaAPH?: true
   totalPagar?: true
-  aph?: true
-  ivaTarifa?: true
-  otrosImpuestos?: true
   fechaEmisionTiqueteFES?: true
   createdAt?: true
   updatedAt?: true
@@ -328,23 +334,24 @@ export type TiqueteGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type TiqueteGroupByOutputType = {
   id: number
   servicioId: number
-  rutaId: number
   numeroTiquete: string
+  codigoReserva: string
+  canalVenta: $Enums.CanalVenta
+  tipoViaje: $Enums.TipoViaje
+  tipoItinerario: $Enums.TipoItinerario
   revision: boolean
   numeroTiqueteRevision: string | null
   clase: string
-  fechaIda: Date
-  fechaRegreso: Date | null
   tarifaNeta: runtime.Decimal
+  ivaTarifa: runtime.Decimal
+  otrosImpuestos: runtime.Decimal
   tarifaAdministrativaNeta: runtime.Decimal
   ivaTarifaAdministrativa: runtime.Decimal
   feeAgenciaNeta: runtime.Decimal
   ivaFeeAgencia: runtime.Decimal
-  feePagoTarjeta: runtime.Decimal
+  tarifaAPH: runtime.Decimal
+  ivaTarifaAPH: runtime.Decimal | null
   totalPagar: runtime.Decimal
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal
-  otrosImpuestos: runtime.Decimal
   fechaEmisionTiqueteFES: Date
   createdAt: Date
   updatedAt: Date
@@ -376,54 +383,56 @@ export type TiqueteWhereInput = {
   NOT?: Prisma.TiqueteWhereInput | Prisma.TiqueteWhereInput[]
   id?: Prisma.IntFilter<"Tiquete"> | number
   servicioId?: Prisma.IntFilter<"Tiquete"> | number
-  rutaId?: Prisma.IntFilter<"Tiquete"> | number
   numeroTiquete?: Prisma.StringFilter<"Tiquete"> | string
+  codigoReserva?: Prisma.StringFilter<"Tiquete"> | string
+  canalVenta?: Prisma.EnumCanalVentaFilter<"Tiquete"> | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFilter<"Tiquete"> | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFilter<"Tiquete"> | $Enums.TipoItinerario
   revision?: Prisma.BoolFilter<"Tiquete"> | boolean
   numeroTiqueteRevision?: Prisma.StringNullableFilter<"Tiquete"> | string | null
   clase?: Prisma.StringFilter<"Tiquete"> | string
-  fechaIda?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
-  fechaRegreso?: Prisma.DateTimeNullableFilter<"Tiquete"> | Date | string | null
   tarifaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.DecimalNullableFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFilter<"Tiquete"> | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
-  ruta?: Prisma.XOR<Prisma.RutaScalarRelationFilter, Prisma.RutaWhereInput>
+  trayectos?: Prisma.TrayectoTiqueteListRelationFilter
   servicio?: Prisma.XOR<Prisma.ServicioScalarRelationFilter, Prisma.ServicioWhereInput>
 }
 
 export type TiqueteOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
-  rutaId?: Prisma.SortOrder
   numeroTiquete?: Prisma.SortOrder
+  codigoReserva?: Prisma.SortOrder
+  canalVenta?: Prisma.SortOrder
+  tipoViaje?: Prisma.SortOrder
+  tipoItinerario?: Prisma.SortOrder
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrderInput | Prisma.SortOrder
   clase?: Prisma.SortOrder
-  fechaIda?: Prisma.SortOrder
-  fechaRegreso?: Prisma.SortOrderInput | Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
+  ivaTarifa?: Prisma.SortOrder
+  otrosImpuestos?: Prisma.SortOrder
   tarifaAdministrativaNeta?: Prisma.SortOrder
   ivaTarifaAdministrativa?: Prisma.SortOrder
   feeAgenciaNeta?: Prisma.SortOrder
   ivaFeeAgencia?: Prisma.SortOrder
-  feePagoTarjeta?: Prisma.SortOrder
+  tarifaAPH?: Prisma.SortOrder
+  ivaTarifaAPH?: Prisma.SortOrderInput | Prisma.SortOrder
   totalPagar?: Prisma.SortOrder
-  aph?: Prisma.SortOrder
-  ivaTarifa?: Prisma.SortOrder
-  otrosImpuestos?: Prisma.SortOrder
   fechaEmisionTiqueteFES?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  ruta?: Prisma.RutaOrderByWithRelationInput
+  trayectos?: Prisma.TrayectoTiqueteOrderByRelationAggregateInput
   servicio?: Prisma.ServicioOrderByWithRelationInput
 }
 
@@ -433,50 +442,52 @@ export type TiqueteWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TiqueteWhereInput | Prisma.TiqueteWhereInput[]
   OR?: Prisma.TiqueteWhereInput[]
   NOT?: Prisma.TiqueteWhereInput | Prisma.TiqueteWhereInput[]
-  rutaId?: Prisma.IntFilter<"Tiquete"> | number
   numeroTiquete?: Prisma.StringFilter<"Tiquete"> | string
+  codigoReserva?: Prisma.StringFilter<"Tiquete"> | string
+  canalVenta?: Prisma.EnumCanalVentaFilter<"Tiquete"> | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFilter<"Tiquete"> | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFilter<"Tiquete"> | $Enums.TipoItinerario
   revision?: Prisma.BoolFilter<"Tiquete"> | boolean
   numeroTiqueteRevision?: Prisma.StringNullableFilter<"Tiquete"> | string | null
   clase?: Prisma.StringFilter<"Tiquete"> | string
-  fechaIda?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
-  fechaRegreso?: Prisma.DateTimeNullableFilter<"Tiquete"> | Date | string | null
   tarifaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.DecimalNullableFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFilter<"Tiquete"> | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
-  ruta?: Prisma.XOR<Prisma.RutaScalarRelationFilter, Prisma.RutaWhereInput>
+  trayectos?: Prisma.TrayectoTiqueteListRelationFilter
   servicio?: Prisma.XOR<Prisma.ServicioScalarRelationFilter, Prisma.ServicioWhereInput>
 }, "id" | "servicioId">
 
 export type TiqueteOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
-  rutaId?: Prisma.SortOrder
   numeroTiquete?: Prisma.SortOrder
+  codigoReserva?: Prisma.SortOrder
+  canalVenta?: Prisma.SortOrder
+  tipoViaje?: Prisma.SortOrder
+  tipoItinerario?: Prisma.SortOrder
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrderInput | Prisma.SortOrder
   clase?: Prisma.SortOrder
-  fechaIda?: Prisma.SortOrder
-  fechaRegreso?: Prisma.SortOrderInput | Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
+  ivaTarifa?: Prisma.SortOrder
+  otrosImpuestos?: Prisma.SortOrder
   tarifaAdministrativaNeta?: Prisma.SortOrder
   ivaTarifaAdministrativa?: Prisma.SortOrder
   feeAgenciaNeta?: Prisma.SortOrder
   ivaFeeAgencia?: Prisma.SortOrder
-  feePagoTarjeta?: Prisma.SortOrder
+  tarifaAPH?: Prisma.SortOrder
+  ivaTarifaAPH?: Prisma.SortOrderInput | Prisma.SortOrder
   totalPagar?: Prisma.SortOrder
-  aph?: Prisma.SortOrder
-  ivaTarifa?: Prisma.SortOrder
-  otrosImpuestos?: Prisma.SortOrder
   fechaEmisionTiqueteFES?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -493,23 +504,24 @@ export type TiqueteScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TiqueteScalarWhereWithAggregatesInput | Prisma.TiqueteScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Tiquete"> | number
   servicioId?: Prisma.IntWithAggregatesFilter<"Tiquete"> | number
-  rutaId?: Prisma.IntWithAggregatesFilter<"Tiquete"> | number
   numeroTiquete?: Prisma.StringWithAggregatesFilter<"Tiquete"> | string
+  codigoReserva?: Prisma.StringWithAggregatesFilter<"Tiquete"> | string
+  canalVenta?: Prisma.EnumCanalVentaWithAggregatesFilter<"Tiquete"> | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeWithAggregatesFilter<"Tiquete"> | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioWithAggregatesFilter<"Tiquete"> | $Enums.TipoItinerario
   revision?: Prisma.BoolWithAggregatesFilter<"Tiquete"> | boolean
   numeroTiqueteRevision?: Prisma.StringNullableWithAggregatesFilter<"Tiquete"> | string | null
   clase?: Prisma.StringWithAggregatesFilter<"Tiquete"> | string
-  fechaIda?: Prisma.DateTimeWithAggregatesFilter<"Tiquete"> | Date | string
-  fechaRegreso?: Prisma.DateTimeNullableWithAggregatesFilter<"Tiquete"> | Date | string | null
   tarifaNeta?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.DecimalNullableWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHWithAggregatesFilter<"Tiquete"> | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalWithAggregatesFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeWithAggregatesFilter<"Tiquete"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tiquete"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Tiquete"> | Date | string
@@ -517,122 +529,131 @@ export type TiqueteScalarWhereWithAggregatesInput = {
 
 export type TiqueteCreateInput = {
   numeroTiquete: string
+  codigoReserva: string
+  canalVenta: $Enums.CanalVenta
+  tipoViaje: $Enums.TipoViaje
+  tipoItinerario: $Enums.TipoItinerario
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  fechaIda: Date | string
-  fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa: runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar: runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  ruta: Prisma.RutaCreateNestedOneWithoutTiquetesInput
+  trayectos?: Prisma.TrayectoTiqueteCreateNestedManyWithoutTiqueteInput
   servicio: Prisma.ServicioCreateNestedOneWithoutTiqueteInput
 }
 
 export type TiqueteUncheckedCreateInput = {
   id?: number
   servicioId: number
-  rutaId: number
   numeroTiquete: string
+  codigoReserva: string
+  canalVenta: $Enums.CanalVenta
+  tipoViaje: $Enums.TipoViaje
+  tipoItinerario: $Enums.TipoItinerario
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  fechaIda: Date | string
-  fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa: runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar: runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  trayectos?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutTiqueteInput
 }
 
 export type TiqueteUpdateInput = {
   numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
+  canalVenta?: Prisma.EnumCanalVentaFieldUpdateOperationsInput | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFieldUpdateOperationsInput | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFieldUpdateOperationsInput | $Enums.TipoItinerario
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ruta?: Prisma.RutaUpdateOneRequiredWithoutTiquetesNestedInput
+  trayectos?: Prisma.TrayectoTiqueteUpdateManyWithoutTiqueteNestedInput
   servicio?: Prisma.ServicioUpdateOneRequiredWithoutTiqueteNestedInput
 }
 
 export type TiqueteUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servicioId?: Prisma.IntFieldUpdateOperationsInput | number
-  rutaId?: Prisma.IntFieldUpdateOperationsInput | number
   numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
+  canalVenta?: Prisma.EnumCanalVentaFieldUpdateOperationsInput | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFieldUpdateOperationsInput | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFieldUpdateOperationsInput | $Enums.TipoItinerario
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  trayectos?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutTiqueteNestedInput
 }
 
 export type TiqueteCreateManyInput = {
   id?: number
   servicioId: number
-  rutaId: number
   numeroTiquete: string
+  codigoReserva: string
+  canalVenta: $Enums.CanalVenta
+  tipoViaje: $Enums.TipoViaje
+  tipoItinerario: $Enums.TipoItinerario
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  fechaIda: Date | string
-  fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa: runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar: runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -640,21 +661,23 @@ export type TiqueteCreateManyInput = {
 
 export type TiqueteUpdateManyMutationInput = {
   numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
+  canalVenta?: Prisma.EnumCanalVentaFieldUpdateOperationsInput | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFieldUpdateOperationsInput | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFieldUpdateOperationsInput | $Enums.TipoItinerario
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -663,23 +686,24 @@ export type TiqueteUpdateManyMutationInput = {
 export type TiqueteUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servicioId?: Prisma.IntFieldUpdateOperationsInput | number
-  rutaId?: Prisma.IntFieldUpdateOperationsInput | number
   numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
+  canalVenta?: Prisma.EnumCanalVentaFieldUpdateOperationsInput | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFieldUpdateOperationsInput | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFieldUpdateOperationsInput | $Enums.TipoItinerario
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -693,23 +717,24 @@ export type TiqueteNullableScalarRelationFilter = {
 export type TiqueteCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
-  rutaId?: Prisma.SortOrder
   numeroTiquete?: Prisma.SortOrder
+  codigoReserva?: Prisma.SortOrder
+  canalVenta?: Prisma.SortOrder
+  tipoViaje?: Prisma.SortOrder
+  tipoItinerario?: Prisma.SortOrder
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrder
   clase?: Prisma.SortOrder
-  fechaIda?: Prisma.SortOrder
-  fechaRegreso?: Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
+  ivaTarifa?: Prisma.SortOrder
+  otrosImpuestos?: Prisma.SortOrder
   tarifaAdministrativaNeta?: Prisma.SortOrder
   ivaTarifaAdministrativa?: Prisma.SortOrder
   feeAgenciaNeta?: Prisma.SortOrder
   ivaFeeAgencia?: Prisma.SortOrder
-  feePagoTarjeta?: Prisma.SortOrder
+  tarifaAPH?: Prisma.SortOrder
+  ivaTarifaAPH?: Prisma.SortOrder
   totalPagar?: Prisma.SortOrder
-  aph?: Prisma.SortOrder
-  ivaTarifa?: Prisma.SortOrder
-  otrosImpuestos?: Prisma.SortOrder
   fechaEmisionTiqueteFES?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -718,38 +743,39 @@ export type TiqueteCountOrderByAggregateInput = {
 export type TiqueteAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
-  rutaId?: Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
+  ivaTarifa?: Prisma.SortOrder
+  otrosImpuestos?: Prisma.SortOrder
   tarifaAdministrativaNeta?: Prisma.SortOrder
   ivaTarifaAdministrativa?: Prisma.SortOrder
   feeAgenciaNeta?: Prisma.SortOrder
   ivaFeeAgencia?: Prisma.SortOrder
-  feePagoTarjeta?: Prisma.SortOrder
+  tarifaAPH?: Prisma.SortOrder
+  ivaTarifaAPH?: Prisma.SortOrder
   totalPagar?: Prisma.SortOrder
-  ivaTarifa?: Prisma.SortOrder
-  otrosImpuestos?: Prisma.SortOrder
 }
 
 export type TiqueteMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
-  rutaId?: Prisma.SortOrder
   numeroTiquete?: Prisma.SortOrder
+  codigoReserva?: Prisma.SortOrder
+  canalVenta?: Prisma.SortOrder
+  tipoViaje?: Prisma.SortOrder
+  tipoItinerario?: Prisma.SortOrder
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrder
   clase?: Prisma.SortOrder
-  fechaIda?: Prisma.SortOrder
-  fechaRegreso?: Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
+  ivaTarifa?: Prisma.SortOrder
+  otrosImpuestos?: Prisma.SortOrder
   tarifaAdministrativaNeta?: Prisma.SortOrder
   ivaTarifaAdministrativa?: Prisma.SortOrder
   feeAgenciaNeta?: Prisma.SortOrder
   ivaFeeAgencia?: Prisma.SortOrder
-  feePagoTarjeta?: Prisma.SortOrder
+  tarifaAPH?: Prisma.SortOrder
+  ivaTarifaAPH?: Prisma.SortOrder
   totalPagar?: Prisma.SortOrder
-  aph?: Prisma.SortOrder
-  ivaTarifa?: Prisma.SortOrder
-  otrosImpuestos?: Prisma.SortOrder
   fechaEmisionTiqueteFES?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -758,23 +784,24 @@ export type TiqueteMaxOrderByAggregateInput = {
 export type TiqueteMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
-  rutaId?: Prisma.SortOrder
   numeroTiquete?: Prisma.SortOrder
+  codigoReserva?: Prisma.SortOrder
+  canalVenta?: Prisma.SortOrder
+  tipoViaje?: Prisma.SortOrder
+  tipoItinerario?: Prisma.SortOrder
   revision?: Prisma.SortOrder
   numeroTiqueteRevision?: Prisma.SortOrder
   clase?: Prisma.SortOrder
-  fechaIda?: Prisma.SortOrder
-  fechaRegreso?: Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
+  ivaTarifa?: Prisma.SortOrder
+  otrosImpuestos?: Prisma.SortOrder
   tarifaAdministrativaNeta?: Prisma.SortOrder
   ivaTarifaAdministrativa?: Prisma.SortOrder
   feeAgenciaNeta?: Prisma.SortOrder
   ivaFeeAgencia?: Prisma.SortOrder
-  feePagoTarjeta?: Prisma.SortOrder
+  tarifaAPH?: Prisma.SortOrder
+  ivaTarifaAPH?: Prisma.SortOrder
   totalPagar?: Prisma.SortOrder
-  aph?: Prisma.SortOrder
-  ivaTarifa?: Prisma.SortOrder
-  otrosImpuestos?: Prisma.SortOrder
   fechaEmisionTiqueteFES?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -783,26 +810,21 @@ export type TiqueteMinOrderByAggregateInput = {
 export type TiqueteSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   servicioId?: Prisma.SortOrder
-  rutaId?: Prisma.SortOrder
   tarifaNeta?: Prisma.SortOrder
+  ivaTarifa?: Prisma.SortOrder
+  otrosImpuestos?: Prisma.SortOrder
   tarifaAdministrativaNeta?: Prisma.SortOrder
   ivaTarifaAdministrativa?: Prisma.SortOrder
   feeAgenciaNeta?: Prisma.SortOrder
   ivaFeeAgencia?: Prisma.SortOrder
-  feePagoTarjeta?: Prisma.SortOrder
+  tarifaAPH?: Prisma.SortOrder
+  ivaTarifaAPH?: Prisma.SortOrder
   totalPagar?: Prisma.SortOrder
-  ivaTarifa?: Prisma.SortOrder
-  otrosImpuestos?: Prisma.SortOrder
 }
 
-export type TiqueteListRelationFilter = {
-  every?: Prisma.TiqueteWhereInput
-  some?: Prisma.TiqueteWhereInput
-  none?: Prisma.TiqueteWhereInput
-}
-
-export type TiqueteOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type TiqueteScalarRelationFilter = {
+  is?: Prisma.TiqueteWhereInput
+  isNot?: Prisma.TiqueteWhereInput
 }
 
 export type TiqueteCreateNestedOneWithoutServicioInput = {
@@ -837,97 +859,89 @@ export type TiqueteUncheckedUpdateOneWithoutServicioNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TiqueteUpdateToOneWithWhereWithoutServicioInput, Prisma.TiqueteUpdateWithoutServicioInput>, Prisma.TiqueteUncheckedUpdateWithoutServicioInput>
 }
 
-export type EnumTipoAPHFieldUpdateOperationsInput = {
-  set?: $Enums.TipoAPH
+export type EnumCanalVentaFieldUpdateOperationsInput = {
+  set?: $Enums.CanalVenta
 }
 
-export type TiqueteCreateNestedManyWithoutRutaInput = {
-  create?: Prisma.XOR<Prisma.TiqueteCreateWithoutRutaInput, Prisma.TiqueteUncheckedCreateWithoutRutaInput> | Prisma.TiqueteCreateWithoutRutaInput[] | Prisma.TiqueteUncheckedCreateWithoutRutaInput[]
-  connectOrCreate?: Prisma.TiqueteCreateOrConnectWithoutRutaInput | Prisma.TiqueteCreateOrConnectWithoutRutaInput[]
-  createMany?: Prisma.TiqueteCreateManyRutaInputEnvelope
-  connect?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
+export type EnumTipoViajeFieldUpdateOperationsInput = {
+  set?: $Enums.TipoViaje
 }
 
-export type TiqueteUncheckedCreateNestedManyWithoutRutaInput = {
-  create?: Prisma.XOR<Prisma.TiqueteCreateWithoutRutaInput, Prisma.TiqueteUncheckedCreateWithoutRutaInput> | Prisma.TiqueteCreateWithoutRutaInput[] | Prisma.TiqueteUncheckedCreateWithoutRutaInput[]
-  connectOrCreate?: Prisma.TiqueteCreateOrConnectWithoutRutaInput | Prisma.TiqueteCreateOrConnectWithoutRutaInput[]
-  createMany?: Prisma.TiqueteCreateManyRutaInputEnvelope
-  connect?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
+export type EnumTipoItinerarioFieldUpdateOperationsInput = {
+  set?: $Enums.TipoItinerario
 }
 
-export type TiqueteUpdateManyWithoutRutaNestedInput = {
-  create?: Prisma.XOR<Prisma.TiqueteCreateWithoutRutaInput, Prisma.TiqueteUncheckedCreateWithoutRutaInput> | Prisma.TiqueteCreateWithoutRutaInput[] | Prisma.TiqueteUncheckedCreateWithoutRutaInput[]
-  connectOrCreate?: Prisma.TiqueteCreateOrConnectWithoutRutaInput | Prisma.TiqueteCreateOrConnectWithoutRutaInput[]
-  upsert?: Prisma.TiqueteUpsertWithWhereUniqueWithoutRutaInput | Prisma.TiqueteUpsertWithWhereUniqueWithoutRutaInput[]
-  createMany?: Prisma.TiqueteCreateManyRutaInputEnvelope
-  set?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
-  disconnect?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
-  delete?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
-  connect?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
-  update?: Prisma.TiqueteUpdateWithWhereUniqueWithoutRutaInput | Prisma.TiqueteUpdateWithWhereUniqueWithoutRutaInput[]
-  updateMany?: Prisma.TiqueteUpdateManyWithWhereWithoutRutaInput | Prisma.TiqueteUpdateManyWithWhereWithoutRutaInput[]
-  deleteMany?: Prisma.TiqueteScalarWhereInput | Prisma.TiqueteScalarWhereInput[]
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type TiqueteUncheckedUpdateManyWithoutRutaNestedInput = {
-  create?: Prisma.XOR<Prisma.TiqueteCreateWithoutRutaInput, Prisma.TiqueteUncheckedCreateWithoutRutaInput> | Prisma.TiqueteCreateWithoutRutaInput[] | Prisma.TiqueteUncheckedCreateWithoutRutaInput[]
-  connectOrCreate?: Prisma.TiqueteCreateOrConnectWithoutRutaInput | Prisma.TiqueteCreateOrConnectWithoutRutaInput[]
-  upsert?: Prisma.TiqueteUpsertWithWhereUniqueWithoutRutaInput | Prisma.TiqueteUpsertWithWhereUniqueWithoutRutaInput[]
-  createMany?: Prisma.TiqueteCreateManyRutaInputEnvelope
-  set?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
-  disconnect?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
-  delete?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
-  connect?: Prisma.TiqueteWhereUniqueInput | Prisma.TiqueteWhereUniqueInput[]
-  update?: Prisma.TiqueteUpdateWithWhereUniqueWithoutRutaInput | Prisma.TiqueteUpdateWithWhereUniqueWithoutRutaInput[]
-  updateMany?: Prisma.TiqueteUpdateManyWithWhereWithoutRutaInput | Prisma.TiqueteUpdateManyWithWhereWithoutRutaInput[]
-  deleteMany?: Prisma.TiqueteScalarWhereInput | Prisma.TiqueteScalarWhereInput[]
+export type TiqueteCreateNestedOneWithoutTrayectosInput = {
+  create?: Prisma.XOR<Prisma.TiqueteCreateWithoutTrayectosInput, Prisma.TiqueteUncheckedCreateWithoutTrayectosInput>
+  connectOrCreate?: Prisma.TiqueteCreateOrConnectWithoutTrayectosInput
+  connect?: Prisma.TiqueteWhereUniqueInput
+}
+
+export type TiqueteUpdateOneRequiredWithoutTrayectosNestedInput = {
+  create?: Prisma.XOR<Prisma.TiqueteCreateWithoutTrayectosInput, Prisma.TiqueteUncheckedCreateWithoutTrayectosInput>
+  connectOrCreate?: Prisma.TiqueteCreateOrConnectWithoutTrayectosInput
+  upsert?: Prisma.TiqueteUpsertWithoutTrayectosInput
+  connect?: Prisma.TiqueteWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TiqueteUpdateToOneWithWhereWithoutTrayectosInput, Prisma.TiqueteUpdateWithoutTrayectosInput>, Prisma.TiqueteUncheckedUpdateWithoutTrayectosInput>
 }
 
 export type TiqueteCreateWithoutServicioInput = {
   numeroTiquete: string
+  codigoReserva: string
+  canalVenta: $Enums.CanalVenta
+  tipoViaje: $Enums.TipoViaje
+  tipoItinerario: $Enums.TipoItinerario
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  fechaIda: Date | string
-  fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa: runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar: runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  ruta: Prisma.RutaCreateNestedOneWithoutTiquetesInput
+  trayectos?: Prisma.TrayectoTiqueteCreateNestedManyWithoutTiqueteInput
 }
 
 export type TiqueteUncheckedCreateWithoutServicioInput = {
   id?: number
-  rutaId: number
   numeroTiquete: string
+  codigoReserva: string
+  canalVenta: $Enums.CanalVenta
+  tipoViaje: $Enums.TipoViaje
+  tipoItinerario: $Enums.TipoItinerario
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  fechaIda: Date | string
-  fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa: runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar: runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  trayectos?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutTiqueteInput
 }
 
 export type TiqueteCreateOrConnectWithoutServicioInput = {
@@ -948,395 +962,353 @@ export type TiqueteUpdateToOneWithWhereWithoutServicioInput = {
 
 export type TiqueteUpdateWithoutServicioInput = {
   numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
+  canalVenta?: Prisma.EnumCanalVentaFieldUpdateOperationsInput | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFieldUpdateOperationsInput | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFieldUpdateOperationsInput | $Enums.TipoItinerario
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ruta?: Prisma.RutaUpdateOneRequiredWithoutTiquetesNestedInput
+  trayectos?: Prisma.TrayectoTiqueteUpdateManyWithoutTiqueteNestedInput
 }
 
 export type TiqueteUncheckedUpdateWithoutServicioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  rutaId?: Prisma.IntFieldUpdateOperationsInput | number
   numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
+  canalVenta?: Prisma.EnumCanalVentaFieldUpdateOperationsInput | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFieldUpdateOperationsInput | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFieldUpdateOperationsInput | $Enums.TipoItinerario
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  trayectos?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutTiqueteNestedInput
 }
 
-export type TiqueteCreateWithoutRutaInput = {
+export type TiqueteCreateWithoutTrayectosInput = {
   numeroTiquete: string
+  codigoReserva: string
+  canalVenta: $Enums.CanalVenta
+  tipoViaje: $Enums.TipoViaje
+  tipoItinerario: $Enums.TipoItinerario
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  fechaIda: Date | string
-  fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa: runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar: runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   servicio: Prisma.ServicioCreateNestedOneWithoutTiqueteInput
 }
 
-export type TiqueteUncheckedCreateWithoutRutaInput = {
+export type TiqueteUncheckedCreateWithoutTrayectosInput = {
   id?: number
   servicioId: number
   numeroTiquete: string
+  codigoReserva: string
+  canalVenta: $Enums.CanalVenta
+  tipoViaje: $Enums.TipoViaje
+  tipoItinerario: $Enums.TipoItinerario
   revision: boolean
   numeroTiqueteRevision?: string | null
   clase: string
-  fechaIda: Date | string
-  fechaRegreso?: Date | string | null
   tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa: runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar: runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type TiqueteCreateOrConnectWithoutRutaInput = {
+export type TiqueteCreateOrConnectWithoutTrayectosInput = {
   where: Prisma.TiqueteWhereUniqueInput
-  create: Prisma.XOR<Prisma.TiqueteCreateWithoutRutaInput, Prisma.TiqueteUncheckedCreateWithoutRutaInput>
+  create: Prisma.XOR<Prisma.TiqueteCreateWithoutTrayectosInput, Prisma.TiqueteUncheckedCreateWithoutTrayectosInput>
 }
 
-export type TiqueteCreateManyRutaInputEnvelope = {
-  data: Prisma.TiqueteCreateManyRutaInput | Prisma.TiqueteCreateManyRutaInput[]
-  skipDuplicates?: boolean
+export type TiqueteUpsertWithoutTrayectosInput = {
+  update: Prisma.XOR<Prisma.TiqueteUpdateWithoutTrayectosInput, Prisma.TiqueteUncheckedUpdateWithoutTrayectosInput>
+  create: Prisma.XOR<Prisma.TiqueteCreateWithoutTrayectosInput, Prisma.TiqueteUncheckedCreateWithoutTrayectosInput>
+  where?: Prisma.TiqueteWhereInput
 }
 
-export type TiqueteUpsertWithWhereUniqueWithoutRutaInput = {
-  where: Prisma.TiqueteWhereUniqueInput
-  update: Prisma.XOR<Prisma.TiqueteUpdateWithoutRutaInput, Prisma.TiqueteUncheckedUpdateWithoutRutaInput>
-  create: Prisma.XOR<Prisma.TiqueteCreateWithoutRutaInput, Prisma.TiqueteUncheckedCreateWithoutRutaInput>
+export type TiqueteUpdateToOneWithWhereWithoutTrayectosInput = {
+  where?: Prisma.TiqueteWhereInput
+  data: Prisma.XOR<Prisma.TiqueteUpdateWithoutTrayectosInput, Prisma.TiqueteUncheckedUpdateWithoutTrayectosInput>
 }
 
-export type TiqueteUpdateWithWhereUniqueWithoutRutaInput = {
-  where: Prisma.TiqueteWhereUniqueInput
-  data: Prisma.XOR<Prisma.TiqueteUpdateWithoutRutaInput, Prisma.TiqueteUncheckedUpdateWithoutRutaInput>
-}
-
-export type TiqueteUpdateManyWithWhereWithoutRutaInput = {
-  where: Prisma.TiqueteScalarWhereInput
-  data: Prisma.XOR<Prisma.TiqueteUpdateManyMutationInput, Prisma.TiqueteUncheckedUpdateManyWithoutRutaInput>
-}
-
-export type TiqueteScalarWhereInput = {
-  AND?: Prisma.TiqueteScalarWhereInput | Prisma.TiqueteScalarWhereInput[]
-  OR?: Prisma.TiqueteScalarWhereInput[]
-  NOT?: Prisma.TiqueteScalarWhereInput | Prisma.TiqueteScalarWhereInput[]
-  id?: Prisma.IntFilter<"Tiquete"> | number
-  servicioId?: Prisma.IntFilter<"Tiquete"> | number
-  rutaId?: Prisma.IntFilter<"Tiquete"> | number
-  numeroTiquete?: Prisma.StringFilter<"Tiquete"> | string
-  revision?: Prisma.BoolFilter<"Tiquete"> | boolean
-  numeroTiqueteRevision?: Prisma.StringNullableFilter<"Tiquete"> | string | null
-  clase?: Prisma.StringFilter<"Tiquete"> | string
-  fechaIda?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
-  fechaRegreso?: Prisma.DateTimeNullableFilter<"Tiquete"> | Date | string | null
-  tarifaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tarifaAdministrativaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  ivaTarifaAdministrativa?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feeAgenciaNeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  ivaFeeAgencia?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalPagar?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFilter<"Tiquete"> | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFilter<"Tiquete"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  fechaEmisionTiqueteFES?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
-  createdAt?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Tiquete"> | Date | string
-}
-
-export type TiqueteCreateManyRutaInput = {
-  id?: number
-  servicioId: number
-  numeroTiquete: string
-  revision: boolean
-  numeroTiqueteRevision?: string | null
-  clase: string
-  fechaIda: Date | string
-  fechaRegreso?: Date | string | null
-  tarifaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tarifaAdministrativaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
-  ivaTarifaAdministrativa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feeAgenciaNeta: runtime.Decimal | runtime.DecimalJsLike | number | string
-  ivaFeeAgencia: runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta: runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalPagar: runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph: $Enums.TipoAPH
-  ivaTarifa: runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos: runtime.Decimal | runtime.DecimalJsLike | number | string
-  fechaEmisionTiqueteFES: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type TiqueteUpdateWithoutRutaInput = {
+export type TiqueteUpdateWithoutTrayectosInput = {
   numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
+  canalVenta?: Prisma.EnumCanalVentaFieldUpdateOperationsInput | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFieldUpdateOperationsInput | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFieldUpdateOperationsInput | $Enums.TipoItinerario
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   servicio?: Prisma.ServicioUpdateOneRequiredWithoutTiqueteNestedInput
 }
 
-export type TiqueteUncheckedUpdateWithoutRutaInput = {
+export type TiqueteUncheckedUpdateWithoutTrayectosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   servicioId?: Prisma.IntFieldUpdateOperationsInput | number
   numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoReserva?: Prisma.StringFieldUpdateOperationsInput | string
+  canalVenta?: Prisma.EnumCanalVentaFieldUpdateOperationsInput | $Enums.CanalVenta
+  tipoViaje?: Prisma.EnumTipoViajeFieldUpdateOperationsInput | $Enums.TipoViaje
+  tipoItinerario?: Prisma.EnumTipoItinerarioFieldUpdateOperationsInput | $Enums.TipoItinerario
   revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tarifaAPH?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ivaTarifaAPH?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type TiqueteUncheckedUpdateManyWithoutRutaInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  servicioId?: Prisma.IntFieldUpdateOperationsInput | number
-  numeroTiquete?: Prisma.StringFieldUpdateOperationsInput | string
-  revision?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numeroTiqueteRevision?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  clase?: Prisma.StringFieldUpdateOperationsInput | string
-  fechaIda?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  fechaRegreso?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  tarifaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tarifaAdministrativaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  ivaTarifaAdministrativa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feeAgenciaNeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  ivaFeeAgencia?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  feePagoTarjeta?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  totalPagar?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  aph?: Prisma.EnumTipoAPHFieldUpdateOperationsInput | $Enums.TipoAPH
-  ivaTarifa?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  otrosImpuestos?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  fechaEmisionTiqueteFES?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+
+/**
+ * Count Type TiqueteCountOutputType
+ */
+
+export type TiqueteCountOutputType = {
+  trayectos: number
 }
 
+export type TiqueteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  trayectos?: boolean | TiqueteCountOutputTypeCountTrayectosArgs
+}
+
+/**
+ * TiqueteCountOutputType without action
+ */
+export type TiqueteCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TiqueteCountOutputType
+   */
+  select?: Prisma.TiqueteCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * TiqueteCountOutputType without action
+ */
+export type TiqueteCountOutputTypeCountTrayectosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TrayectoTiqueteWhereInput
+}
 
 
 export type TiqueteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   servicioId?: boolean
-  rutaId?: boolean
   numeroTiquete?: boolean
+  codigoReserva?: boolean
+  canalVenta?: boolean
+  tipoViaje?: boolean
+  tipoItinerario?: boolean
   revision?: boolean
   numeroTiqueteRevision?: boolean
   clase?: boolean
-  fechaIda?: boolean
-  fechaRegreso?: boolean
   tarifaNeta?: boolean
+  ivaTarifa?: boolean
+  otrosImpuestos?: boolean
   tarifaAdministrativaNeta?: boolean
   ivaTarifaAdministrativa?: boolean
   feeAgenciaNeta?: boolean
   ivaFeeAgencia?: boolean
-  feePagoTarjeta?: boolean
+  tarifaAPH?: boolean
+  ivaTarifaAPH?: boolean
   totalPagar?: boolean
-  aph?: boolean
-  ivaTarifa?: boolean
-  otrosImpuestos?: boolean
   fechaEmisionTiqueteFES?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ruta?: boolean | Prisma.RutaDefaultArgs<ExtArgs>
+  trayectos?: boolean | Prisma.Tiquete$trayectosArgs<ExtArgs>
   servicio?: boolean | Prisma.ServicioDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.TiqueteCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tiquete"]>
 
 export type TiqueteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   servicioId?: boolean
-  rutaId?: boolean
   numeroTiquete?: boolean
+  codigoReserva?: boolean
+  canalVenta?: boolean
+  tipoViaje?: boolean
+  tipoItinerario?: boolean
   revision?: boolean
   numeroTiqueteRevision?: boolean
   clase?: boolean
-  fechaIda?: boolean
-  fechaRegreso?: boolean
   tarifaNeta?: boolean
+  ivaTarifa?: boolean
+  otrosImpuestos?: boolean
   tarifaAdministrativaNeta?: boolean
   ivaTarifaAdministrativa?: boolean
   feeAgenciaNeta?: boolean
   ivaFeeAgencia?: boolean
-  feePagoTarjeta?: boolean
+  tarifaAPH?: boolean
+  ivaTarifaAPH?: boolean
   totalPagar?: boolean
-  aph?: boolean
-  ivaTarifa?: boolean
-  otrosImpuestos?: boolean
   fechaEmisionTiqueteFES?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ruta?: boolean | Prisma.RutaDefaultArgs<ExtArgs>
   servicio?: boolean | Prisma.ServicioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tiquete"]>
 
 export type TiqueteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   servicioId?: boolean
-  rutaId?: boolean
   numeroTiquete?: boolean
+  codigoReserva?: boolean
+  canalVenta?: boolean
+  tipoViaje?: boolean
+  tipoItinerario?: boolean
   revision?: boolean
   numeroTiqueteRevision?: boolean
   clase?: boolean
-  fechaIda?: boolean
-  fechaRegreso?: boolean
   tarifaNeta?: boolean
+  ivaTarifa?: boolean
+  otrosImpuestos?: boolean
   tarifaAdministrativaNeta?: boolean
   ivaTarifaAdministrativa?: boolean
   feeAgenciaNeta?: boolean
   ivaFeeAgencia?: boolean
-  feePagoTarjeta?: boolean
+  tarifaAPH?: boolean
+  ivaTarifaAPH?: boolean
   totalPagar?: boolean
-  aph?: boolean
-  ivaTarifa?: boolean
-  otrosImpuestos?: boolean
   fechaEmisionTiqueteFES?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  ruta?: boolean | Prisma.RutaDefaultArgs<ExtArgs>
   servicio?: boolean | Prisma.ServicioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tiquete"]>
 
 export type TiqueteSelectScalar = {
   id?: boolean
   servicioId?: boolean
-  rutaId?: boolean
   numeroTiquete?: boolean
+  codigoReserva?: boolean
+  canalVenta?: boolean
+  tipoViaje?: boolean
+  tipoItinerario?: boolean
   revision?: boolean
   numeroTiqueteRevision?: boolean
   clase?: boolean
-  fechaIda?: boolean
-  fechaRegreso?: boolean
   tarifaNeta?: boolean
+  ivaTarifa?: boolean
+  otrosImpuestos?: boolean
   tarifaAdministrativaNeta?: boolean
   ivaTarifaAdministrativa?: boolean
   feeAgenciaNeta?: boolean
   ivaFeeAgencia?: boolean
-  feePagoTarjeta?: boolean
+  tarifaAPH?: boolean
+  ivaTarifaAPH?: boolean
   totalPagar?: boolean
-  aph?: boolean
-  ivaTarifa?: boolean
-  otrosImpuestos?: boolean
   fechaEmisionTiqueteFES?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TiqueteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "servicioId" | "rutaId" | "numeroTiquete" | "revision" | "numeroTiqueteRevision" | "clase" | "fechaIda" | "fechaRegreso" | "tarifaNeta" | "tarifaAdministrativaNeta" | "ivaTarifaAdministrativa" | "feeAgenciaNeta" | "ivaFeeAgencia" | "feePagoTarjeta" | "totalPagar" | "aph" | "ivaTarifa" | "otrosImpuestos" | "fechaEmisionTiqueteFES" | "createdAt" | "updatedAt", ExtArgs["result"]["tiquete"]>
+export type TiqueteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "servicioId" | "numeroTiquete" | "codigoReserva" | "canalVenta" | "tipoViaje" | "tipoItinerario" | "revision" | "numeroTiqueteRevision" | "clase" | "tarifaNeta" | "ivaTarifa" | "otrosImpuestos" | "tarifaAdministrativaNeta" | "ivaTarifaAdministrativa" | "feeAgenciaNeta" | "ivaFeeAgencia" | "tarifaAPH" | "ivaTarifaAPH" | "totalPagar" | "fechaEmisionTiqueteFES" | "createdAt" | "updatedAt", ExtArgs["result"]["tiquete"]>
 export type TiqueteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ruta?: boolean | Prisma.RutaDefaultArgs<ExtArgs>
+  trayectos?: boolean | Prisma.Tiquete$trayectosArgs<ExtArgs>
   servicio?: boolean | Prisma.ServicioDefaultArgs<ExtArgs>
+  _count?: boolean | Prisma.TiqueteCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TiqueteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ruta?: boolean | Prisma.RutaDefaultArgs<ExtArgs>
   servicio?: boolean | Prisma.ServicioDefaultArgs<ExtArgs>
 }
 export type TiqueteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  ruta?: boolean | Prisma.RutaDefaultArgs<ExtArgs>
   servicio?: boolean | Prisma.ServicioDefaultArgs<ExtArgs>
 }
 
 export type $TiquetePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Tiquete"
   objects: {
-    ruta: Prisma.$RutaPayload<ExtArgs>
+    trayectos: Prisma.$TrayectoTiquetePayload<ExtArgs>[]
     servicio: Prisma.$ServicioPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     servicioId: number
-    rutaId: number
     numeroTiquete: string
+    codigoReserva: string
+    canalVenta: $Enums.CanalVenta
+    tipoViaje: $Enums.TipoViaje
+    tipoItinerario: $Enums.TipoItinerario
     revision: boolean
     numeroTiqueteRevision: string | null
     clase: string
-    fechaIda: Date
-    fechaRegreso: Date | null
     tarifaNeta: runtime.Decimal
+    ivaTarifa: runtime.Decimal
+    otrosImpuestos: runtime.Decimal
     tarifaAdministrativaNeta: runtime.Decimal
     ivaTarifaAdministrativa: runtime.Decimal
     feeAgenciaNeta: runtime.Decimal
     ivaFeeAgencia: runtime.Decimal
-    feePagoTarjeta: runtime.Decimal
+    tarifaAPH: runtime.Decimal
+    ivaTarifaAPH: runtime.Decimal | null
     totalPagar: runtime.Decimal
-    aph: $Enums.TipoAPH
-    ivaTarifa: runtime.Decimal
-    otrosImpuestos: runtime.Decimal
     fechaEmisionTiqueteFES: Date
     createdAt: Date
     updatedAt: Date
@@ -1734,7 +1706,7 @@ readonly fields: TiqueteFieldRefs;
  */
 export interface Prisma__TiqueteClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  ruta<T extends Prisma.RutaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RutaDefaultArgs<ExtArgs>>): Prisma.Prisma__RutaClient<runtime.Types.Result.GetResult<Prisma.$RutaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  trayectos<T extends Prisma.Tiquete$trayectosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tiquete$trayectosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrayectoTiquetePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   servicio<T extends Prisma.ServicioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServicioDefaultArgs<ExtArgs>>): Prisma.Prisma__ServicioClient<runtime.Types.Result.GetResult<Prisma.$ServicioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1767,23 +1739,24 @@ export interface Prisma__TiqueteClient<T, Null = never, ExtArgs extends runtime.
 export interface TiqueteFieldRefs {
   readonly id: Prisma.FieldRef<"Tiquete", 'Int'>
   readonly servicioId: Prisma.FieldRef<"Tiquete", 'Int'>
-  readonly rutaId: Prisma.FieldRef<"Tiquete", 'Int'>
   readonly numeroTiquete: Prisma.FieldRef<"Tiquete", 'String'>
+  readonly codigoReserva: Prisma.FieldRef<"Tiquete", 'String'>
+  readonly canalVenta: Prisma.FieldRef<"Tiquete", 'CanalVenta'>
+  readonly tipoViaje: Prisma.FieldRef<"Tiquete", 'TipoViaje'>
+  readonly tipoItinerario: Prisma.FieldRef<"Tiquete", 'TipoItinerario'>
   readonly revision: Prisma.FieldRef<"Tiquete", 'Boolean'>
   readonly numeroTiqueteRevision: Prisma.FieldRef<"Tiquete", 'String'>
   readonly clase: Prisma.FieldRef<"Tiquete", 'String'>
-  readonly fechaIda: Prisma.FieldRef<"Tiquete", 'DateTime'>
-  readonly fechaRegreso: Prisma.FieldRef<"Tiquete", 'DateTime'>
   readonly tarifaNeta: Prisma.FieldRef<"Tiquete", 'Decimal'>
+  readonly ivaTarifa: Prisma.FieldRef<"Tiquete", 'Decimal'>
+  readonly otrosImpuestos: Prisma.FieldRef<"Tiquete", 'Decimal'>
   readonly tarifaAdministrativaNeta: Prisma.FieldRef<"Tiquete", 'Decimal'>
   readonly ivaTarifaAdministrativa: Prisma.FieldRef<"Tiquete", 'Decimal'>
   readonly feeAgenciaNeta: Prisma.FieldRef<"Tiquete", 'Decimal'>
   readonly ivaFeeAgencia: Prisma.FieldRef<"Tiquete", 'Decimal'>
-  readonly feePagoTarjeta: Prisma.FieldRef<"Tiquete", 'Decimal'>
+  readonly tarifaAPH: Prisma.FieldRef<"Tiquete", 'Decimal'>
+  readonly ivaTarifaAPH: Prisma.FieldRef<"Tiquete", 'Decimal'>
   readonly totalPagar: Prisma.FieldRef<"Tiquete", 'Decimal'>
-  readonly aph: Prisma.FieldRef<"Tiquete", 'TipoAPH'>
-  readonly ivaTarifa: Prisma.FieldRef<"Tiquete", 'Decimal'>
-  readonly otrosImpuestos: Prisma.FieldRef<"Tiquete", 'Decimal'>
   readonly fechaEmisionTiqueteFES: Prisma.FieldRef<"Tiquete", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Tiquete", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Tiquete", 'DateTime'>
@@ -2185,6 +2158,30 @@ export type TiqueteDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Tiquetes to delete.
    */
   limit?: number
+}
+
+/**
+ * Tiquete.trayectos
+ */
+export type Tiquete$trayectosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TrayectoTiquete
+   */
+  select?: Prisma.TrayectoTiqueteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TrayectoTiquete
+   */
+  omit?: Prisma.TrayectoTiqueteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrayectoTiqueteInclude<ExtArgs> | null
+  where?: Prisma.TrayectoTiqueteWhereInput
+  orderBy?: Prisma.TrayectoTiqueteOrderByWithRelationInput | Prisma.TrayectoTiqueteOrderByWithRelationInput[]
+  cursor?: Prisma.TrayectoTiqueteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TrayectoTiqueteScalarFieldEnum | Prisma.TrayectoTiqueteScalarFieldEnum[]
 }
 
 /**

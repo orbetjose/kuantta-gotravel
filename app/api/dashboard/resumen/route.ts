@@ -125,7 +125,7 @@ export async function GET(request: Request) {
           servicio: whereTotalVendido,
         },
         _sum: {
-          totalIngreso: true,
+          totalVentaAgencia: true,
         },
       }),
 
@@ -145,7 +145,7 @@ export async function GET(request: Request) {
           servicio: whereCartera,
         },
         _sum: {
-          totalIngreso: true,
+          totalVentaAgencia: true,
         },
       }),
 
@@ -165,22 +165,22 @@ export async function GET(request: Request) {
           servicio: wherePendienteFacturar,
         },
         _sum: {
-          totalIngreso: true,
+          totalVentaAgencia: true,
         },
       }),
     ]);
 
     const totalVendido =
       Number(totalVendidoTiquetes._sum.totalPagar ?? 0) +
-      Number(totalVendidoDetalles._sum.totalIngreso ?? 0);
+      Number(totalVendidoDetalles._sum?.totalVentaAgencia ?? 0);
 
     const totalCartera =
       Number(carteraTiquetes._sum.totalPagar ?? 0) +
-      Number(carteraDetalles._sum.totalIngreso ?? 0);
+      Number(carteraDetalles._sum?.totalVentaAgencia ?? 0);
 
     const pendientePorFacturar =
       Number(pendienteTiquetes._sum.totalPagar ?? 0) +
-      Number(pendienteDetalles._sum.totalIngreso ?? 0);
+      Number(pendienteDetalles._sum?.totalVentaAgencia ?? 0);
 
     // =========================================================
     // DATOS PARA LOS GRÁFICOS
@@ -207,7 +207,7 @@ export async function GET(request: Request) {
           servicio: whereTotalVendido,
         },
         select: {
-          totalIngreso: true,
+          totalVentaAgencia: true,
           servicio: {
             select: {
               tipo: true,
@@ -253,7 +253,7 @@ export async function GET(request: Request) {
 
       ventasPorTipoMap.set(
         tipo,
-        totalActual + Number(detalle.totalIngreso ?? 0),
+        totalActual + Number(detalle.totalVentaAgencia ?? 0),
       );
     }
 
@@ -306,7 +306,7 @@ export async function GET(request: Request) {
           servicio: whereVentasPeriodo,
         },
         select: {
-          totalIngreso: true,
+          totalVentaAgencia: true,
           servicio: {
             select: {
               fechaEmision: true,
@@ -334,7 +334,7 @@ export async function GET(request: Request) {
 
       ventasPorPeriodoMap.set(
         periodo,
-        actual + Number(detalle.totalIngreso ?? 0),
+        actual + Number(detalle.totalVentaAgencia ?? 0),
       );
     }
 

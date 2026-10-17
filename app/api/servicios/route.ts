@@ -121,7 +121,7 @@ export async function GET(request: Request) {
 
           detalleServicio: {
             select: {
-              totalIngreso: true,
+              totalVentaAgencia: true,
             },
           },
         },
@@ -136,7 +136,7 @@ export async function GET(request: Request) {
       const total =
         servicio.tipo === "TIQUETE"
           ? servicio.tiquete?.totalPagar
-          : servicio.detalleServicio?.totalIngreso;
+          : servicio.detalleServicio?.totalVentaAgencia;
 
       return {
         id: servicio.id,

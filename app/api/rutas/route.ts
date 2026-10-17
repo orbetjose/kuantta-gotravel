@@ -15,17 +15,23 @@ export async function GET(request: Request) {
       ? {
           OR: [
             {
-              origen: {
+              codigoIATA: {
                 contains: search,
                 mode: "insensitive" as const,
               },
             },
             {
-              destino: {
+              nombreAeropuerto: {
                 contains: search,
                 mode: "insensitive" as const,
               },
-            }
+            },
+            {
+              ciudad: {
+                contains: search,
+                mode: "insensitive" as const,
+              },
+            },
           ],
         }
       : undefined;
@@ -40,10 +46,10 @@ export async function GET(request: Request) {
         take: limit,
         select: {
           id: true,
-          origen: true,
-          destino: true,
-          codigoOrigen: true,
-          codigoDestino: true,
+          codigoIATA: true,
+          nombreAeropuerto: true,
+          ciudad: true,
+          pais: true,
           createdAt: true,
         },
       }),

@@ -1,14 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { formatDate } from "@/libs/helpers";
 
 type RutaDetailProps = {
   ruta: {
     id: number;
-    origen: string;
-    codigoOrigen: string;
-    destino: string;
-    codigoDestino: string;
+    codigoIATA: string;
+    nombreAeropuerto: string;
+    ciudad: string;
+    pais: string;
+    region: string | null;
     createdAt: Date;
     updatedAt: Date;
   };
@@ -17,9 +19,7 @@ type RutaDetailProps = {
 export default function RutaDetail({ ruta }: RutaDetailProps) {
   const router = useRouter();
 
-  const fechaRegistro = new Intl.DateTimeFormat("es-CO", {
-    dateStyle: "long",
-  }).format(new Date(ruta.createdAt));
+  const fechaRegistro = formatDate(ruta.createdAt);
 
   return (
     <div className="font-inter p-6 bg-fourth-gray rounded-lg w-full text-fifth-gray">
@@ -28,17 +28,15 @@ export default function RutaDetail({ ruta }: RutaDetailProps) {
         <div>
           <p className="text-sm text-fifth-gray">Detalle de la ruta</p>
 
-          <h1 className="text-4xl font-bold">
-            {ruta.origen} - {ruta.destino}
+          <h1 className="text-3xl font-bold">
+            {ruta.codigoIATA} - {ruta.ciudad} - {ruta.pais}
           </h1>
         </div>
         <div>
           <div className="flex gap-4">
             <button
               type="button"
-              onClick={() =>
-                router.push(`/dashboard/administracion/rutas/${ruta.id}/editar`)
-              }
+              onClick={() => router.push(`/dashboard/rutas/${ruta.id}/editar`)}
               className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
             >
               Editar ruta
@@ -56,40 +54,35 @@ export default function RutaDetail({ ruta }: RutaDetailProps) {
 
       {/* Información de la ruta */}
       <div className="rounded-lg bg-white p-6">
-        <h2 className="mb-6 text-xl font-bold">
-          Información de la ruta
-        </h2>
+        <h2 className="mb-6 text-xl font-bold">Información de la ruta</h2>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* Origen */}
           <div>
-            <p className="mb-1 text-sm text-fifth-gray">Origen</p>
+            <p className="mb-1 text-sm text-fifth-gray">Código IATA</p>
 
-            <p className="font-bold">{ruta.origen}</p>
+            <p className="font-bold">{ruta.codigoIATA}</p>
           </div>
 
-          {/* Destino */}
           <div>
-            <p className="mb-1 text-sm text-fifth-gray">Destino</p>
+            <p className="mb-1 text-sm text-fifth-gray">Aeropuerto</p>
 
-            <p className="font-bold">{ruta.destino}</p>
+            <p className="font-bold">{ruta.nombreAeropuerto}</p>
           </div>
-
-          {/* Codigo origen */}
           <div>
-            <p className="mb-1 text-sm text-fifth-gray">Código origen</p>
+            <p className="mb-1 text-sm text-fifth-gray">Ciudad</p>
 
-            <p className="font-bold">{ruta.codigoOrigen}</p>
+            <p className="font-bold">{ruta.ciudad}</p>
           </div>
-
-          {/* Codigo destino */}
           <div>
-            <p className="mb-1 text-sm text-fifth-gray">Código destino</p>
+            <p className="mb-1 text-sm text-fifth-gray">País</p>
 
-            <p className="font-bold">{ruta.codigoDestino}</p>
+            <p className="font-bold">{ruta.pais}</p>
           </div>
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Región</p>
 
-          {/* Fecha de registro */}
+            <p className="font-bold">{ruta.region}</p>
+          </div>
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Fecha de registro</p>
 

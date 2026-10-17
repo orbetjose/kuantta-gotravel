@@ -4,10 +4,10 @@ import { prisma } from "@/libs/prisma";
 import { auth } from "@/auth";
 import {
   providerSchema,
-  type ProviderFormValues,
+  type ProviderFormData,
 } from "@/libs/schemas/providerSchema";
 
-export async function createProveedor(data: ProviderFormValues) {
+export async function createProveedor(data: ProviderFormData) {
   const validatedData = providerSchema.safeParse(data);
 
   if (!validatedData.success) {
@@ -20,24 +20,13 @@ export async function createProveedor(data: ProviderFormValues) {
   try {
     const proveedor = await prisma.proveedor.create({
       data: {
-        razonSocial: validatedData.data.razonSocial,
-        ruc: validatedData.data.ruc,
-        direccionFiscal: validatedData.data.direccionFiscal,
-        telefono: validatedData.data.telefono,
-        correo: validatedData.data.correo,
+        ...validatedData.data,
       },
     });
 
     return {
       success: true,
-      proveedor: {
-        id: proveedor.id,
-        razonSocial: proveedor.razonSocial,
-        ruc: proveedor.ruc,
-        direccionFiscal: proveedor.direccionFiscal,
-        telefono: proveedor.telefono,
-        correo: proveedor.correo,
-      },
+      proveedor,
     };
   } catch (error) {
     console.error("Error creando proveedor:", error);
@@ -49,16 +38,9 @@ export async function createProveedor(data: ProviderFormValues) {
   }
 }
 
-
 export async function updateProveedor(
   proveedorId: number,
-  data: {
-    razonSocial: string;
-    ruc: string;
-    direccionFiscal: string;
-    correo: string;
-    telefono: string;
-  },
+  data: ProviderFormData,
 ) {
   const session = await auth();
 
@@ -66,6 +48,15 @@ export async function updateProveedor(
     return {
       success: false,
       error: "No autorizado.",
+    };
+  }
+
+  const validatedData = providerSchema.safeParse(data);
+
+  if (!validatedData.success) {
+    return {
+      success: false,
+      error: "Los datos del proveedor no son válidos.",
     };
   }
 
@@ -88,11 +79,7 @@ export async function updateProveedor(
         id: proveedorId,
       },
       data: {
-        razonSocial: data.razonSocial,
-        ruc: data.ruc,
-        direccionFiscal: data.direccionFiscal,
-        correo: data.correo,
-        telefono: data.telefono,
+        ...validatedData.data,
       },
     });
 

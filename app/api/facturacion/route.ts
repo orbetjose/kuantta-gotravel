@@ -85,7 +85,6 @@ export async function GET(request: Request) {
             select: {
               id: true,
               nombre: true,
-              apellido: true,
             },
           },
           tiquete: {
@@ -97,7 +96,7 @@ export async function GET(request: Request) {
           detalleServicio: {
             select: {
               id: true,
-              totalIngreso: true,
+              totalVentaAgencia: true,
             },
           },
         },
@@ -116,11 +115,11 @@ export async function GET(request: Request) {
       estado: servicio.estado,
       cliente: {
         id: servicio.cliente.id,
-        nombre: `${servicio.cliente.nombre} ${servicio.cliente.apellido}`,
+        nombre: `${servicio.cliente.nombre}`,
       },
       total: servicio.tiquete
         ? Number(servicio.tiquete.totalPagar)
-        : Number(servicio.detalleServicio?.totalIngreso),
+        : Number(servicio.detalleServicio?.totalVentaAgencia),
     }));
 
     return NextResponse.json({

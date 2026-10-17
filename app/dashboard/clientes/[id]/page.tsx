@@ -25,7 +25,7 @@ export default async function ClienteDetailPage({
         orderBy: {
           createdAt: "desc",
         },
-        take: 10,
+        take: 5,
         include: {
           proveedor: true,
           tiquete: {
@@ -37,7 +37,7 @@ export default async function ClienteDetailPage({
           detalleServicio: {
             select: {
               id: true,
-              totalIngreso: true,
+              totalVentaAgencia: true,
             },
           },
         },
@@ -64,7 +64,7 @@ const clienteData = {
     detalleServicio: servicio.detalleServicio
       ? {
           ...servicio.detalleServicio,
-          totalIngreso: Number(servicio.detalleServicio.totalIngreso),
+          totalVentaAgencia: Number(servicio.detalleServicio.totalVentaAgencia),
         }
       : null,
   })),

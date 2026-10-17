@@ -47,11 +47,6 @@ export default async function ServicioDetailPage({
       cliente: true,
       pasajero: true,
       proveedor: true,
-      tiquete: {
-        include: {
-          ruta: true,
-        },
-      },
       detalleServicio: true,
     },
   });
@@ -72,17 +67,13 @@ export default async function ServicioDetailPage({
     detalleServicio: servicio.detalleServicio
       ? {
           ...servicio.detalleServicio,
-          valorPagadoProveedor: Number(
-            servicio.detalleServicio.valorPagadoProveedor,
+          totalPagado: Number(
+            servicio.detalleServicio.totalPagado,
           ),
-          trm: Number(servicio.detalleServicio.trm),
           feePagoTarjetaCredito: Number(
             servicio.detalleServicio.feePagoTarjetaCredito,
           ),
-          valorPagadoGoTravel: Number(
-            servicio.detalleServicio.valorPagadoGoTravel,
-          ),
-          totalIngreso: Number(servicio.detalleServicio.totalIngreso),
+          totalIngreso: Number(servicio.detalleServicio.totalVentaAgencia),
         }
       : null,
   };

@@ -58,6 +58,7 @@ export const ModelName = {
   Servicio: 'Servicio',
   DetalleServicio: 'DetalleServicio',
   Tiquete: 'Tiquete',
+  TrayectoTiquete: 'TrayectoTiquete',
   Proveedor: 'Proveedor',
   Ruta: 'Ruta'
 } as const
@@ -115,9 +116,16 @@ export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeo
 export const ClienteScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
-  apellido: 'apellido',
-  correo: 'correo',
+  razonSocial: 'razonSocial',
+  tipoDocumento: 'tipoDocumento',
+  documento: 'documento',
+  direccion: 'direccion',
+  ciudad: 'ciudad',
   telefono: 'telefono',
+  correo: 'correo',
+  tipoPersona: 'tipoPersona',
+  observaciones: 'observaciones',
+  activo: 'activo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -129,8 +137,12 @@ export const PasajeroScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
   apellido: 'apellido',
+  documento: 'documento',
+  fechaNacimiento: 'fechaNacimiento',
   correo: 'correo',
   telefono: 'telefono',
+  preferenciaSilla: 'preferenciaSilla',
+  activo: 'activo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -146,6 +158,7 @@ export const ServicioScalarFieldEnum = {
   tipo: 'tipo',
   estado: 'estado',
   fechaEmision: 'fechaEmision',
+  fechaSolicitud: 'fechaSolicitud',
   facturaProveedorUrl: 'facturaProveedorUrl',
   facturaGoTravelUrl: 'facturaGoTravelUrl',
   soporteTiqueteElectronicoUrl: 'soporteTiqueteElectronicoUrl',
@@ -155,6 +168,7 @@ export const ServicioScalarFieldEnum = {
   numeroTarjeta: 'numeroTarjeta',
   numeroAprobacion: 'numeroAprobacion',
   creditoAgencia: 'creditoAgencia',
+  comprobantePagoUrl: 'comprobantePagoUrl',
   proyectoFCDS: 'proyectoFCDS',
   ceCos: 'ceCos',
   vencimientoFacturaProveedor: 'vencimientoFacturaProveedor',
@@ -179,11 +193,18 @@ export const DetalleServicioScalarFieldEnum = {
   servicioId: 'servicioId',
   descripcionServicio: 'descripcionServicio',
   codigoReserva: 'codigoReserva',
-  valorPagadoProveedor: 'valorPagadoProveedor',
-  trm: 'trm',
+  ciudad: 'ciudad',
+  pais: 'pais',
+  fechaIngreso: 'fechaIngreso',
+  fechaSalida: 'fechaSalida',
+  tarifaNeta: 'tarifaNeta',
+  ivaTarifa: 'ivaTarifa',
   feePagoTarjetaCredito: 'feePagoTarjetaCredito',
-  valorPagadoGoTravel: 'valorPagadoGoTravel',
-  totalIngreso: 'totalIngreso',
+  totalVentaAgencia: 'totalVentaAgencia',
+  tarifaNetaProveedor: 'tarifaNetaProveedor',
+  ivaTarifaProveedor: 'ivaTarifaProveedor',
+  comisionAgencia: 'comisionAgencia',
+  totalPagado: 'totalPagado',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -194,23 +215,24 @@ export type DetalleServicioScalarFieldEnum = (typeof DetalleServicioScalarFieldE
 export const TiqueteScalarFieldEnum = {
   id: 'id',
   servicioId: 'servicioId',
-  rutaId: 'rutaId',
   numeroTiquete: 'numeroTiquete',
+  codigoReserva: 'codigoReserva',
+  canalVenta: 'canalVenta',
+  tipoViaje: 'tipoViaje',
+  tipoItinerario: 'tipoItinerario',
   revision: 'revision',
   numeroTiqueteRevision: 'numeroTiqueteRevision',
   clase: 'clase',
-  fechaIda: 'fechaIda',
-  fechaRegreso: 'fechaRegreso',
   tarifaNeta: 'tarifaNeta',
+  ivaTarifa: 'ivaTarifa',
+  otrosImpuestos: 'otrosImpuestos',
   tarifaAdministrativaNeta: 'tarifaAdministrativaNeta',
   ivaTarifaAdministrativa: 'ivaTarifaAdministrativa',
   feeAgenciaNeta: 'feeAgenciaNeta',
   ivaFeeAgencia: 'ivaFeeAgencia',
-  feePagoTarjeta: 'feePagoTarjeta',
+  tarifaAPH: 'tarifaAPH',
+  ivaTarifaAPH: 'ivaTarifaAPH',
   totalPagar: 'totalPagar',
-  aph: 'aph',
-  ivaTarifa: 'ivaTarifa',
-  otrosImpuestos: 'otrosImpuestos',
   fechaEmisionTiqueteFES: 'fechaEmisionTiqueteFES',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -219,13 +241,36 @@ export const TiqueteScalarFieldEnum = {
 export type TiqueteScalarFieldEnum = (typeof TiqueteScalarFieldEnum)[keyof typeof TiqueteScalarFieldEnum]
 
 
+export const TrayectoTiqueteScalarFieldEnum = {
+  id: 'id',
+  tiqueteId: 'tiqueteId',
+  orden: 'orden',
+  origenId: 'origenId',
+  destinoId: 'destinoId',
+  fechaSalida: 'fechaSalida',
+  fechaRegreso: 'fechaRegreso'
+} as const
+
+export type TrayectoTiqueteScalarFieldEnum = (typeof TrayectoTiqueteScalarFieldEnum)[keyof typeof TrayectoTiqueteScalarFieldEnum]
+
+
 export const ProveedorScalarFieldEnum = {
   id: 'id',
   razonSocial: 'razonSocial',
-  ruc: 'ruc',
-  direccionFiscal: 'direccionFiscal',
+  nombreComercial: 'nombreComercial',
+  nit: 'nit',
+  categoria: 'categoria',
+  ciudad: 'ciudad',
+  direccion: 'direccion',
   telefono: 'telefono',
-  correo: 'correo',
+  correoComercial: 'correoComercial',
+  correoFacturacion: 'correoFacturacion',
+  contacto: 'contacto',
+  remuneracion: 'remuneracion',
+  monedaBase: 'monedaBase',
+  condicionPago: 'condicionPago',
+  documentosPdf: 'documentosPdf',
+  activo: 'activo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -235,10 +280,11 @@ export type ProveedorScalarFieldEnum = (typeof ProveedorScalarFieldEnum)[keyof t
 
 export const RutaScalarFieldEnum = {
   id: 'id',
-  origen: 'origen',
-  codigoOrigen: 'codigoOrigen',
-  destino: 'destino',
-  codigoDestino: 'codigoDestino',
+  codigoIATA: 'codigoIATA',
+  nombreAeropuerto: 'nombreAeropuerto',
+  ciudad: 'ciudad',
+  pais: 'pais',
+  region: 'region',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

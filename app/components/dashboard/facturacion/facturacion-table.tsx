@@ -7,14 +7,13 @@ import {
   getTiposStyles,
 } from "@/libs/helpers";
 import { facturarServicio } from "@/actions/servicios";
-import Pagination from "../pagination";
-import TableActions, { type TableAction } from "../table-actions";
+import Pagination from "../ui/pagination";
+import TableActions, { type TableAction } from "../ui/table-actions";
 import { getActions } from "@/libs/helpers";
 import { Servicios } from "@/types";
-import TableFilters from "../table-filters";
+import TableFilters from "../ui/table-filters";
 import { TableFilterValues } from "@/types";
 import { handleTableFiltersChange } from "@/libs/helpers";
-import { SearchInput } from "../search";
 
 type Pagination = {
   page: number;

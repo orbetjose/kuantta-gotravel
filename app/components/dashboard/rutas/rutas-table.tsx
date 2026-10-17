@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import BtnAdd from "@/app/components/dashboard/btn-add";
-import Pagination from "../pagination";
-import TableActions from "../table-actions";
-import { SearchInput } from "../search";
+import BtnAdd from "@/app/components/dashboard/ui/btn-add";
+import Pagination from "../ui/pagination";
+import TableActions from "../ui/table-actions";
+import { SearchInput } from "../ui/search";
 
 type Ruta = {
   id: number;
-  origen: string;
-  destino: string;
-  codigoOrigen: string;
-  codigoDestino: string;
+  codigoIATA: string;
+  nombreAeropuerto: string;
+  ciudad: string;
+  pais: string; 
   createdAt: string;
 };
 
@@ -97,7 +97,7 @@ export default function RutasTable() {
           </h1>
         </div>
         <BtnAdd
-          href="/dashboard/administracion/rutas/nuevo"
+          href="/dashboard/rutas/nuevo"
           services="Nueva ruta"
         />
       </div>
@@ -119,22 +119,22 @@ export default function RutasTable() {
           <thead>
             <tr className="border-b border-gray-200 text-left">
               <th className="px-4 pt-4 pb-2 font-inter text-sm font-bold text-fifth-gray">
-                Origen
+                Código IATA
               </th>
 
               <th className="px-4 pt-4 pb-2 font-inter text-sm font-bold text-fifth-gray">
-                Destino
+                Aeropuerto
               </th>
 
               <th className="px-4 pt-4 pb-2 font-inter text-sm font-bold text-fifth-gray">
-                Código origen
+                Ciudad
               </th>
 
               <th className="px-4 pt-4 pb-2 font-inter text-sm font-bold text-fifth-gray">
-                Código destino
+                País
               </th>
 
-              <th className="px-4 pt-4 pb-2 font-inter text-sm font-bold text-fifth-gray">
+              <th className="px-4 pt-4 pb-2 font-inter text-sm font-bold text-fifth-gray text-center">
                 Acciones
               </th>
             </tr>
@@ -168,31 +168,31 @@ export default function RutasTable() {
                   className="bg-fifth-gray/11 border-b border-gray-100 last:border-0 rounded-lg"
                 >
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray rounded-l-lg">
-                    {ruta.origen}
+                    {ruta.codigoIATA}
                   </td>
 
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
-                    {ruta.destino}
+                    {ruta.nombreAeropuerto}
                   </td>
 
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
-                    {ruta.codigoOrigen}
+                    {ruta.ciudad}
                   </td>
 
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
-                    {ruta.codigoDestino}
+                    {ruta.pais}
                   </td>
 
-                  <td className="px-4 py-2 rounded-r-lg">
+                  <td className="px-4 py-2 rounded-r-lg ">
                     <TableActions
                       actions={[
                         {
                           label: "Revisar",
-                          href: `/dashboard/administracion/rutas/${ruta.id}`,
+                          href: `/dashboard/rutas/${ruta.id}`,
                         },
                         {
                           label: "Editar",
-                          href: `/dashboard/administracion/rutas/${ruta.id}/editar`,
+                          href: `/dashboard/rutas/${ruta.id}/editar`,
                         },
                       ]}
                     />

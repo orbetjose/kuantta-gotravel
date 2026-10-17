@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import BtnAdd from "@/app/components/dashboard/btn-add";
-import Pagination from "../pagination";
-import TableActions from "../table-actions";
-import { SearchInput } from "../search";
+import BtnAdd from "@/app/components/dashboard/ui/btn-add";
+import Pagination from "../ui/pagination";
+import TableActions from "../ui/table-actions";
+import { SearchInput } from "../ui/search";
 
 type Proveedor = {
   id: number;
   razonSocial: string;
-  ruc: string;
-  correo: string;
+  nit: string;
+  categoria: string;
+  correoComercial: string;
   telefono: string;
   createdAt: string;
 };
@@ -33,6 +34,7 @@ export default function ProveedoresTable() {
 
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
@@ -117,13 +119,19 @@ export default function ProveedoresTable() {
 
       {/* Table */}
       <div className="overflow-x-auto rounded-lg p-4 bg-white shadow-sm">
-        <table className="w-full table-fixed 3xl:table-auto  min-w-175 border-separate border-spacing-y-3">
+        <table className="w-full border-separate border-spacing-y-3">
           <thead>
             <tr className="border-b border-gray-200 text-left">
               <th className="px-4 pt-4 font-inter text-sm font-bold text-fifth-gray md:w-75 3xl:w-auto">
                 Razón social
               </th>
 
+              <th className="px-4 pt-4 font-inter text-sm font-bold text-fifth-gray">
+                NIT
+              </th>
+              <th className="px-4 pt-4 font-inter text-sm font-bold text-fifth-gray">
+                Categoría
+              </th>
               <th className="px-4 pt-4 font-inter text-sm font-bold text-fifth-gray">
                 Correo
               </th>
@@ -168,11 +176,18 @@ export default function ProveedoresTable() {
                   className="bg-fifth-gray/11 border-b border-gray-100 last:border-0 rounded-lg"
                 >
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray rounded-l-lg md:max-w-55 3xl:max-w-full">
-                    <span className="block md:truncate 3xl:overflow-visible 3xl:whitespace-normal">{proveedor.razonSocial}</span>
+                    <span className="block md:truncate 3xl:overflow-visible 3xl:whitespace-normal">
+                      {proveedor.razonSocial}
+                    </span>
                   </td>
-
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
-                    {proveedor.correo}
+                    {proveedor.nit}
+                  </td>
+                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
+                    {proveedor.categoria}
+                  </td>
+                  <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
+                    {proveedor.correoComercial}
                   </td>
                   <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
                     {proveedor.telefono}

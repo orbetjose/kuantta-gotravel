@@ -21,7 +21,13 @@ export async function createCliente(data: ClientFormValues) {
     const cliente = await prisma.cliente.create({
       data: {
         nombre: validatedData.data.nombre,
-        apellido: validatedData.data.apellido,
+        razonSocial: validatedData.data.razonSocial,
+        tipoPersona: validatedData.data.tipoPersona,
+        documento: validatedData.data.documento,
+        tipoDocumento: validatedData.data.tipoDocumento,
+        direccion: validatedData.data.direccion,
+        ciudad: validatedData.data.ciudad,
+        observaciones: validatedData.data.observaciones,
         correo: validatedData.data.correo,
         telefono: validatedData.data.telefono,
       },
@@ -45,9 +51,15 @@ export async function updateCliente(
   clienteId: number,
   data: {
     nombre: string;
-    apellido: string;
+    razonSocial?: string;
+    tipoDocumento: "NIT" | "CEDULA" | "PASAPORTE";
+    documento: string;
+    direccion: string;
+    ciudad: string;
+    tipoPersona: "NATURAL" | "JURIDICA";
     correo: string;
     telefono: string;
+    observaciones?: string;
   },
 ) {
   const session = await auth();
@@ -79,7 +91,12 @@ export async function updateCliente(
       },
       data: {
         nombre: data.nombre,
-        apellido: data.apellido,
+        razonSocial: data.razonSocial,
+        tipoDocumento: data.tipoDocumento,
+        tipoPersona: data.tipoPersona,
+        documento: data.documento,
+        ciudad: data.ciudad,
+        observaciones: data.observaciones,
         correo: data.correo,
         telefono: data.telefono,
       },

@@ -42,25 +42,64 @@ model Account {
 }
 
 model Cliente {
-  id        Int        @id @default(autoincrement())
-  nombre    String
-  apellido  String
-  correo    String     @unique
+  id Int @id @default(autoincrement())
+
+  nombre      String
+  razonSocial String?
+
+  tipoDocumento TipoDocumento
+  documento     String        @unique
+
+  direccion String?
+  ciudad    String?
   telefono  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  correo    String
+
+  tipoPersona TipoPersona
+
+  observaciones String?
+
+  activo Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   servicios Servicio[]
 }
 
+enum TipoPersona {
+  NATURAL
+  JURIDICA
+}
+
+enum TipoDocumento {
+  NIT
+  CEDULA
+  PASAPORTE
+}
+
 model Pasajero {
-  id        Int        @id @default(autoincrement())
-  nombre    String
-  apellido  String
-  correo    String     @unique
-  telefono  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id Int @id @default(autoincrement())
+
+  nombre           String
+  apellido         String
+  documento        String           @unique
+  fechaNacimiento  DateTime
+  correo           String
+  telefono         String
+  preferenciaSilla PreferenciaSilla
+
+  activo Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   servicios Servicio[]
+}
+
+enum PreferenciaSilla {
+  VENTANA
+  PASILLO
 }
 
 model Servicio {
@@ -72,7 +111,8 @@ model Servicio {
   estado      EstadoServicio @default(BORRADOR)
 
   // Datos generales
-  fechaEmision DateTime
+  fechaEmision   DateTime
+  fechaSolicitud DateTime
 
   // Documentos
   facturaProveedorUrl          String?
@@ -86,6 +126,7 @@ model Servicio {
   numeroTarjeta    String?
   numeroAprobacion String?
   creditoAgencia   Int?
+  comprobantePagoUrl String?
 
   // Información administrativa
   proyectoFCDS String?
@@ -124,75 +165,172 @@ model DetalleServicio {
 
   descripcionServicio String
   codigoReserva       String
+  ciudad              String
+  pais                String
 
-  valorPagadoProveedor  Decimal
-  trm                   Decimal
+  fechaIngreso DateTime?
+  fechaSalida  DateTime?
+
+  tarifaNeta            Decimal
+  ivaTarifa             Decimal
   feePagoTarjetaCredito Decimal
-  valorPagadoGoTravel   Decimal
-  totalIngreso          Decimal
+  totalVentaAgencia     Decimal
+
+  tarifaNetaProveedor Decimal
+  ivaTarifaProveedor  Decimal
+  comisionAgencia     Decimal
+  totalPagado         Decimal
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   servicio  Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade)
 }
 
+enum TipoViaje {
+  NACIONAL
+  INTERNACIONAL
+}
+
+enum TipoItinerario {
+  SOLO_IDA
+  IDA_VUELTA
+  MULTIDESTINO
+}
+
+enum CanalVenta {
+  AMADEUS
+  SABRE
+  KONTROL_TRAVEL
+  KIU_TRAVEL
+  NDC
+  OTROS
+}
+
 model Tiquete {
   id         Int @id @default(autoincrement())
   servicioId Int @unique
 
-  rutaId        Int
   numeroTiquete String
+  codigoReserva String
+  canalVenta    CanalVenta
+
+  tipoViaje      TipoViaje
+  tipoItinerario TipoItinerario
+  trayectos      TrayectoTiquete[]
 
   revision              Boolean
   numeroTiqueteRevision String?
 
-  clase        String
-  fechaIda     DateTime
-  fechaRegreso DateTime?
+  clase String
 
   tarifaNeta               Decimal
+  ivaTarifa                Decimal
+  otrosImpuestos           Decimal
   tarifaAdministrativaNeta Decimal
   ivaTarifaAdministrativa  Decimal
   feeAgenciaNeta           Decimal
   ivaFeeAgencia            Decimal
-  feePagoTarjeta           Decimal
+  tarifaAPH                Decimal
+  ivaTarifaAPH             Decimal?
 
   totalPagar Decimal
-  aph        TipoAPH
-
-  ivaTarifa      Decimal
-  otrosImpuestos Decimal
 
   fechaEmisionTiqueteFES DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  ruta     Ruta     @relation(fields: [rutaId], references: [id])
   servicio Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade)
 }
 
+model TrayectoTiquete {
+  id            Int      @id @default(autoincrement())
+  tiqueteId     Int
+  orden         Int
+  origenId      Int
+  destinoId     Int
+  fechaSalida   DateTime
+  fechaRegreso  DateTime?
+
+  tiquete Tiquete @relation(fields: [tiqueteId],references: [id],onDelete: Cascade)
+
+  origen Ruta @relation("AeropuertoOrigen", fields: [origenId], references: [id])
+
+  destino Ruta @relation("AeropuertoDestino", fields: [destinoId], references: [id])
+
+  @@unique([tiqueteId, orden])
+  @@index([origenId])
+  @@index([destinoId])
+}
+
 model Proveedor {
-  id              Int        @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
   razonSocial     String
-  ruc             String     @unique
-  direccionFiscal String
-  telefono        String
-  correo          String
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  servicios       Servicio[]
+  nombreComercial String?
+  nit             String  @unique
+
+  categoria         CategoriaProveedor
+  ciudad            String?
+  direccion         String?
+  telefono          String?
+  correoComercial   String?
+  correoFacturacion String?
+  contacto          String?
+
+  remuneracion  RemuneracionProveedor
+  monedaBase    Moneda
+  condicionPago CondicionPago
+
+  documentosPdf String[]
+
+  activo Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  servicios Servicio[]
+}
+
+enum CategoriaProveedor {
+  HOTEL_CADENA
+  ASISTENCIA_MEDICA
+  TECNOLOGIA_GDS
+  CONSOLIDADOR
+  MAYORISTA
+  AEROLINEA
+  HOTEL_PLATAFORMA
+  TRANSPORTE_TERRESTRE
+}
+
+enum RemuneracionProveedor {
+  COMISION
+  NETO_MARKUP
+}
+
+enum Moneda {
+  COP
+  USD
+  EUR
+}
+
+enum CondicionPago {
+  INMEDIATO
+  CREDITO
 }
 
 model Ruta {
-  id            Int       @id @default(autoincrement())
-  origen        String
-  codigoOrigen  String
-  destino       String
-  codigoDestino String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  tiquetes      Tiquete[]
+  id               Int      @id @default(autoincrement())
+  codigoIATA       String   @unique
+  nombreAeropuerto String
+  ciudad           String
+  pais             String
+  region           String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  origenes TrayectoTiquete[] @relation("AeropuertoOrigen")
+  destinos TrayectoTiquete[] @relation("AeropuertoDestino")
 }
 
 enum Role {
@@ -235,15 +373,11 @@ enum EstadoServicio {
   ANULADO
 }
 
-enum TipoAPH {
-  NACIONAL
-  INTERNACIONAL
-}
-
 enum TipoPago {
   CASH
   TARJETA_CREDITO
   CREDITO_AGENCIA
+  OTROS
 }
 
 enum TipoCash {

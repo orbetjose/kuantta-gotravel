@@ -21,7 +21,13 @@ export async function GET(request: Request) {
               },
             },
             {
-              apellido: {
+              documento: {
+                contains: search,
+                mode: "insensitive" as const,
+              },
+            },
+            {
+              razonSocial: {
                 contains: search,
                 mode: "insensitive" as const,
               },
@@ -53,7 +59,8 @@ export async function GET(request: Request) {
         select: {
           id: true,
           nombre: true,
-          apellido: true,
+          documento: true,
+          tipoDocumento: true,
           correo: true,
           telefono: true,
           createdAt: true,

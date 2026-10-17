@@ -5,18 +5,38 @@ export const clientSchema = z.object({
     .string()
     .min(1, "Ingresa el nombre"),
 
-  apellido: z
+  razonSocial: z
     .string()
-    .min(1, "Ingresa el apellido"),
+    .optional(),
 
-  correo: z
+  tipoDocumento: z.enum(["NIT", "CEDULA", "PASAPORTE"]),
+
+  documento: z
     .string()
-    .min(1, "Ingresa el correo")
-    .email("Ingresa un correo válido"),
+    .min(1, "Ingresa el documento"),
+
+  direccion: z
+    .string()
+    .min(1, "Ingresa la dirección"),
+
+  ciudad: z
+    .string()
+    .min(1, "Ingresa la ciudad"),
 
   telefono: z
     .string()
-    .min(1, "Ingresa el teléfono"),
+    .min(1, "Ingresa el teléfono celular"),
+
+  correo: z
+    .string()
+    .min(1, "Ingresa el correo electrónico")
+    .email("Ingresa un correo válido"),
+
+  tipoPersona: z.enum(["NATURAL", "JURIDICA"]),
+
+  observaciones: z
+    .string()
+    .optional(),
 });
 
-export type ClientFormValues = z.infer<typeof clientSchema>;
+export type ClientFormValues = z.infer<typeof clientSchema>; 

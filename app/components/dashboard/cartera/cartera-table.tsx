@@ -9,11 +9,10 @@ import {
 import { getActions } from "@/libs/helpers";
 import { Servicios } from "@/types";
 import { TableFilterValues } from "@/types";
-import Pagination from "@/app/components/dashboard/pagination";
+import Pagination from "@/app/components/dashboard/ui/pagination";
 import PaymentModal from "@/app/components/dashboard/cartera/paymentModal";
-import TableActions from "@/app/components/dashboard/table-actions";
-import TableFilters from "@/app/components/dashboard/table-filters";
-import { SearchInput } from "@/app/components/dashboard/search";
+import TableActions from "@/app/components/dashboard/ui/table-actions";
+import TableFilters from "@/app/components/dashboard/ui/table-filters";
 
 type Pagination = {
   page: number;
@@ -150,7 +149,7 @@ export default function CarteraTable() {
               Cartera
             </h1>
           </div>
-          <div className="border-2 p-6 rounded-lg bg-white">
+          <div className="p-6 rounded-lg bg-white">
             <p className="font-poppins font-bold text-primary-blue text-lg">
               Total cartera: {formatCurrency(totalCartera)}
             </p>

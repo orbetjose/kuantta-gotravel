@@ -4,13 +4,48 @@ import { prisma } from "@/libs/prisma";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
+  const id = searchParams.get("id");
   const search = searchParams.get("q")?.trim() ?? "";
 
-  if (!search) {
-    return NextResponse.json([]);
-  }
+
 
   try {
+    if (id !== null) {
+      const pasajeroId = Number(id);
+
+      if (!Number.isInteger(pasajeroId) || pasajeroId <= 0) {
+        return NextResponse.json(
+          { error: "ID de pasajero inválido." },
+          { status: 400 },
+        );
+      }
+
+      const pasajero = await prisma.pasajero.findUnique({
+        where: { id: pasajeroId },
+        select: {
+          id: true,
+          nombre: true,
+          apellido: true,
+          documento: true,
+          correo: true,
+          telefono: true,
+        },
+      });
+
+      if (!pasajero) {
+        return NextResponse.json(
+          { error: "Pasajero no encontrado." },
+          { status: 404 },
+        );
+      }
+
+      return NextResponse.json(pasajero);
+    }
+
+    // Buscar clientes por texto
+    if (search.trim().length < 2) {
+      return NextResponse.json([]);
+    }
     const pasajeros = await prisma.pasajero.findMany({
       where: {
         OR: [
@@ -45,6 +80,8 @@ export async function GET(request: Request) {
         id: true,
         nombre: true,
         apellido: true,
+        documento: true,
+        telefono: true,
         correo: true,
       },
     });
@@ -53,6 +90,9 @@ export async function GET(request: Request) {
       pasajeros.map((pasajero) => ({
         value: String(pasajero.id),
         label: `${pasajero.nombre} ${pasajero.apellido}`,
+        documento: pasajero.documento,
+        correo: pasajero.correo,
+        telefono: pasajero.telefono,
       })),
     );
   } catch (error) {

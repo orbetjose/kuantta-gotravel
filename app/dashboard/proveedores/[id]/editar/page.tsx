@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/libs/prisma";
-import ProviderForm from "@/app/components/dashboard/provider-form";
+import ProviderForm from "@/app/components/dashboard/forms/provider-form";
 
 export default async function EditarProveedorPage({
   params,
@@ -32,10 +32,19 @@ export default async function EditarProveedorPage({
         proveedorId={proveedor.id}
         initialData={{
           razonSocial: proveedor.razonSocial,
-          ruc: proveedor.ruc,
-          direccionFiscal: proveedor.direccionFiscal,
-          correo: proveedor.correo,
-          telefono: proveedor.telefono,
+          nombreComercial: proveedor.nombreComercial ?? "",
+          nit: proveedor.nit,
+          categoria: proveedor.categoria,
+          ciudad: proveedor.ciudad ?? "",
+          direccion: proveedor.direccion ?? "",
+          telefono: proveedor.telefono ?? "",
+          correoComercial: proveedor.correoComercial ?? "",
+          correoFacturacion: proveedor.correoFacturacion ?? "",
+          contacto: proveedor.contacto ?? "",
+          remuneracion: proveedor.remuneracion,
+          monedaBase: proveedor.monedaBase,
+          condicionPago: proveedor.condicionPago,
+          documentosPdf: proveedor.documentosPdf ?? [],
         }}
       />
     </div>

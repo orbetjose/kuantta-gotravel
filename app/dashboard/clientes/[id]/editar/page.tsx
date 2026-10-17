@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/libs/prisma";
-import ClientForm from "@/app/components/dashboard/client-form";
+import ClientForm from "@/app/components/dashboard/forms/client-form";
 
 export default async function EditarClientePage({
   params,
@@ -32,9 +32,15 @@ export default async function EditarClientePage({
         clienteId={cliente.id}
         initialData={{
           nombre: cliente.nombre,
-          apellido: cliente.apellido,
-          correo: cliente.correo,
-          telefono: cliente.telefono,
+          tipoDocumento: cliente.tipoDocumento,
+          documento: cliente.documento,
+          direccion: cliente.direccion ?? "",
+          ciudad: cliente.ciudad ?? "",
+          tipoPersona: cliente.tipoPersona,
+          observaciones: cliente.observaciones ?? "",
+          razonSocial: cliente.razonSocial ?? "",
+          correo: cliente.correo ?? "",
+          telefono: cliente.telefono ?? "",
         }}
       />
     </div>

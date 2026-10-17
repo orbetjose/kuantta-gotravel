@@ -38,7 +38,7 @@ export default function ServicioActions({
   const [motivo, setMotivo] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const canEdit = estado !== "FACTURADO" && estado !== "ANULADO";
+  const canEdit = estado !== "FACTURADO" && estado !== "ANULADO" && estado !== "POR_FACTURAR";
 
   const canSubmit =
     (role === "ASESOR" || role === "ADMINISTRADOR") &&

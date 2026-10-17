@@ -5,6 +5,7 @@ type ServicioDetailProps = {
   servicio: any;
   role: "ADMINISTRADOR" | "ASESOR" | "FACTURADOR";
 };
+
 const formatCurrency = (value: unknown) => {
   return new Intl.NumberFormat("es-CO", {
     style: "currency",
@@ -33,7 +34,6 @@ export default function ServiciosDetail({
   role,
 }: ServicioDetailProps) {
   const cliente = servicio.cliente;
-  const pasajero = servicio.pasajero;
   const proveedor = servicio.proveedor;
   const tipoServicio = servicio.tipo;
 
@@ -76,34 +76,31 @@ export default function ServiciosDetail({
         </div>
       </div>
 
-      {/* Información general */}
       <section className="rounded-lg bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-lg font-bold">Información general</h2>
+        <h2 className="mb-2 text-lg font-bold">Información del cliente</h2>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-4 ">
+          <InfoItem label="Nombre" value={`${cliente.nombre}`} />
+          <InfoItem
+            label="Documento"
+            value={`${cliente.tipoDocumento} ${cliente.documento}`}
+          />
+          <InfoItem label="Correo" value={`${cliente.correo}`} />
+          <InfoItem label="Teléfono" value={`${cliente.telefono}`} />
+        </div>
+      </section>
+
+      <section className="rounded-lg bg-white p-6 shadow-sm">
+        <h2 className="mb-2 text-lg font-bold">Información del proveedor</h2>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <InfoItem label="Razón social" value={`${proveedor?.razonSocial}`} />
+          <InfoItem label="NIT" value={`${proveedor?.nit}`} />
           <InfoItem
-            label="Cliente"
-            value={`${cliente.nombre} ${cliente.apellido}`}
+            label="Correo comercial"
+            value={`${proveedor?.correoComercial}`}
           />
-
-          <InfoItem
-            label="Proveedor"
-            value={proveedor?.razonSocial ?? "Sin proveedor"}
-          />
-
-          <InfoItem
-            label="Fecha de emisión"
-            value={formatDate(servicio.fechaEmision)}
-          />
-
-          <InfoItem
-            label="Pasajero"
-            value={`${pasajero.nombre} ${pasajero.apellido}`}
-          />
-          <InfoItem
-            label="Código de reserva"
-            value={servicio.detalleServicio.codigoReserva}
-          />
+          <InfoItem label="Teléfono" value={`${proveedor?.telefono}`} />
           <InfoItem
             label="Pagado al proveedor"
             value={servicio.pagadoProveedor}
@@ -116,11 +113,65 @@ export default function ServiciosDetail({
             label="Fecha de vencimiento factura proveedor"
             value={formatDate(servicio.vencimientoFacturaProveedor)}
           />
+        </div>
+      </section>
+
+      <section className="rounded-lg bg-white p-6 shadow-sm">
+        <h2 className="mb-2 text-lg font-bold">Información del pasajero</h2>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <InfoItem
+            label="Pasajero"
+            value={`${servicio.pasajero.nombre} ${servicio.pasajero.apellido}`}
+          />
+
+          <InfoItem label="Documento" value={servicio.pasajero.documento} />
+
+          <InfoItem label="Teléfono" value={`${servicio.pasajero.telefono}`} />
+        </div>
+      </section>
+
+      {/* Información general */}
+      <section className="rounded-lg bg-white p-6 shadow-sm">
+        <h2 className="mb-6 text-lg font-bold">Información del servicio</h2>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <InfoItem label="Tipo de servicio" value={`${servicio.tipo}`} />
+
+          <InfoItem
+            label="Código de reserva"
+            value={servicio.detalleServicio.codigoReserva}
+          />
+
+          {servicio.tipo === "HOTEL" && (
+            <>
+              <InfoItem
+                label="Fecha de ingreso"
+                value={formatDate(servicio.detalleServicio.fechaIngreso)}
+              />
+
+              <InfoItem
+                label="Fecha de salida"
+                value={formatDate(servicio.detalleServicio.fechaSalida)}
+              />
+            </>
+          )}
+
+          <InfoItem
+            label="Fecha de solicitud"
+            value={formatDate(servicio.fechaSolicitud)}
+          />
+
+          <InfoItem
+            label="Fecha de emisión"
+            value={formatDate(servicio.fechaEmision)}
+          />
+
           <div className="mt-6 md:col-span-4">
             <InfoItem
               label="Descripcion del servicio"
               value={servicio.detalleServicio.descripcionServicio}
-              border
+              descripcion
             />
           </div>
         </div>
@@ -131,20 +182,38 @@ export default function ServiciosDetail({
 
         <div className="space-y-3">
           <AmountRow
+            label="Tarifa neta proveedor"
+            value={servicio.detalleServicio.tarifaNetaProveedor}
+          />
+          <AmountRow
+            label="Iva tarifa proveedor"
+            value={servicio.detalleServicio.ivaTarifaProveedor}
+          />
+          <AmountRow
+            label="Comisión agencia"
+            value={servicio.detalleServicio.comisionAgencia}
+          />
+          <AmountRow
             label="Valor pagado al proveedor"
-            value={servicio.detalleServicio.valorPagadoProveedor}
+            value={servicio.detalleServicio.totalPagado}
           />
 
-          <AmountRow label="TRM" value={servicio.detalleServicio.trm} />
-
           <AmountRow
-            label="Fee pago tarjeta de crédito"
+            label="Tarifa neta"
+            value={servicio.detalleServicio.tarifaNeta}
+          />
+          <AmountRow
+            label="Iva tarifa"
+            value={servicio.detalleServicio.ivaTarifa}
+          />
+          <AmountRow
+            label="Fee pago con tarjeta"
             value={servicio.detalleServicio.feePagoTarjetaCredito}
           />
 
           <AmountRow
             label="Valor pagado a Go Travel"
-            value={servicio.detalleServicio.valorPagadoGoTravel}
+            value={servicio.detalleServicio.totalVentaAgencia}
           />
 
           <div className="mt-4 flex items-center justify-between border-t pt-4">
@@ -201,7 +270,11 @@ export default function ServiciosDetail({
 
         {servicio.observaciones && (
           <div className="mt-6">
-            <InfoItem label="Observaciones" value={servicio.observaciones} border />
+            <InfoItem
+              label="Observaciones"
+              value={servicio.observaciones}
+              descripcion
+            />
           </div>
         )}
       </section>
@@ -259,24 +332,24 @@ export default function ServiciosDetail({
 function InfoItem({
   label,
   value,
-  border,
+  descripcion,
 }: {
   label: string;
   value: string | null | undefined;
-  border?: boolean
+  descripcion?: boolean;
 }) {
   return (
     <div>
       <p className="mb-1 text-sm text-fifth-gray">{label}</p>
 
-      <p className={`font-medium text-fifth-gray ${border && "border-2 py-2 px-2 rounded-lg min-h-30 border-fifth-gray"}`}>
+      <p
+        className={`font-medium text-fifth-gray ${descripcion && "py-2 px-2 rounded-lg min-h-30"}`}
+      >
         {value?.replace("_", " ") || "—"}
       </p>
     </div>
   );
 }
-
-
 
 function AmountRow({ label, value }: { label: string; value: unknown }) {
   return (

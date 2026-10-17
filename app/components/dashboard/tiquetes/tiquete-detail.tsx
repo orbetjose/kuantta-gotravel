@@ -1,8 +1,9 @@
+import { TiqueteDetailData } from "@/types/tiquete";
 import ServicioActions from "../servicios/servicio-actions";
-import { getEstadoStyles } from "@/libs/helpers";
+import { getEstadoStyles, formatDate } from "@/libs/helpers";
 
 type TiqueteDetailProps = {
-  tiquete: any;
+  tiquete: TiqueteDetailData;
   role: "ADMINISTRADOR" | "ASESOR" | "FACTURADOR";
 };
 
@@ -15,25 +16,13 @@ const formatCurrency = (value: unknown) => {
   }).format(Number(value));
 };
 
-const formatDate = (date: Date | string | null) => {
-  if (!date) return "—";
-
-  return new Intl.DateTimeFormat("es-CO", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(new Date(date));
-};
-
 const formatEstado = (estado: string) => {
   return estado.replaceAll("_", " ");
 };
 
 export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
   const cliente = tiquete.servicio.cliente;
-  const pasajero = tiquete.servicio.pasajero;
   const proveedor = tiquete.servicio.proveedor;
-  const ruta = tiquete.ruta;
   const servicio = tiquete.servicio;
 
   return (
@@ -70,68 +59,143 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
 
       {/* Información general */}
       <section className="rounded-lg bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-lg font-bold">Información general</h2>
+        <h2 className="mb-2 text-lg font-bold">Información del cliente</h2>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-4 ">
+          <InfoItem label="Nombre" value={`${cliente.nombre}`} />
+          <InfoItem
+            label="Documento"
+            value={`${cliente.tipoDocumento} ${cliente.documento}`}
+          />
+          <InfoItem label="Correo" value={`${cliente.correo}`} />
+          <InfoItem label="Teléfono" value={`${cliente.telefono}`} />
+        </div>
+      </section>
+      <section className="rounded-lg bg-white p-6 shadow-sm">
+        <h2 className="mb-2 text-lg font-bold">Información del proveedor</h2>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <InfoItem label="Razón social" value={`${proveedor?.razonSocial}`} />
+          <InfoItem label="NIT" value={`${proveedor?.nit}`} />
+          <InfoItem
+            label="Correo comercial"
+            value={`${proveedor?.correoComercial}`}
+          />
+          <InfoItem label="Teléfono" value={`${proveedor?.telefono}`} />
+        </div>
+      </section>
+      <section className="rounded-lg bg-white p-6 shadow-sm">
+        <h2 className="mb-2 text-lg font-bold">Información del pasajero</h2>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           <InfoItem
-            label="Cliente"
-            value={`${cliente.nombre} ${cliente.apellido}`}
+            label="Pasajero"
+            value={`${servicio.pasajero.nombre} ${servicio.pasajero.apellido}`}
           />
 
           <InfoItem
-            label="Proveedor"
-            value={proveedor?.razonSocial ?? "Sin proveedor"}
+            label="Documento"
+            value={servicio.pasajero.documento}
           />
-
-          <InfoItem label="Número de tiquete" value={tiquete.numeroTiquete} />
 
           <InfoItem
-            label="Fecha de emisión"
-            value={formatDate(tiquete.fechaEmision)}
+            label="Número de tiquete"
+            value={tiquete.numeroTiquete}
           />
+          <InfoItem label="Teléfono" value={`${servicio.pasajero.telefono}`} />
         </div>
       </section>
 
       {/* Trayecto */}
       <section className="rounded-lg bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-lg font-bold">Información del viaje</h2>
+        <h2 className="mb-2 text-lg font-bold">Información del viaje</h2>
 
-        <div className="mb-8 flex items-center gap-4">
-          <div>
-            <p className="text-2xl font-bold">{ruta.codigoOrigen}</p>
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-5 ">
+            <InfoItem label="Número de tiquete" value={tiquete.numeroTiquete} />
+            <InfoItem label="Código de reserva" value={tiquete.codigoReserva} />
 
-            <p className="text-sm text-fifth-gray">{ruta.origen}</p>
+            <InfoItem label="Tipo de viaje" value={tiquete.tipoViaje} />
+            <InfoItem label="Tipo itinerario" value={tiquete.tipoItinerario} />
+
+            <InfoItem
+              clases="text-right"
+              label="Fecha de emisión"
+              value={formatDate(servicio.fechaEmision)}
+            />
           </div>
+          {tiquete.trayectos.map((trayecto, index) => (
+            <div
+              key={trayecto.id}
+              className="border-b border-gray-100 pb-6 last:border-0 last:pb-0"
+            >
+              <p className="mb-4 text-sm font-medium text-fifth-gray">
+                Trayecto {index + 1}
+              </p>
 
-          <div className="flex-1 border-t border-dashed border-gray-300" />
+              <div className="mb-6 flex items-center gap-4">
+                <div className="min-w-0">
+                  <p className="text-2xl font-bold">
+                    {trayecto.origen.codigoIATA}
+                  </p>
+                  <p className="text-sm text-fifth-gray">
+                    {trayecto.origen.nombreAeropuerto}
+                  </p>
+                  <p className="text-sm text-fifth-gray">
+                    {trayecto.origen.ciudad}
+                  </p>
+                  <p className="text-sm text-fifth-gray">
+                    {trayecto.origen.pais}
+                  </p>
+                </div>
 
-          <div className="text-right">
-            <p className="text-2xl font-bold">{ruta.codigoDestino}</p>
+                <div className="flex-1 border-t border-dashed border-gray-300" />
 
-            <p className="text-sm text-fifth-gray">{ruta.destino}</p>
-          </div>
-        </div>
+                <div className="min-w-0 text-right">
+                  <p className="text-2xl font-bold">
+                    {trayecto.destino.codigoIATA}
+                  </p>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <InfoItem
-            label="Pasajero"
-            value={`${pasajero.nombre} ${pasajero.apellido}`}
-          />
+                  <p className="text-sm text-fifth-gray">
+                    {trayecto.destino.nombreAeropuerto}
+                  </p>
+                  <p className="text-sm text-fifth-gray">
+                    {trayecto.destino.ciudad}
+                  </p>
+                  <p className="text-sm text-fifth-gray">
+                    {trayecto.destino.pais}
+                  </p>
+                </div>
+              </div>
 
-          <InfoItem label="Clase" value={tiquete.clase} />
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-center">
+                <InfoItem
+                  label="Fecha de salida"
+                  value={formatDate(trayecto.fechaSalida)}
+                />
 
-          <InfoItem label="Fecha de ida" value={formatDate(tiquete.fechaIda)} />
+                <InfoItem
+                  clases="text-center"
+                  label="Clase"
+                  value={tiquete.clase}
+                />
 
-          <InfoItem
-            label="Fecha de regreso"
-            value={formatDate(tiquete.fechaRegreso)}
-          />
+                {trayecto.fechaRegreso && (
+                  <InfoItem
+                    clases="text-right"
+                    label="Fecha de regreso"
+                    value={formatDate(trayecto.fechaRegreso)}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Valores */}
       <section className="rounded-lg bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-lg font-bold">Valores</h2>
+        <h2 className="mb-2 text-lg font-bold">Valores</h2>
 
         <div className="space-y-3">
           <AmountRow label="Tarifa neta" value={tiquete.tarifaNeta} />
@@ -153,8 +217,8 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
           <AmountRow label="Fee agencia neta" value={tiquete.feeAgenciaNeta} />
 
           <AmountRow label="IVA fee agencia" value={tiquete.ivaFeeAgencia} />
-
-          <AmountRow label="Fee pago tarjeta" value={tiquete.feePagoTarjeta} />
+          <AmountRow label="Tarifa APH" value={tiquete.tarifaAPH} />
+          <AmountRow label="IVA tarifa APH" value={tiquete.ivaTarifaAPH} />
 
           <div className="mt-4 flex items-center justify-between border-t pt-4">
             <span className="text-lg font-bold">Total a pagar</span>
@@ -168,30 +232,33 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
 
       {/* Pago */}
       <section className="rounded-lg bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-lg font-bold">Información de pago</h2>
+        <h2 className="mb-2 text-lg font-bold">Información de pago</h2>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <InfoItem label="Forma de pago" value={tiquete.pago} />
+          <InfoItem label="Forma de pago" value={servicio.formaPago} />
 
-          {tiquete.tipoCash && (
-            <InfoItem label="Tipo de pago" value={tiquete.tipoCash} />
+          {servicio.tipoCash && (
+            <InfoItem label="Tipo de pago" value={servicio.tipoCash} />
           )}
 
-          {tiquete.creditoAgencia && (
+          {servicio.creditoAgencia && (
             <InfoItem
               label="Crédito agencia"
-              value={`${tiquete.creditoAgencia} días`}
+              value={`${servicio.creditoAgencia} días`}
             />
           )}
 
-          {tiquete.numeroTarjeta && (
-            <InfoItem label="Número de tarjeta" value={tiquete.numeroTarjeta} />
+          {servicio.numeroTarjeta && (
+            <InfoItem
+              label="Número de tarjeta"
+              value={servicio.numeroTarjeta}
+            />
           )}
 
-          {tiquete.numeroAprobacion && (
+          {servicio.numeroAprobacion && (
             <InfoItem
               label="Número de aprobación"
-              value={tiquete.numeroAprobacion}
+              value={servicio.numeroAprobacion}
             />
           )}
         </div>
@@ -199,14 +266,12 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
 
       {/* Información adicional */}
       <section className="rounded-lg bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-lg font-bold">Información adicional</h2>
+        <h2 className="mb-2 text-lg font-bold">Información adicional</h2>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <InfoItem label="APH" value={tiquete.aph} />
+          <InfoItem label="CECO" value={servicio.ceCos} />
 
-          <InfoItem label="CECO" value={tiquete.ceCos} />
-
-          <InfoItem label="Proyecto FCDS" value={tiquete.proyectoFCDS} />
+          <InfoItem label="Proyecto FCDS" value={servicio.proyectoFCDS} />
 
           <InfoItem
             label="Fecha emisión FES"
@@ -214,21 +279,21 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
           />
         </div>
 
-        {tiquete.observaciones && (
+        {servicio.observaciones && (
           <div className="mt-6">
-            <InfoItem label="Observaciones" value={tiquete.observaciones} />
+            <InfoItem label="Observaciones" value={servicio.observaciones} />
           </div>
         )}
       </section>
 
       {/* Documentos */}
       <section className="rounded-lg bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-lg font-bold">Documentos</h2>
+        <h2 className="mb-2 text-lg font-bold">Documentos</h2>
 
         <div className="flex flex-wrap gap-3">
-          {tiquete.facturaProveedorUrl && (
+          {servicio.facturaProveedorUrl && (
             <a
-              href={tiquete.facturaProveedorUrl}
+              href={servicio.facturaProveedorUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg border px-4 py-2 text-sm font-medium hover:bg-gray-50"
@@ -237,9 +302,9 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
             </a>
           )}
 
-          {tiquete.soporteTiqueteUrl && (
+          {servicio.soporteTiqueteElectronicoUrl && (
             <a
-              href={tiquete.soporteTiqueteUrl}
+              href={servicio.soporteTiqueteElectronicoUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg border px-4 py-2 text-sm font-medium hover:bg-gray-50"
@@ -248,9 +313,9 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
             </a>
           )}
 
-          {tiquete.facturaGoTravelUrl && (
+          {servicio.facturaGoTravelUrl && (
             <a
-              href={tiquete.facturaGoTravelUrl}
+              href={servicio.facturaGoTravelUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-lg border px-4 py-2 text-sm font-medium hover:bg-gray-50"
@@ -259,9 +324,9 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
             </a>
           )}
 
-          {!tiquete.facturaProveedorUrl &&
-            !tiquete.soporteTiqueteUrl &&
-            !tiquete.facturaGoTravelUrl && (
+          {servicio.facturaProveedorUrl &&
+            servicio.soporteTiqueteElectronicoUrl &&
+            servicio.facturaGoTravelUrl && (
               <p className="text-sm text-fifth-gray">
                 No hay documentos adjuntos.
               </p>
@@ -275,14 +340,15 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
 function InfoItem({
   label,
   value,
+  clases,
 }: {
   label: string;
   value: string | null | undefined;
+  clases?: string;
 }) {
   return (
-    <div>
+    <div className={`${clases}`}>
       <p className="mb-1 text-sm text-fifth-gray">{label}</p>
-
       <p className="font-medium text-fifth-gray">{value || "—"}</p>
     </div>
   );

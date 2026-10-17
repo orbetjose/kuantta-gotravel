@@ -1,9 +1,8 @@
 import { notFound, redirect } from "next/navigation";
 
 import { prisma } from "@/libs/prisma";
-import TicketForm from "@/app/components/dashboard/ticket-form";
+import TicketForm from "@/app/components/dashboard/forms/ticket-form";
 import { TicketFormInitialData } from "@/libs/schemas/ticketSchema";
-
 import {
   getClientes,
   getPasajeros,
@@ -37,7 +36,12 @@ export default async function EditarTiquetePage({
             pasajero: true,
           },
         },
-        ruta: true,
+        trayectos: {
+          include: {
+            origen: true,
+            destino: true,
+          },
+        },
       },
     }),
 
@@ -55,7 +59,7 @@ export default async function EditarTiquetePage({
     tiquete.servicio.estado === "FACTURADO" ||
     tiquete.servicio.estado === "ANULADO"
   ) {
-    redirect(`/dashboard/tiquetes/${tiqueteId}`);
+    redirect(`/dashboard/servicios/tiquete/${tiqueteId}`);
   }
 
   const initialData: TicketFormInitialData = {
@@ -63,13 +67,14 @@ export default async function EditarTiquetePage({
     // Servicio
     // -----------------------------
 
-    clienteId: tiquete.servicio.cliente.id,
+    clienteId: String(tiquete.servicio.cliente.id),
 
-    proveedorId: tiquete.servicio.proveedor?.id,
+    proveedorId: String(tiquete.servicio.proveedor?.id),
 
-    pasajeroId: tiquete.servicio.pasajero.id,
+    pasajeroId: String(tiquete.servicio.pasajero.id),
 
     fechaEmision: tiquete.servicio.fechaEmision.toISOString().split("T")[0],
+    fechaSolicitud: tiquete.servicio.fechaSolicitud.toISOString().split("T")[0],
 
     formaPago: tiquete.servicio.formaPago,
 
@@ -78,6 +83,14 @@ export default async function EditarTiquetePage({
       : undefined,
 
     numeroTarjeta: tiquete.servicio.numeroTarjeta ?? "",
+
+    codigoReserva: tiquete.codigoReserva,
+
+    canalVenta: tiquete.canalVenta,
+
+    tipoViaje: tiquete.tipoViaje,
+
+    tipoItinerario: tiquete.tipoItinerario,
 
     numeroAprobacion: tiquete.servicio.numeroAprobacion ?? "",
 
@@ -89,25 +102,28 @@ export default async function EditarTiquetePage({
 
     observaciones: tiquete.servicio.observaciones ?? "",
 
+    trayectos: tiquete.trayectos.map((trayecto) => ({
+      origenId: String(trayecto.origenId),
+      destinoId: String(trayecto.destinoId),
+      origenLabel: `${trayecto.origen.codigoIATA} — ${trayecto.origen.ciudad}, ${trayecto.origen.pais}`,
+      destinoLabel: `${trayecto.destino.codigoIATA} — ${trayecto.destino.ciudad}, ${trayecto.destino.pais}`,
+      fechaSalida: trayecto.fechaSalida.toISOString().split("T")[0],
+      fechaRegreso: trayecto.fechaRegreso
+        ? trayecto.fechaRegreso.toISOString().split("T")[0]
+        : "",
+    })),
+
     // -----------------------------
     // Tiquete
     // -----------------------------
 
     numeroTiquete: tiquete.numeroTiquete,
 
-    revision: tiquete.revision ? "SI" : "NO",
+    revision: tiquete.revision,
 
     numeroTiqueteRevision: tiquete.numeroTiqueteRevision ?? "",
 
-    rutaId: tiquete.rutaId,
-
     clase: tiquete.clase,
-
-    fechaIda: tiquete.fechaIda.toISOString().split("T")[0],
-
-    fechaRegreso: tiquete.fechaRegreso
-      ? tiquete.fechaRegreso.toISOString().split("T")[0]
-      : "",
 
     tarifaNeta: Number(tiquete.tarifaNeta),
 
@@ -122,12 +138,10 @@ export default async function EditarTiquetePage({
     feeAgenciaNeta: Number(tiquete.feeAgenciaNeta),
 
     ivaFeeAgencia: Number(tiquete.ivaFeeAgencia),
-
-    feePagoTarjeta: Number(tiquete.feePagoTarjeta),
+    tarifaAPH: Number(tiquete.tarifaAPH),
+    ivaTarifaAPH: Number(tiquete.ivaTarifaAPH),
 
     totalPagar: Number(tiquete.totalPagar),
-
-    aph: tiquete.aph,
 
     fechaEmisionTiqueteFES: tiquete.fechaEmisionTiqueteFES
       .toISOString()

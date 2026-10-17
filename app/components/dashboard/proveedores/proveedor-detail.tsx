@@ -1,19 +1,37 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { TipoServicio, EstadoServicio } from "@/libs/generated/prisma/client";
 import { getEstadoStyles } from "@/libs/helpers";
+import type {
+  CategoriaProveedor,
+  RemuneracionProveedor,
+  Moneda,
+  CondicionPago,
+  TipoServicio,
+  EstadoServicio,
+} from "@/libs/generated/prisma/client";
 
 type ProveedorDetailProps = {
   proveedor: {
     id: number;
     razonSocial: string;
-    ruc: string;
-    correo: string;
-    direccionFiscal: string;
-    telefono: string;
+    nombreComercial: string | null;
+    nit: string;
+    categoria: CategoriaProveedor;
+    ciudad: string | null;
+    direccion: string | null;
+    telefono: string | null;
+    correoComercial: string | null;
+    correoFacturacion: string | null;
+    contacto: string | null;
+    remuneracion: RemuneracionProveedor;
+    monedaBase: Moneda;
+    condicionPago: CondicionPago;
+    documentosPdf: string[];
+    activo: boolean;
     createdAt: Date;
     updatedAt: Date;
+
     servicios: {
       id: number;
       uuid: string;
@@ -29,6 +47,10 @@ type ProveedorDetailProps = {
       tiquete: {
         id: number;
         totalPagar: number;
+      } | null;
+      detalleServicio: {
+        id: number;
+        totalVentaAgencia: number;
       } | null;
     }[];
   };
@@ -53,17 +75,23 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
             ? `/dashboard/servicios/tiquete/${servicio.tiquete.id}`
             : null,
         };
-
-      // Cuando exista Hotel:
-      // case "HOTEL":
-      //   return {
-      //     id: servicio.hotel?.id,
-      //     totalPagar: servicio.hotel?.totalPagar,
-      //     href: servicio.hotel
-      //       ? `/dashboard/hoteles/${servicio.hotel.id}`
-      //       : null,
-      //   };
-
+      case "HOTEL":
+      case "ALQUILER_AUTO":
+      case "SALON":
+      case "EVENTO":
+      case "SILLA":
+      case "TARJETA_ASISTENCIA":
+      case "TRASLADO":
+      case "VISA":
+      case "WEB_CHECKIN":
+      case "PLAN_VACACIONAL":
+        return {
+          id: servicio.detalleServicio?.id ?? null,
+          totalPagar: servicio.detalleServicio?.totalVentaAgencia ?? null,
+          href: servicio.detalleServicio
+            ? `/dashboard/servicios/${servicio.tipo.toLowerCase().replace("_", "-")}/${servicio.detalleServicio.id}`
+            : null,
+        };
       default:
         return {
           id: null,
@@ -108,46 +136,115 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
       <div className="rounded-lg bg-white p-6">
         <h2 className="mb-6 text-xl font-bold">Información del proveedor</h2>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* razon social */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {/* Razón social */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Razón social</p>
-
             <p className="font-bold">{proveedor.razonSocial}</p>
           </div>
 
-          {/* ruc */}
+          {/* Nombre comercial */}
           <div>
-            <p className="mb-1 text-sm text-fifth-gray">RUC</p>
-
-            <p className="font-bold">{proveedor.ruc}</p>
+            <p className="mb-1 text-sm text-fifth-gray">Nombre comercial</p>
+            <p className="font-bold">{proveedor.nombreComercial ?? "—"}</p>
           </div>
 
-          {/* Correo */}
+          {/* NIT */}
           <div>
-            <p className="mb-1 text-sm text-fifth-gray">Correo electrónico</p>
+            <p className="mb-1 text-sm text-fifth-gray">NIT</p>
+            <p className="font-bold">{proveedor.nit}</p>
+          </div>
 
-            <p className="font-bold">{proveedor.correo}</p>
+          {/* Categoría */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Categoría</p>
+            <p className="font-bold">{proveedor.categoria}</p>
+          </div>
+
+          {/* Ciudad */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Ciudad</p>
+            <p className="font-bold">{proveedor.ciudad ?? "—"}</p>
+          </div>
+
+          {/* Dirección */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Dirección</p>
+            <p className="font-bold">{proveedor.direccion ?? "—"}</p>
           </div>
 
           {/* Teléfono */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Teléfono</p>
+            <p className="font-bold">{proveedor.telefono ?? "—"}</p>
+          </div>
 
-            <p className="font-bold">{proveedor.telefono}</p>
+          {/* Contacto */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Persona de contacto</p>
+            <p className="font-bold">{proveedor.contacto ?? "—"}</p>
+          </div>
+
+          {/* Correo comercial */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Correo comercial</p>
+            <p className="font-bold">{proveedor.correoComercial ?? "—"}</p>
+          </div>
+
+          {/* Correo de facturación */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">
+              Correo de facturación
+            </p>
+            <p className="font-bold">{proveedor.correoFacturacion ?? "—"}</p>
+          </div>
+
+          {/* Remuneración */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Remuneración</p>
+            <p className="font-bold">
+              {proveedor.remuneracion === "COMISION"
+                ? "Comisión"
+                : "Neto (Mark-up)"}
+            </p>
+          </div>
+
+          {/* Moneda base */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Moneda base</p>
+            <p className="font-bold">{proveedor.monedaBase}</p>
+          </div>
+
+          {/* Condición de pago */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Condición de pago</p>
+            <p className="font-bold">
+              {proveedor.condicionPago === "INMEDIATO"
+                ? "Inmediato"
+                : "Crédito"}
+            </p>
+          </div>
+
+          {/* Estado */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Estado</p>
+            <p className="font-bold">
+              {proveedor.activo ? "Activo" : "Inactivo"}
+            </p>
           </div>
 
           {/* Fecha de registro */}
           <div>
             <p className="mb-1 text-sm text-fifth-gray">Fecha de registro</p>
-
             <p className="font-bold">{fechaRegistro}</p>
           </div>
-          {/* Dirección fiscal */}
-          <div>
-            <p className="mb-1 text-sm text-fifth-gray">Dirección fiscal</p>
 
-            <p className="font-bold">{proveedor.direccionFiscal}</p>
+          {/* Última actualización */}
+          <div>
+            <p className="mb-1 text-sm text-fifth-gray">Última actualización</p>
+            <p className="font-bold">
+              {new Date(proveedor.updatedAt).toLocaleDateString("es-CO")}
+            </p>
           </div>
         </div>
       </div>

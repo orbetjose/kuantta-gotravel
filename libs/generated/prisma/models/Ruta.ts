@@ -36,30 +36,33 @@ export type RutaSumAggregateOutputType = {
 
 export type RutaMinAggregateOutputType = {
   id: number | null
-  origen: string | null
-  codigoOrigen: string | null
-  destino: string | null
-  codigoDestino: string | null
+  codigoIATA: string | null
+  nombreAeropuerto: string | null
+  ciudad: string | null
+  pais: string | null
+  region: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type RutaMaxAggregateOutputType = {
   id: number | null
-  origen: string | null
-  codigoOrigen: string | null
-  destino: string | null
-  codigoDestino: string | null
+  codigoIATA: string | null
+  nombreAeropuerto: string | null
+  ciudad: string | null
+  pais: string | null
+  region: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type RutaCountAggregateOutputType = {
   id: number
-  origen: number
-  codigoOrigen: number
-  destino: number
-  codigoDestino: number
+  codigoIATA: number
+  nombreAeropuerto: number
+  ciudad: number
+  pais: number
+  region: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -76,30 +79,33 @@ export type RutaSumAggregateInputType = {
 
 export type RutaMinAggregateInputType = {
   id?: true
-  origen?: true
-  codigoOrigen?: true
-  destino?: true
-  codigoDestino?: true
+  codigoIATA?: true
+  nombreAeropuerto?: true
+  ciudad?: true
+  pais?: true
+  region?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type RutaMaxAggregateInputType = {
   id?: true
-  origen?: true
-  codigoOrigen?: true
-  destino?: true
-  codigoDestino?: true
+  codigoIATA?: true
+  nombreAeropuerto?: true
+  ciudad?: true
+  pais?: true
+  region?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type RutaCountAggregateInputType = {
   id?: true
-  origen?: true
-  codigoOrigen?: true
-  destino?: true
-  codigoDestino?: true
+  codigoIATA?: true
+  nombreAeropuerto?: true
+  ciudad?: true
+  pais?: true
+  region?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -193,10 +199,11 @@ export type RutaGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type RutaGroupByOutputType = {
   id: number
-  origen: string
-  codigoOrigen: string
-  destino: string
-  codigoDestino: string
+  codigoIATA: string
+  nombreAeropuerto: string
+  ciudad: string
+  pais: string
+  region: string | null
   createdAt: Date
   updatedAt: Date
   _count: RutaCountAggregateOutputType | null
@@ -226,46 +233,53 @@ export type RutaWhereInput = {
   OR?: Prisma.RutaWhereInput[]
   NOT?: Prisma.RutaWhereInput | Prisma.RutaWhereInput[]
   id?: Prisma.IntFilter<"Ruta"> | number
-  origen?: Prisma.StringFilter<"Ruta"> | string
-  codigoOrigen?: Prisma.StringFilter<"Ruta"> | string
-  destino?: Prisma.StringFilter<"Ruta"> | string
-  codigoDestino?: Prisma.StringFilter<"Ruta"> | string
+  codigoIATA?: Prisma.StringFilter<"Ruta"> | string
+  nombreAeropuerto?: Prisma.StringFilter<"Ruta"> | string
+  ciudad?: Prisma.StringFilter<"Ruta"> | string
+  pais?: Prisma.StringFilter<"Ruta"> | string
+  region?: Prisma.StringNullableFilter<"Ruta"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Ruta"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Ruta"> | Date | string
-  tiquetes?: Prisma.TiqueteListRelationFilter
+  origenes?: Prisma.TrayectoTiqueteListRelationFilter
+  destinos?: Prisma.TrayectoTiqueteListRelationFilter
 }
 
 export type RutaOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  origen?: Prisma.SortOrder
-  codigoOrigen?: Prisma.SortOrder
-  destino?: Prisma.SortOrder
-  codigoDestino?: Prisma.SortOrder
+  codigoIATA?: Prisma.SortOrder
+  nombreAeropuerto?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrder
+  pais?: Prisma.SortOrder
+  region?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  tiquetes?: Prisma.TiqueteOrderByRelationAggregateInput
+  origenes?: Prisma.TrayectoTiqueteOrderByRelationAggregateInput
+  destinos?: Prisma.TrayectoTiqueteOrderByRelationAggregateInput
 }
 
 export type RutaWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  codigoIATA?: string
   AND?: Prisma.RutaWhereInput | Prisma.RutaWhereInput[]
   OR?: Prisma.RutaWhereInput[]
   NOT?: Prisma.RutaWhereInput | Prisma.RutaWhereInput[]
-  origen?: Prisma.StringFilter<"Ruta"> | string
-  codigoOrigen?: Prisma.StringFilter<"Ruta"> | string
-  destino?: Prisma.StringFilter<"Ruta"> | string
-  codigoDestino?: Prisma.StringFilter<"Ruta"> | string
+  nombreAeropuerto?: Prisma.StringFilter<"Ruta"> | string
+  ciudad?: Prisma.StringFilter<"Ruta"> | string
+  pais?: Prisma.StringFilter<"Ruta"> | string
+  region?: Prisma.StringNullableFilter<"Ruta"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Ruta"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Ruta"> | Date | string
-  tiquetes?: Prisma.TiqueteListRelationFilter
-}, "id">
+  origenes?: Prisma.TrayectoTiqueteListRelationFilter
+  destinos?: Prisma.TrayectoTiqueteListRelationFilter
+}, "id" | "codigoIATA">
 
 export type RutaOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  origen?: Prisma.SortOrder
-  codigoOrigen?: Prisma.SortOrder
-  destino?: Prisma.SortOrder
-  codigoDestino?: Prisma.SortOrder
+  codigoIATA?: Prisma.SortOrder
+  nombreAeropuerto?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrder
+  pais?: Prisma.SortOrder
+  region?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.RutaCountOrderByAggregateInput
@@ -280,81 +294,93 @@ export type RutaScalarWhereWithAggregatesInput = {
   OR?: Prisma.RutaScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RutaScalarWhereWithAggregatesInput | Prisma.RutaScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Ruta"> | number
-  origen?: Prisma.StringWithAggregatesFilter<"Ruta"> | string
-  codigoOrigen?: Prisma.StringWithAggregatesFilter<"Ruta"> | string
-  destino?: Prisma.StringWithAggregatesFilter<"Ruta"> | string
-  codigoDestino?: Prisma.StringWithAggregatesFilter<"Ruta"> | string
+  codigoIATA?: Prisma.StringWithAggregatesFilter<"Ruta"> | string
+  nombreAeropuerto?: Prisma.StringWithAggregatesFilter<"Ruta"> | string
+  ciudad?: Prisma.StringWithAggregatesFilter<"Ruta"> | string
+  pais?: Prisma.StringWithAggregatesFilter<"Ruta"> | string
+  region?: Prisma.StringNullableWithAggregatesFilter<"Ruta"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Ruta"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Ruta"> | Date | string
 }
 
 export type RutaCreateInput = {
-  origen: string
-  codigoOrigen: string
-  destino: string
-  codigoDestino: string
+  codigoIATA: string
+  nombreAeropuerto: string
+  ciudad: string
+  pais: string
+  region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tiquetes?: Prisma.TiqueteCreateNestedManyWithoutRutaInput
+  origenes?: Prisma.TrayectoTiqueteCreateNestedManyWithoutOrigenInput
+  destinos?: Prisma.TrayectoTiqueteCreateNestedManyWithoutDestinoInput
 }
 
 export type RutaUncheckedCreateInput = {
   id?: number
-  origen: string
-  codigoOrigen: string
-  destino: string
-  codigoDestino: string
+  codigoIATA: string
+  nombreAeropuerto: string
+  ciudad: string
+  pais: string
+  region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tiquetes?: Prisma.TiqueteUncheckedCreateNestedManyWithoutRutaInput
+  origenes?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutOrigenInput
+  destinos?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutDestinoInput
 }
 
 export type RutaUpdateInput = {
-  origen?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoOrigen?: Prisma.StringFieldUpdateOperationsInput | string
-  destino?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoDestino?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoIATA?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreAeropuerto?: Prisma.StringFieldUpdateOperationsInput | string
+  ciudad?: Prisma.StringFieldUpdateOperationsInput | string
+  pais?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tiquetes?: Prisma.TiqueteUpdateManyWithoutRutaNestedInput
+  origenes?: Prisma.TrayectoTiqueteUpdateManyWithoutOrigenNestedInput
+  destinos?: Prisma.TrayectoTiqueteUpdateManyWithoutDestinoNestedInput
 }
 
 export type RutaUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  origen?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoOrigen?: Prisma.StringFieldUpdateOperationsInput | string
-  destino?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoDestino?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoIATA?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreAeropuerto?: Prisma.StringFieldUpdateOperationsInput | string
+  ciudad?: Prisma.StringFieldUpdateOperationsInput | string
+  pais?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tiquetes?: Prisma.TiqueteUncheckedUpdateManyWithoutRutaNestedInput
+  origenes?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutOrigenNestedInput
+  destinos?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutDestinoNestedInput
 }
 
 export type RutaCreateManyInput = {
   id?: number
-  origen: string
-  codigoOrigen: string
-  destino: string
-  codigoDestino: string
+  codigoIATA: string
+  nombreAeropuerto: string
+  ciudad: string
+  pais: string
+  region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type RutaUpdateManyMutationInput = {
-  origen?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoOrigen?: Prisma.StringFieldUpdateOperationsInput | string
-  destino?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoDestino?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoIATA?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreAeropuerto?: Prisma.StringFieldUpdateOperationsInput | string
+  ciudad?: Prisma.StringFieldUpdateOperationsInput | string
+  pais?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RutaUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  origen?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoOrigen?: Prisma.StringFieldUpdateOperationsInput | string
-  destino?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoDestino?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoIATA?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreAeropuerto?: Prisma.StringFieldUpdateOperationsInput | string
+  ciudad?: Prisma.StringFieldUpdateOperationsInput | string
+  pais?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -366,10 +392,11 @@ export type RutaScalarRelationFilter = {
 
 export type RutaCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  origen?: Prisma.SortOrder
-  codigoOrigen?: Prisma.SortOrder
-  destino?: Prisma.SortOrder
-  codigoDestino?: Prisma.SortOrder
+  codigoIATA?: Prisma.SortOrder
+  nombreAeropuerto?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrder
+  pais?: Prisma.SortOrder
+  region?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -380,20 +407,22 @@ export type RutaAvgOrderByAggregateInput = {
 
 export type RutaMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  origen?: Prisma.SortOrder
-  codigoOrigen?: Prisma.SortOrder
-  destino?: Prisma.SortOrder
-  codigoDestino?: Prisma.SortOrder
+  codigoIATA?: Prisma.SortOrder
+  nombreAeropuerto?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrder
+  pais?: Prisma.SortOrder
+  region?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type RutaMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  origen?: Prisma.SortOrder
-  codigoOrigen?: Prisma.SortOrder
-  destino?: Prisma.SortOrder
-  codigoDestino?: Prisma.SortOrder
+  codigoIATA?: Prisma.SortOrder
+  nombreAeropuerto?: Prisma.SortOrder
+  ciudad?: Prisma.SortOrder
+  pais?: Prisma.SortOrder
+  region?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -402,72 +431,156 @@ export type RutaSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
-export type RutaCreateNestedOneWithoutTiquetesInput = {
-  create?: Prisma.XOR<Prisma.RutaCreateWithoutTiquetesInput, Prisma.RutaUncheckedCreateWithoutTiquetesInput>
-  connectOrCreate?: Prisma.RutaCreateOrConnectWithoutTiquetesInput
+export type RutaCreateNestedOneWithoutOrigenesInput = {
+  create?: Prisma.XOR<Prisma.RutaCreateWithoutOrigenesInput, Prisma.RutaUncheckedCreateWithoutOrigenesInput>
+  connectOrCreate?: Prisma.RutaCreateOrConnectWithoutOrigenesInput
   connect?: Prisma.RutaWhereUniqueInput
 }
 
-export type RutaUpdateOneRequiredWithoutTiquetesNestedInput = {
-  create?: Prisma.XOR<Prisma.RutaCreateWithoutTiquetesInput, Prisma.RutaUncheckedCreateWithoutTiquetesInput>
-  connectOrCreate?: Prisma.RutaCreateOrConnectWithoutTiquetesInput
-  upsert?: Prisma.RutaUpsertWithoutTiquetesInput
+export type RutaCreateNestedOneWithoutDestinosInput = {
+  create?: Prisma.XOR<Prisma.RutaCreateWithoutDestinosInput, Prisma.RutaUncheckedCreateWithoutDestinosInput>
+  connectOrCreate?: Prisma.RutaCreateOrConnectWithoutDestinosInput
   connect?: Prisma.RutaWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.RutaUpdateToOneWithWhereWithoutTiquetesInput, Prisma.RutaUpdateWithoutTiquetesInput>, Prisma.RutaUncheckedUpdateWithoutTiquetesInput>
 }
 
-export type RutaCreateWithoutTiquetesInput = {
-  origen: string
-  codigoOrigen: string
-  destino: string
-  codigoDestino: string
+export type RutaUpdateOneRequiredWithoutOrigenesNestedInput = {
+  create?: Prisma.XOR<Prisma.RutaCreateWithoutOrigenesInput, Prisma.RutaUncheckedCreateWithoutOrigenesInput>
+  connectOrCreate?: Prisma.RutaCreateOrConnectWithoutOrigenesInput
+  upsert?: Prisma.RutaUpsertWithoutOrigenesInput
+  connect?: Prisma.RutaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RutaUpdateToOneWithWhereWithoutOrigenesInput, Prisma.RutaUpdateWithoutOrigenesInput>, Prisma.RutaUncheckedUpdateWithoutOrigenesInput>
+}
+
+export type RutaUpdateOneRequiredWithoutDestinosNestedInput = {
+  create?: Prisma.XOR<Prisma.RutaCreateWithoutDestinosInput, Prisma.RutaUncheckedCreateWithoutDestinosInput>
+  connectOrCreate?: Prisma.RutaCreateOrConnectWithoutDestinosInput
+  upsert?: Prisma.RutaUpsertWithoutDestinosInput
+  connect?: Prisma.RutaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RutaUpdateToOneWithWhereWithoutDestinosInput, Prisma.RutaUpdateWithoutDestinosInput>, Prisma.RutaUncheckedUpdateWithoutDestinosInput>
+}
+
+export type RutaCreateWithoutOrigenesInput = {
+  codigoIATA: string
+  nombreAeropuerto: string
+  ciudad: string
+  pais: string
+  region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  destinos?: Prisma.TrayectoTiqueteCreateNestedManyWithoutDestinoInput
 }
 
-export type RutaUncheckedCreateWithoutTiquetesInput = {
+export type RutaUncheckedCreateWithoutOrigenesInput = {
   id?: number
-  origen: string
-  codigoOrigen: string
-  destino: string
-  codigoDestino: string
+  codigoIATA: string
+  nombreAeropuerto: string
+  ciudad: string
+  pais: string
+  region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  destinos?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutDestinoInput
 }
 
-export type RutaCreateOrConnectWithoutTiquetesInput = {
+export type RutaCreateOrConnectWithoutOrigenesInput = {
   where: Prisma.RutaWhereUniqueInput
-  create: Prisma.XOR<Prisma.RutaCreateWithoutTiquetesInput, Prisma.RutaUncheckedCreateWithoutTiquetesInput>
+  create: Prisma.XOR<Prisma.RutaCreateWithoutOrigenesInput, Prisma.RutaUncheckedCreateWithoutOrigenesInput>
 }
 
-export type RutaUpsertWithoutTiquetesInput = {
-  update: Prisma.XOR<Prisma.RutaUpdateWithoutTiquetesInput, Prisma.RutaUncheckedUpdateWithoutTiquetesInput>
-  create: Prisma.XOR<Prisma.RutaCreateWithoutTiquetesInput, Prisma.RutaUncheckedCreateWithoutTiquetesInput>
+export type RutaCreateWithoutDestinosInput = {
+  codigoIATA: string
+  nombreAeropuerto: string
+  ciudad: string
+  pais: string
+  region?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  origenes?: Prisma.TrayectoTiqueteCreateNestedManyWithoutOrigenInput
+}
+
+export type RutaUncheckedCreateWithoutDestinosInput = {
+  id?: number
+  codigoIATA: string
+  nombreAeropuerto: string
+  ciudad: string
+  pais: string
+  region?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  origenes?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutOrigenInput
+}
+
+export type RutaCreateOrConnectWithoutDestinosInput = {
+  where: Prisma.RutaWhereUniqueInput
+  create: Prisma.XOR<Prisma.RutaCreateWithoutDestinosInput, Prisma.RutaUncheckedCreateWithoutDestinosInput>
+}
+
+export type RutaUpsertWithoutOrigenesInput = {
+  update: Prisma.XOR<Prisma.RutaUpdateWithoutOrigenesInput, Prisma.RutaUncheckedUpdateWithoutOrigenesInput>
+  create: Prisma.XOR<Prisma.RutaCreateWithoutOrigenesInput, Prisma.RutaUncheckedCreateWithoutOrigenesInput>
   where?: Prisma.RutaWhereInput
 }
 
-export type RutaUpdateToOneWithWhereWithoutTiquetesInput = {
+export type RutaUpdateToOneWithWhereWithoutOrigenesInput = {
   where?: Prisma.RutaWhereInput
-  data: Prisma.XOR<Prisma.RutaUpdateWithoutTiquetesInput, Prisma.RutaUncheckedUpdateWithoutTiquetesInput>
+  data: Prisma.XOR<Prisma.RutaUpdateWithoutOrigenesInput, Prisma.RutaUncheckedUpdateWithoutOrigenesInput>
 }
 
-export type RutaUpdateWithoutTiquetesInput = {
-  origen?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoOrigen?: Prisma.StringFieldUpdateOperationsInput | string
-  destino?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoDestino?: Prisma.StringFieldUpdateOperationsInput | string
+export type RutaUpdateWithoutOrigenesInput = {
+  codigoIATA?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreAeropuerto?: Prisma.StringFieldUpdateOperationsInput | string
+  ciudad?: Prisma.StringFieldUpdateOperationsInput | string
+  pais?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  destinos?: Prisma.TrayectoTiqueteUpdateManyWithoutDestinoNestedInput
 }
 
-export type RutaUncheckedUpdateWithoutTiquetesInput = {
+export type RutaUncheckedUpdateWithoutOrigenesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  origen?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoOrigen?: Prisma.StringFieldUpdateOperationsInput | string
-  destino?: Prisma.StringFieldUpdateOperationsInput | string
-  codigoDestino?: Prisma.StringFieldUpdateOperationsInput | string
+  codigoIATA?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreAeropuerto?: Prisma.StringFieldUpdateOperationsInput | string
+  ciudad?: Prisma.StringFieldUpdateOperationsInput | string
+  pais?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  destinos?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutDestinoNestedInput
+}
+
+export type RutaUpsertWithoutDestinosInput = {
+  update: Prisma.XOR<Prisma.RutaUpdateWithoutDestinosInput, Prisma.RutaUncheckedUpdateWithoutDestinosInput>
+  create: Prisma.XOR<Prisma.RutaCreateWithoutDestinosInput, Prisma.RutaUncheckedCreateWithoutDestinosInput>
+  where?: Prisma.RutaWhereInput
+}
+
+export type RutaUpdateToOneWithWhereWithoutDestinosInput = {
+  where?: Prisma.RutaWhereInput
+  data: Prisma.XOR<Prisma.RutaUpdateWithoutDestinosInput, Prisma.RutaUncheckedUpdateWithoutDestinosInput>
+}
+
+export type RutaUpdateWithoutDestinosInput = {
+  codigoIATA?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreAeropuerto?: Prisma.StringFieldUpdateOperationsInput | string
+  ciudad?: Prisma.StringFieldUpdateOperationsInput | string
+  pais?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  origenes?: Prisma.TrayectoTiqueteUpdateManyWithoutOrigenNestedInput
+}
+
+export type RutaUncheckedUpdateWithoutDestinosInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  codigoIATA?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreAeropuerto?: Prisma.StringFieldUpdateOperationsInput | string
+  ciudad?: Prisma.StringFieldUpdateOperationsInput | string
+  pais?: Prisma.StringFieldUpdateOperationsInput | string
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  origenes?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutOrigenNestedInput
 }
 
 
@@ -476,11 +589,13 @@ export type RutaUncheckedUpdateWithoutTiquetesInput = {
  */
 
 export type RutaCountOutputType = {
-  tiquetes: number
+  origenes: number
+  destinos: number
 }
 
 export type RutaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tiquetes?: boolean | RutaCountOutputTypeCountTiquetesArgs
+  origenes?: boolean | RutaCountOutputTypeCountOrigenesArgs
+  destinos?: boolean | RutaCountOutputTypeCountDestinosArgs
 }
 
 /**
@@ -496,56 +611,69 @@ export type RutaCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * RutaCountOutputType without action
  */
-export type RutaCountOutputTypeCountTiquetesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TiqueteWhereInput
+export type RutaCountOutputTypeCountOrigenesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TrayectoTiqueteWhereInput
+}
+
+/**
+ * RutaCountOutputType without action
+ */
+export type RutaCountOutputTypeCountDestinosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TrayectoTiqueteWhereInput
 }
 
 
 export type RutaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  origen?: boolean
-  codigoOrigen?: boolean
-  destino?: boolean
-  codigoDestino?: boolean
+  codigoIATA?: boolean
+  nombreAeropuerto?: boolean
+  ciudad?: boolean
+  pais?: boolean
+  region?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  tiquetes?: boolean | Prisma.Ruta$tiquetesArgs<ExtArgs>
+  origenes?: boolean | Prisma.Ruta$origenesArgs<ExtArgs>
+  destinos?: boolean | Prisma.Ruta$destinosArgs<ExtArgs>
   _count?: boolean | Prisma.RutaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ruta"]>
 
 export type RutaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  origen?: boolean
-  codigoOrigen?: boolean
-  destino?: boolean
-  codigoDestino?: boolean
+  codigoIATA?: boolean
+  nombreAeropuerto?: boolean
+  ciudad?: boolean
+  pais?: boolean
+  region?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["ruta"]>
 
 export type RutaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  origen?: boolean
-  codigoOrigen?: boolean
-  destino?: boolean
-  codigoDestino?: boolean
+  codigoIATA?: boolean
+  nombreAeropuerto?: boolean
+  ciudad?: boolean
+  pais?: boolean
+  region?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["ruta"]>
 
 export type RutaSelectScalar = {
   id?: boolean
-  origen?: boolean
-  codigoOrigen?: boolean
-  destino?: boolean
-  codigoDestino?: boolean
+  codigoIATA?: boolean
+  nombreAeropuerto?: boolean
+  ciudad?: boolean
+  pais?: boolean
+  region?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RutaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "origen" | "codigoOrigen" | "destino" | "codigoDestino" | "createdAt" | "updatedAt", ExtArgs["result"]["ruta"]>
+export type RutaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "codigoIATA" | "nombreAeropuerto" | "ciudad" | "pais" | "region" | "createdAt" | "updatedAt", ExtArgs["result"]["ruta"]>
 export type RutaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tiquetes?: boolean | Prisma.Ruta$tiquetesArgs<ExtArgs>
+  origenes?: boolean | Prisma.Ruta$origenesArgs<ExtArgs>
+  destinos?: boolean | Prisma.Ruta$destinosArgs<ExtArgs>
   _count?: boolean | Prisma.RutaCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RutaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -554,14 +682,16 @@ export type RutaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $RutaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Ruta"
   objects: {
-    tiquetes: Prisma.$TiquetePayload<ExtArgs>[]
+    origenes: Prisma.$TrayectoTiquetePayload<ExtArgs>[]
+    destinos: Prisma.$TrayectoTiquetePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    origen: string
-    codigoOrigen: string
-    destino: string
-    codigoDestino: string
+    codigoIATA: string
+    nombreAeropuerto: string
+    ciudad: string
+    pais: string
+    region: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["ruta"]>
@@ -958,7 +1088,8 @@ readonly fields: RutaFieldRefs;
  */
 export interface Prisma__RutaClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  tiquetes<T extends Prisma.Ruta$tiquetesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ruta$tiquetesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TiquetePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  origenes<T extends Prisma.Ruta$origenesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ruta$origenesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrayectoTiquetePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  destinos<T extends Prisma.Ruta$destinosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Ruta$destinosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrayectoTiquetePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -989,10 +1120,11 @@ export interface Prisma__RutaClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface RutaFieldRefs {
   readonly id: Prisma.FieldRef<"Ruta", 'Int'>
-  readonly origen: Prisma.FieldRef<"Ruta", 'String'>
-  readonly codigoOrigen: Prisma.FieldRef<"Ruta", 'String'>
-  readonly destino: Prisma.FieldRef<"Ruta", 'String'>
-  readonly codigoDestino: Prisma.FieldRef<"Ruta", 'String'>
+  readonly codigoIATA: Prisma.FieldRef<"Ruta", 'String'>
+  readonly nombreAeropuerto: Prisma.FieldRef<"Ruta", 'String'>
+  readonly ciudad: Prisma.FieldRef<"Ruta", 'String'>
+  readonly pais: Prisma.FieldRef<"Ruta", 'String'>
+  readonly region: Prisma.FieldRef<"Ruta", 'String'>
   readonly createdAt: Prisma.FieldRef<"Ruta", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Ruta", 'DateTime'>
 }
@@ -1388,27 +1520,51 @@ export type RutaDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Ruta.tiquetes
+ * Ruta.origenes
  */
-export type Ruta$tiquetesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Ruta$origenesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Tiquete
+   * Select specific fields to fetch from the TrayectoTiquete
    */
-  select?: Prisma.TiqueteSelect<ExtArgs> | null
+  select?: Prisma.TrayectoTiqueteSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Tiquete
+   * Omit specific fields from the TrayectoTiquete
    */
-  omit?: Prisma.TiqueteOmit<ExtArgs> | null
+  omit?: Prisma.TrayectoTiqueteOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TiqueteInclude<ExtArgs> | null
-  where?: Prisma.TiqueteWhereInput
-  orderBy?: Prisma.TiqueteOrderByWithRelationInput | Prisma.TiqueteOrderByWithRelationInput[]
-  cursor?: Prisma.TiqueteWhereUniqueInput
+  include?: Prisma.TrayectoTiqueteInclude<ExtArgs> | null
+  where?: Prisma.TrayectoTiqueteWhereInput
+  orderBy?: Prisma.TrayectoTiqueteOrderByWithRelationInput | Prisma.TrayectoTiqueteOrderByWithRelationInput[]
+  cursor?: Prisma.TrayectoTiqueteWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.TiqueteScalarFieldEnum | Prisma.TiqueteScalarFieldEnum[]
+  distinct?: Prisma.TrayectoTiqueteScalarFieldEnum | Prisma.TrayectoTiqueteScalarFieldEnum[]
+}
+
+/**
+ * Ruta.destinos
+ */
+export type Ruta$destinosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TrayectoTiquete
+   */
+  select?: Prisma.TrayectoTiqueteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TrayectoTiquete
+   */
+  omit?: Prisma.TrayectoTiqueteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrayectoTiqueteInclude<ExtArgs> | null
+  where?: Prisma.TrayectoTiqueteWhereInput
+  orderBy?: Prisma.TrayectoTiqueteOrderByWithRelationInput | Prisma.TrayectoTiqueteOrderByWithRelationInput[]
+  cursor?: Prisma.TrayectoTiqueteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TrayectoTiqueteScalarFieldEnum | Prisma.TrayectoTiqueteScalarFieldEnum[]
 }
 
 /**

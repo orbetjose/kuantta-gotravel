@@ -11,8 +11,11 @@ export async function getClientes() {
     select: {
       id: true,
       nombre: true,
-      apellido: true,
+      tipoDocumento: true,
+      documento: true,
+      razonSocial: true,
       correo: true,
+      telefono: true,
     },
   });
 }
@@ -26,7 +29,10 @@ export async function getProveedores() {
     select: {
       id: true,
       razonSocial: true,
-      ruc: true,
+      nit: true,
+      correoComercial: true,
+      nombreComercial: true,
+      telefono: true,
     },
   });
 }
@@ -39,10 +45,10 @@ export async function getRutas() {
     take: 10,
     select: {
       id: true,
-      origen: true,
-      codigoOrigen: true,
-      destino: true,
-      codigoDestino: true,
+      codigoIATA: true,
+      nombreAeropuerto: true,
+      ciudad: true,
+      pais: true,
     },
   });
 }
@@ -58,6 +64,8 @@ export async function getPasajeros() {
       nombre: true,
       apellido: true,
       correo: true,
+      telefono: true,
+      documento: true,
     },
   });
 }

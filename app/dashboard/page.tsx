@@ -6,7 +6,6 @@ import DashboardStats from "@/app/components/dashboard/dashboard-stats";
 import DashboardSalesByType from "@/app/components/dashboard/dahsboard-sales-by-type";
 import DashboardSalesByPeriod from "@/app/components/dashboard/dashboard-sales-by-period";
 import DashboardServicesByQuantity from "../components/dashboard/dashboard-services-by-quantity";
-import { DashboardFilterValues } from "@/types";
 
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
@@ -46,19 +45,8 @@ export default function Dashboard() {
   });
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
-
-  const [filters, setFilters] = useState<DashboardFilterValues>({
-    fechaDesde: "",
-    fechaHasta: "",
-    tipo: "",
-    estado: "",
-  });
-
   const [loading, setLoading] = useState(false);
 
-  const handleFiltersChange = (values: DashboardFilterValues) => {
-    setFilters(values);
-  };
 
   useEffect(() => {
     const fetchDashboard = async () => {

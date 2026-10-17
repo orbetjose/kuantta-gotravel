@@ -2,52 +2,34 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/libs/prisma";
+import { ServiceFormValues } from "@/libs/schemas/serviceSchema";
 
-type servicioData = {
-  tipoServicio:
-    | "HOTEL"
-    | "ALQUILER_AUTO"
-    | "SALON"
-    | "EVENTO"
-    | "SILLA"
-    | "TARJETA_ASISTENCIA"
-    | "TRASLADO"
-    | "VISA"
-    | "WEB_CHECKIN"
-    | "PLAN_VACACIONAL";
-
-  clienteId: number;
-  proveedorId?: number;
-  pasajeroId: number;
-
-  // Campos comunes de Servicio
-  fechaEmision: string;
-  formaPago: "CASH" | "TARJETA_CREDITO" | "CREDITO_AGENCIA";
-
-  creditoAgencia?: "3" | "8" | "15" | "30";
-  numeroTarjeta?: string;
-  numeroAprobacion?: string;
-  tipoCash?: "EFECTIVO" | "TRANSFERENCIA";
-
-  ceCos?: string;
-  proyectoFCDS?: string;
-  observaciones?: string;
-
-  // Campos específicos de Servicio
-  pagadoProveedor: "SI" | "NO" | "NO_APLICA";
-
-  codigoReserva: string;
-  descripcionServicio: string;
-  fechaPagoCliente?: string;
-  fechaPagoProveedor?: string;
-  vencimientoFacturaProveedor?: string;
-
-  valorPagadoProveedor: number;
-  trm: number;
-  feePagoTarjetaCredito: number;
+const calcularIVA = (tarifa: number) => {
+  return Number((tarifa * 0.19).toFixed(2));
 };
 
-export async function createServicio(data: servicioData) {
+function calcularValoresIVA(data: {
+  tarifaNeta: number;
+  tarifaNetaProveedor: number;
+}) {
+  return {
+    ivaTarifa: calcularIVA(data.tarifaNeta),
+    ivaTarifaProveedor: calcularIVA(data.tarifaNetaProveedor),
+  };
+}
+
+function calcularTotalPagado(
+  data: ServiceFormValues,
+  ivaTarifaProveedor: number,
+) {
+  return data.tarifaNetaProveedor + ivaTarifaProveedor + data.comisionAgencia;
+}
+
+function calcularTotalVentaAgencia(data: ServiceFormValues, ivaTarifa: number) {
+  return data.tarifaNeta + ivaTarifa + data.feePagoTarjetaCredito;
+}
+
+export async function createServicio(data: ServiceFormValues) {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -56,17 +38,10 @@ export async function createServicio(data: servicioData) {
 
   try {
     const result = await prisma.$transaction(async (tx) => {
-      // -----------------------------------------
-      // 1. Validaciones
-      // -----------------------------------------
-
+      // 1. Validar relaciones
       const cliente = await tx.cliente.findUnique({
-        where: {
-          id: data.clienteId,
-        },
-        select: {
-          id: true,
-        },
+        where: { id: Number(data.clienteId) },
+        select: { id: true },
       });
 
       if (!cliente) {
@@ -74,12 +49,8 @@ export async function createServicio(data: servicioData) {
       }
 
       const pasajero = await tx.pasajero.findUnique({
-        where: {
-          id: data.pasajeroId,
-        },
-        select: {
-          id: true,
-        },
+        where: { id: Number(data.pasajeroId) },
+        select: { id: true },
       });
 
       if (!pasajero) {
@@ -88,12 +59,8 @@ export async function createServicio(data: servicioData) {
 
       if (data.proveedorId) {
         const proveedor = await tx.proveedor.findUnique({
-          where: {
-            id: data.proveedorId,
-          },
-          select: {
-            id: true,
-          },
+          where: { id: Number(data.proveedorId) },
+          select: { id: true },
         });
 
         if (!proveedor) {
@@ -101,35 +68,41 @@ export async function createServicio(data: servicioData) {
         }
       }
 
-      // -----------------------------------------
       // 2. Crear Servicio
-      // -----------------------------------------
-
       const servicio = await tx.servicio.create({
         data: {
-          clienteId: data.clienteId,
-          pasajeroId: data.pasajeroId,
-          proveedorId: data.proveedorId ?? null,
+          clienteId: Number(data.clienteId),
+          pasajeroId: Number(data.pasajeroId),
+          proveedorId: data.proveedorId ? Number(data.proveedorId) : null,
 
-          tipo: data.tipoServicio,
-          estado: "BORRADOR",
-
+          tipo: data.tipo,
+          estado: data.estado,
           creadoPorId: session.user.id,
 
-          // Campos comunes
           fechaEmision: new Date(data.fechaEmision),
+          fechaSolicitud: new Date(data.fechaSolicitud),
+
+          facturaProveedorUrl: String(data.facturaProveedorUrl) || null,
+          facturaGoTravelUrl: String(data.facturaGoTravelUrl) || null,
+          soporteTiqueteElectronicoUrl:
+            String(data.soporteTiqueteElectronicoUrl) || null,
+          comprobantePagoUrl: String(data.comprobantePagoUrl) || null,
+
           fechaPagoCliente: data.fechaPagoCliente
             ? new Date(data.fechaPagoCliente)
             : null,
+
           fechaPagoProveedor: data.fechaPagoProveedor
             ? new Date(data.fechaPagoProveedor)
             : null,
+
           vencimientoFacturaProveedor: data.vencimientoFacturaProveedor
             ? new Date(data.vencimientoFacturaProveedor)
             : null,
 
           formaPago: data.formaPago,
-          pagadoProveedor: data.pagadoProveedor,
+          pagadoProveedor: data.pagadoProveedor ?? null,
+          pagadoCliente: data.pagadoCliente,
 
           creditoAgencia:
             data.formaPago === "CREDITO_AGENCIA"
@@ -137,55 +110,54 @@ export async function createServicio(data: servicioData) {
               : null,
 
           numeroTarjeta:
-            data.formaPago === "TARJETA_CREDITO" ? data.numeroTarjeta : null,
+            data.formaPago === "TARJETA_CREDITO"
+              ? data.numeroTarjeta || null
+              : null,
+
           numeroAprobacion:
-            data.formaPago === "TARJETA_CREDITO" ? data.numeroAprobacion : null,
+            data.formaPago === "TARJETA_CREDITO"
+              ? data.numeroAprobacion || null
+              : null,
 
-          tipoCash: data.formaPago === "CASH" ? data.tipoCash : null,
+          tipoCash: data.formaPago === "CASH" ? (data.tipoCash ?? null) : null,
 
-          ceCos: data.ceCos || null,
-          proyectoFCDS: data.proyectoFCDS || null,
-
-          observaciones: data.observaciones || null,
-
-          // Archivos todavía sin Storage
-          facturaProveedorUrl: null,
-          facturaGoTravelUrl: null,
-          soporteTiqueteElectronicoUrl: null,
+          ceCos: data.ceCos?.trim() || null,
+          proyectoFCDS: data.proyectoFCDS?.trim() || null,
+          observaciones: data.observaciones?.trim() || null,
         },
       });
 
-      // -----------------------------------------
-      // 3. Crear Tiquete
-      // -----------------------------------------
+      const valoresIVA = calcularValoresIVA(data);
 
-      const valorPagadoGoTravel =
-        data.valorPagadoProveedor + data.trm + data.feePagoTarjetaCredito;
-
-      const totalIngreso = valorPagadoGoTravel - data.valorPagadoProveedor;
-
+      // 3. Crear DetalleServicio
       const detalleServicio = await tx.detalleServicio.create({
         data: {
           servicioId: servicio.id,
 
-          codigoReserva: data.codigoReserva,
           descripcionServicio: data.descripcionServicio,
+          codigoReserva: data.codigoReserva,
+          ciudad: data.ciudad,
+          pais: data.pais,
 
-          valorPagadoProveedor: data.valorPagadoProveedor,
+          fechaIngreso: data.fechaIngreso ? new Date(data.fechaIngreso) : null,
 
-          trm: data.trm,
+          fechaSalida: data.fechaSalida ? new Date(data.fechaSalida) : null,
 
+          tarifaNeta: data.tarifaNeta,
           feePagoTarjetaCredito: data.feePagoTarjetaCredito,
-          valorPagadoGoTravel: valorPagadoGoTravel,
+          ...valoresIVA,
+          tarifaNetaProveedor: data.tarifaNetaProveedor,
+          comisionAgencia: data.comisionAgencia,
+          totalPagado: calcularTotalPagado(data, valoresIVA.ivaTarifaProveedor),
 
-          totalIngreso: totalIngreso,
+          totalVentaAgencia: calcularTotalVentaAgencia(
+            data,
+            valoresIVA.ivaTarifa,
+          ),
         },
       });
 
-      return {
-        servicio,
-        detalleServicio,
-      };
+      return { servicio, detalleServicio };
     });
 
     return {
@@ -200,14 +172,17 @@ export async function createServicio(data: servicioData) {
 
     return {
       success: false,
-      error: "No se pudo crear el servicio.",
+      error:
+        error instanceof Error
+          ? error.message
+          : "No se pudo crear el servicio.",
     };
   }
 }
 
 export async function updateServicio(
   detalleServicioId: number,
-  data: servicioData,
+  data: ServiceFormValues,
 ) {
   const session = await auth();
 
@@ -215,11 +190,8 @@ export async function updateServicio(
     throw new Error("No estás autenticado.");
   }
 
-  // 1. Buscar el detalle y su servicio
   const detalleServicio = await prisma.detalleServicio.findUnique({
-    where: {
-      id: detalleServicioId,
-    },
+    where: { id: detalleServicioId },
     select: {
       id: true,
       servicioId: true,
@@ -236,39 +208,38 @@ export async function updateServicio(
     throw new Error("El servicio no existe.");
   }
 
-  // 2. No permitir editar estados finales
   if (
     detalleServicio.servicio.estado === "FACTURADO" ||
     detalleServicio.servicio.estado === "ANULADO"
   ) {
     throw new Error(
-      "Este tiquete no puede editarse porque ya está facturado o anulado.",
+      "Este servicio no puede editarse porque ya está facturado o anulado.",
     );
   }
 
-  // 3. Validar cliente
+  // Validar relaciones
   const cliente = await prisma.cliente.findUnique({
-    where: {
-      id: data.clienteId,
-    },
-    select: {
-      id: true,
-    },
+    where: { id: Number(data.clienteId) },
+    select: { id: true },
   });
 
   if (!cliente) {
     throw new Error("El cliente seleccionado no existe.");
   }
 
-  // 4. Validar proveedor si existe
+  const pasajero = await prisma.pasajero.findUnique({
+    where: { id: Number(data.pasajeroId) },
+    select: { id: true },
+  });
+
+  if (!pasajero) {
+    throw new Error("El pasajero seleccionado no existe.");
+  }
+
   if (data.proveedorId) {
     const proveedor = await prisma.proveedor.findUnique({
-      where: {
-        id: data.proveedorId,
-      },
-      select: {
-        id: true,
-      },
+      where: { id: Number(data.proveedorId) },
+      select: { id: true },
     });
 
     if (!proveedor) {
@@ -276,39 +247,40 @@ export async function updateServicio(
     }
   }
 
-  // 6. Calcular total en el servidor
-  const valorPagadoGoTravel =
-    data.valorPagadoProveedor + data.trm + data.feePagoTarjetaCredito;
-
-  const totalIngreso = valorPagadoGoTravel - data.valorPagadoProveedor;
-
-  // 7. Actualizar Servicio + Tiquete
   const resultado = await prisma.$transaction(async (tx) => {
-    // -----------------------------------------
-    // Servicio
-    // -----------------------------------------
-
+    // 1. Actualizar Servicio
     const servicio = await tx.servicio.update({
-      where: {
-        id: detalleServicio.servicioId,
-      },
+      where: { id: detalleServicio.servicioId },
       data: {
-        clienteId: data.clienteId,
-        proveedorId: data.proveedorId ?? null,
+        clienteId: Number(data.clienteId),
+        pasajeroId: Number(data.pasajeroId),
+        proveedorId: data.proveedorId ? Number(data.proveedorId) : null,
+        estado: data.estado,
+        tipo: data.tipo,
 
         fechaEmision: new Date(data.fechaEmision),
+        fechaSolicitud: new Date(data.fechaSolicitud),
+
+        facturaProveedorUrl: String(data.facturaProveedorUrl) || null,
+        facturaGoTravelUrl: String(data.facturaGoTravelUrl) || null,
+        soporteTiqueteElectronicoUrl:
+          String(data.soporteTiqueteElectronicoUrl) || null,
+        comprobantePagoUrl: String(data.comprobantePagoUrl) || null,
+
         fechaPagoCliente: data.fechaPagoCliente
           ? new Date(data.fechaPagoCliente)
           : null,
+
         fechaPagoProveedor: data.fechaPagoProveedor
           ? new Date(data.fechaPagoProveedor)
           : null,
+
         vencimientoFacturaProveedor: data.vencimientoFacturaProveedor
           ? new Date(data.vencimientoFacturaProveedor)
           : null,
 
-        pagadoProveedor: data.pagadoProveedor,
-
+        pagadoProveedor: data.pagadoProveedor ?? null,
+        pagadoCliente: data.pagadoCliente,
         formaPago: data.formaPago,
 
         creditoAgencia:
@@ -317,44 +289,48 @@ export async function updateServicio(
             : null,
 
         numeroTarjeta:
-          data.formaPago === "TARJETA_CREDITO" ? data.numeroTarjeta : null,
+          data.formaPago === "TARJETA_CREDITO"
+            ? data.numeroTarjeta || null
+            : null,
+
         numeroAprobacion:
-          data.formaPago === "TARJETA_CREDITO" ? data.numeroAprobacion : null,
+          data.formaPago === "TARJETA_CREDITO"
+            ? data.numeroAprobacion || null
+            : null,
 
-        tipoCash: data.formaPago === "CASH" ? data.tipoCash : null,
-
-        tipo: data.tipoServicio,
+        tipoCash: data.formaPago === "CASH" ? (data.tipoCash ?? null) : null,
 
         ceCos: data.ceCos?.trim() || null,
-
         proyectoFCDS: data.proyectoFCDS?.trim() || null,
-
         observaciones: data.observaciones?.trim() || null,
       },
     });
 
-    // -----------------------------------------
-    // Tiquete
-    // -----------------------------------------
+    const valoresIVA = calcularValoresIVA(data);
 
+    // 2. Actualizar DetalleServicio
     const detalleServicioActualizado = await tx.detalleServicio.update({
-      where: {
-        id: detalleServicioId,
-      },
+      where: { id: detalleServicioId },
       data: {
         descripcionServicio: data.descripcionServicio,
-
         codigoReserva: data.codigoReserva,
+        ciudad: data.ciudad,
+        pais: data.pais,
 
-        valorPagadoProveedor: data.valorPagadoProveedor,
+        fechaIngreso: data.fechaIngreso ? new Date(data.fechaIngreso) : null,
 
-        trm: data.trm,
+        fechaSalida: data.fechaSalida ? new Date(data.fechaSalida) : null,
 
+        tarifaNeta: data.tarifaNeta,
         feePagoTarjetaCredito: data.feePagoTarjetaCredito,
-
-        valorPagadoGoTravel,
-
-        totalIngreso,
+        ...valoresIVA,
+        tarifaNetaProveedor: data.tarifaNetaProveedor,
+        comisionAgencia: data.comisionAgencia,
+        totalPagado: calcularTotalPagado(data, valoresIVA.ivaTarifaProveedor),
+        totalVentaAgencia: calcularTotalVentaAgencia(
+          data,
+          valoresIVA.ivaTarifa,
+        ),
       },
     });
 

@@ -4,10 +4,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
-
-import {
-  LayoutDashboard,
+import { Menu, X, Road,   LayoutDashboard,
   BriefcaseBusiness,
   Users,
   Building2,
@@ -19,21 +16,43 @@ import {
   Monitor,
   Settings,
   LogOut,
-  ChevronDown,
-} from "lucide-react";
+  ChevronDown, } from "lucide-react";
+import { can, type Resource, type Action } from "@/libs/permissions";
 
-const menuItems = [
+type MenuItem = {
+  label: string;
+  href: string;
+  icon: React.ElementType;
+  type: "link" | "dropdown";
+  resource: Resource;
+  action: Action;
+  items?: {
+    label: string;
+    href: string;
+  }[];
+};
+
+
+type SidebarProps = {
+  role: "ASESOR" | "FACTURADOR" | "ADMINISTRADOR";
+};
+
+const menuItems: MenuItem[] = [
   {
     label: "Dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
     type: "link",
+    resource: "dashboard",
+    action: "view",
   },
   {
     label: "Servicios",
     href: "/dashboard/servicios",
     icon: BriefcaseBusiness,
     type: "dropdown",
+    resource: "servicios",
+    action: "view",
     items: [
       {
         label: "Todos",
@@ -91,46 +110,68 @@ const menuItems = [
     href: "/dashboard/clientes",
     icon: Users,
     type: "link",
+    resource: "clientes",
+    action: "view",
   },
   {
     label: "Proveedores",
     href: "/dashboard/proveedores",
     icon: Building2,
     type: "link",
+    resource: "proveedores",
+    action: "view",
   },
   {
     label: "Pasajeros",
     href: "/dashboard/pasajeros",
     icon: UserRound,
     type: "link",
+    resource: "pasajeros",
+    action: "view",
+  },
+    {
+    label: "Rutas",
+    href: "/dashboard/rutas",
+    icon: Road,
+    type: "link",
+    resource: "rutas",
+    action: "view",
   },
   {
     label: "Facturación",
     href: "/dashboard/facturacion",
     icon: ReceiptText,
     type: "link",
+    resource: "facturacion",
+    action: "view",
   },
   {
     label: "Reportes",
     href: "/dashboard/reportes",
     icon: ChartNoAxesCombined,
     type: "link",
+    resource: "reportes",
+    action: "view",
   },
   {
     label: "Cartera",
     href: "/dashboard/cartera",
     icon: WalletCards,
     type: "link",
+    resource: "cartera",
+    action: "view",
   },
   {
     label: "Administración",
     href: "/dashboard/administracion",
     icon: Settings2,
     type: "dropdown",
+    resource: "administracion",
+    action: "view",
     items: [
       {
-        label: "Rutas",
-        href: "/dashboard/administracion/rutas",
+        label: "Usuarios",
+        href: "/dashboard/administracion/usuarios",
       },
     ],
   },
@@ -139,10 +180,12 @@ const menuItems = [
     href: "/dashboard/kuantta-desk",
     icon: Monitor,
     type: "link",
+    resource: "kuanttaDesk",
+    action: "view",
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ role }: SidebarProps) {
   const pathname = usePathname();
   const [openMenus, setOpenMenus] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -154,6 +197,10 @@ export default function Sidebar() {
         : [...prev, href],
     );
   }
+
+  const filteredMenuItems = menuItems.filter((item) => {
+    return can(role, item.resource, item.action);
+  });
 
   return (
     <>
@@ -200,7 +247,7 @@ export default function Sidebar() {
         {/* Menu */}
         <nav className="flex-1 py-6 overflow-y-auto 3xl:overflow-y-hidden">
           <ul className="space-y-2">
-            {menuItems.map((item) => {
+            {filteredMenuItems.map((item) => {
               const Icon = item.icon;
 
               const isActive =
@@ -237,7 +284,9 @@ export default function Sidebar() {
                     </button>
 
                     {isOpen && (
-                      <div className="ml-2 mt-1 max-h-50 space-y-1 overflow-y-auto">
+                      <div
+                        className={`ml-2 mt-1 ${role != "ADMINISTRADOR" ? "max-h-100" : "max-h-50"}  space-y-1 overflow-y-auto`}
+                      >
                         {item.items?.map((subItem) => {
                           const isSubItemActive = pathname === subItem.href;
 

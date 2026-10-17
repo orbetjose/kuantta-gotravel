@@ -2,48 +2,115 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/libs/prisma";
+import { TiqueteData, TrayectoData } from "@/types/tiquete";
 
-type TiqueteData = {
-  clienteId: number;
-  proveedorId?: number;
-  pasajeroId: number;
-
-  // Campos comunes de Servicio
-  fechaEmision: string;
-  formaPago: "CASH" | "TARJETA_CREDITO" | "CREDITO_AGENCIA";
-
-  creditoAgencia?: "3" | "8" | "15" | "30";
-  numeroTarjeta?: string;
-  numeroAprobacion?: string;
-  tipoCash?: "EFECTIVO" | "TRANSFERENCIA";
-
-  ceCos?: string;
-  proyectoFCDS?: string;
-  observaciones?: string;
-
-  // Campos específicos de Tiquete
-  numeroTiquete: string;
-  revision: "SI" | "NO";
-  numeroTiqueteRevision?: string;
-
-  rutaId: number;
-  clase: string;
-  fechaIda: string;
-  fechaRegreso?: string;
-
-  tarifaNeta: number;
-  ivaTarifa: number;
-  otrosImpuestos: number;
-  tarifaAdministrativaNeta: number;
-  ivaTarifaAdministrativa: number;
-  feeAgenciaNeta: number;
-  ivaFeeAgencia: number;
-  feePagoTarjeta: number;
-
-  aph: "NACIONAL" | "INTERNACIONAL";
-
-  fechaEmisionTiqueteFES: string;
+const calcularIVA = (tarifa: number) => {
+  return Number((tarifa * 0.19).toFixed(2));
 };
+
+function calcularValoresIVA(data: {
+  tarifaNeta: number;
+  tarifaAdministrativaNeta: number;
+  feeAgenciaNeta: number;
+  tarifaAPH?: number | null;
+}) {
+  return {
+    ivaTarifa: calcularIVA(data.tarifaNeta),
+    ivaTarifaAdministrativa: calcularIVA(data.tarifaAdministrativaNeta),
+    ivaFeeAgencia: calcularIVA(data.feeAgenciaNeta),
+    ivaTarifaAPH: data.tarifaAPH != null ? calcularIVA(data.tarifaAPH) : null,
+  };
+}
+
+function calcularTotal(
+  data: TiqueteData,
+  ivaTarifa: number,
+  ivaTarifaAdministrativa: number,
+  ivaFeeAgencia: number,
+  ivaTarifaAPH?: number,
+) {
+  return (
+    data.tarifaNeta +
+    ivaTarifa +
+    data.otrosImpuestos +
+    data.tarifaAdministrativaNeta +
+    ivaTarifaAdministrativa +
+    data.feeAgenciaNeta +
+    ivaFeeAgencia +
+    data.tarifaAPH +
+    (ivaTarifaAPH ?? 0)
+  );
+}
+
+async function validarRelaciones(
+  tx: Parameters<Parameters<typeof prisma.$transaction>[0]>[0],
+  data: TiqueteData,
+) {
+  const cliente = await tx.cliente.findUnique({
+    where: { id: data.clienteId },
+    select: { id: true },
+  });
+
+  if (!cliente) throw new Error("El cliente seleccionado no existe.");
+
+  const pasajero = await tx.pasajero.findUnique({
+    where: { id: data.pasajeroId },
+    select: { id: true },
+  });
+
+  if (!pasajero) throw new Error("El pasajero seleccionado no existe.");
+
+  if (data.proveedorId) {
+    const proveedor = await tx.proveedor.findUnique({
+      where: { id: data.proveedorId },
+      select: { id: true },
+    });
+
+    if (!proveedor) {
+      throw new Error("El proveedor seleccionado no existe.");
+    }
+  }
+
+  if (!data.trayectos.length) {
+    throw new Error("Debes agregar al menos un trayecto.");
+  }
+
+  const rutaIds = [
+    ...new Set(
+      data.trayectos.flatMap((trayecto) => [
+        trayecto.origenId,
+        trayecto.destinoId,
+      ]),
+    ),
+  ];
+
+  const rutas = await tx.ruta.findMany({
+    where: { id: { in: rutaIds } },
+    select: { id: true },
+  });
+
+  if (rutas.length !== rutaIds.length) {
+    throw new Error("Uno o más aeropuertos seleccionados no existen.");
+  }
+
+  for (const trayecto of data.trayectos) {
+    if (trayecto.origenId === trayecto.destinoId) {
+      throw new Error("El origen y el destino deben ser diferentes.");
+    }
+  }
+}
+
+function mapearTrayectos(trayectos: TrayectoData[]) {
+  return trayectos.map((trayecto, index) => ({
+    orden: index + 1,
+    origenId: trayecto.origenId,
+    destinoId: trayecto.destinoId,
+    fechaSalida: new Date(trayecto.fechaSalida),
+    fechaRegreso: trayecto.fechaRegreso
+      ? new Date(trayecto.fechaRegreso)
+      : null,
+  }));
+}
 
 export async function createTiquete(data: TiqueteData) {
   const session = await auth();
@@ -54,67 +121,7 @@ export async function createTiquete(data: TiqueteData) {
 
   try {
     const result = await prisma.$transaction(async (tx) => {
-      // -----------------------------------------
-      // 1. Validaciones
-      // -----------------------------------------
-
-      const cliente = await tx.cliente.findUnique({
-        where: {
-          id: data.clienteId,
-        },
-        select: {
-          id: true,
-        },
-      });
-
-      if (!cliente) {
-        throw new Error("El cliente seleccionado no existe.");
-      }
-
-      const pasajero = await tx.pasajero.findUnique({
-        where: {
-          id: data.pasajeroId,
-        },
-        select: {
-          id: true,
-        },
-      });
-
-      if (!pasajero) {
-        throw new Error("El pasajero seleccionado no existe.");
-      }
-
-      if (data.proveedorId) {
-        const proveedor = await tx.proveedor.findUnique({
-          where: {
-            id: data.proveedorId,
-          },
-          select: {
-            id: true,
-          },
-        });
-
-        if (!proveedor) {
-          throw new Error("El proveedor seleccionado no existe.");
-        }
-      }
-
-      const ruta = await tx.ruta.findUnique({
-        where: {
-          id: data.rutaId,
-        },
-        select: {
-          id: true,
-        },
-      });
-
-      if (!ruta) {
-        throw new Error("La ruta seleccionada no existe.");
-      }
-
-      // -----------------------------------------
-      // 2. Crear Servicio
-      // -----------------------------------------
+      await validarRelaciones(tx, data);
 
       const servicio = await tx.servicio.create({
         data: {
@@ -123,12 +130,11 @@ export async function createTiquete(data: TiqueteData) {
           pasajeroId: data.pasajeroId,
 
           tipo: "TIQUETE",
-          estado: "BORRADOR",
-
+          estado: data.estado,
           creadoPorId: session.user.id,
 
-          // Campos comunes
           fechaEmision: new Date(data.fechaEmision),
+          fechaSolicitud: new Date(data.fechaSolicitud),
 
           formaPago: data.formaPago,
 
@@ -138,85 +144,69 @@ export async function createTiquete(data: TiqueteData) {
               : null,
 
           numeroTarjeta:
-            data.formaPago === "TARJETA_CREDITO" ? data.numeroTarjeta : null,
+            data.formaPago === "TARJETA_CREDITO"
+              ? data.numeroTarjeta || null
+              : null,
+
           numeroAprobacion:
-            data.formaPago === "TARJETA_CREDITO" ? data.numeroAprobacion : null,
+            data.formaPago === "TARJETA_CREDITO"
+              ? data.numeroAprobacion || null
+              : null,
 
-          tipoCash: data.formaPago === "CASH" ? data.tipoCash : null,
+          tipoCash: data.formaPago === "CASH" ? (data.tipoCash ?? null) : null,
 
-          ceCos: data.ceCos || null,
-          proyectoFCDS: data.proyectoFCDS || null,
+          ceCos: data.ceCos?.trim() || null,
+          proyectoFCDS: data.proyectoFCDS?.trim() || null,
+          observaciones: data.observaciones?.trim() || null,
 
-          observaciones: data.observaciones || null,
-
-          // Archivos todavía sin Storage
           facturaProveedorUrl: null,
           facturaGoTravelUrl: null,
           soporteTiqueteElectronicoUrl: null,
         },
       });
 
-      // -----------------------------------------
-      // 3. Crear Tiquete
-      // -----------------------------------------
-
-      const totalPagar =
-        data.tarifaNeta +
-        data.ivaTarifa +
-        data.otrosImpuestos +
-        data.tarifaAdministrativaNeta +
-        data.ivaTarifaAdministrativa +
-        data.feeAgenciaNeta +
-        data.ivaFeeAgencia +
-        data.feePagoTarjeta;
+      const valoresIVA = calcularValoresIVA(data);
 
       const tiquete = await tx.tiquete.create({
         data: {
           servicioId: servicio.id,
 
-          rutaId: data.rutaId,
-
           numeroTiquete: data.numeroTiquete,
+          codigoReserva: data.codigoReserva,
+          canalVenta: data.canalVenta,
+          tipoViaje: data.tipoViaje,
+          tipoItinerario: data.tipoItinerario,
 
-          revision: data.revision === "SI",
-
-          numeroTiqueteRevision:
-            data.revision === "SI" ? data.numeroTiqueteRevision || null : null,
+          revision: data.revision,
+          numeroTiqueteRevision: data.revision
+            ? data.numeroTiqueteRevision || null
+            : null,
 
           clase: data.clase,
 
-          fechaIda: new Date(data.fechaIda),
-
-          fechaRegreso: data.fechaRegreso ? new Date(data.fechaRegreso) : null,
-
           tarifaNeta: data.tarifaNeta,
-
-          ivaTarifa: data.ivaTarifa,
-
           otrosImpuestos: data.otrosImpuestos,
-
           tarifaAdministrativaNeta: data.tarifaAdministrativaNeta,
-
-          ivaTarifaAdministrativa: data.ivaTarifaAdministrativa,
-
           feeAgenciaNeta: data.feeAgenciaNeta,
-
-          ivaFeeAgencia: data.ivaFeeAgencia,
-
-          feePagoTarjeta: data.feePagoTarjeta,
-
-          totalPagar,
-
-          aph: data.aph,
+          tarifaAPH: data.tarifaAPH,
+          ...valoresIVA,
+          totalPagar: calcularTotal(
+            data,
+            valoresIVA.ivaFeeAgencia,
+            valoresIVA.ivaTarifa,
+            valoresIVA.ivaTarifaAdministrativa,
+            valoresIVA.ivaTarifaAPH ?? 0,
+          ),
 
           fechaEmisionTiqueteFES: new Date(data.fechaEmisionTiqueteFES),
+
+          trayectos: {
+            create: mapearTrayectos(data.trayectos),
+          },
         },
       });
 
-      return {
-        servicio,
-        tiquete,
-      };
+      return { servicio, tiquete };
     });
 
     return {
@@ -230,7 +220,8 @@ export async function createTiquete(data: TiqueteData) {
 
     return {
       success: false,
-      error: "No se pudo crear el tiquete.",
+      error:
+        error instanceof Error ? error.message : "No se pudo crear el tiquete.",
     };
   }
 }
@@ -242,19 +233,13 @@ export async function updateTiquete(tiqueteId: number, data: TiqueteData) {
     throw new Error("No estás autenticado.");
   }
 
-  // 1. Buscar el tiquete y su servicio
   const tiquete = await prisma.tiquete.findUnique({
-    where: {
-      id: tiqueteId,
-    },
+    where: { id: tiqueteId },
     select: {
       id: true,
       servicioId: true,
       servicio: {
-        select: {
-          id: true,
-          estado: true,
-        },
+        select: { estado: true },
       },
     },
   });
@@ -263,7 +248,6 @@ export async function updateTiquete(tiqueteId: number, data: TiqueteData) {
     throw new Error("El tiquete no existe.");
   }
 
-  // 2. No permitir editar estados finales
   if (
     tiquete.servicio.estado === "FACTURADO" ||
     tiquete.servicio.estado === "ANULADO"
@@ -273,77 +257,19 @@ export async function updateTiquete(tiqueteId: number, data: TiqueteData) {
     );
   }
 
-  // 3. Validar cliente
-  const cliente = await prisma.cliente.findUnique({
-    where: {
-      id: data.clienteId,
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  if (!cliente) {
-    throw new Error("El cliente seleccionado no existe.");
-  }
-
-  // 4. Validar proveedor si existe
-  if (data.proveedorId) {
-    const proveedor = await prisma.proveedor.findUnique({
-      where: {
-        id: data.proveedorId,
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (!proveedor) {
-      throw new Error("El proveedor seleccionado no existe.");
-    }
-  }
-
-  // 5. Validar ruta
-  const ruta = await prisma.ruta.findUnique({
-    where: {
-      id: data.rutaId,
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  if (!ruta) {
-    throw new Error("La ruta seleccionada no existe.");
-  }
-
-  // 6. Calcular total en el servidor
-  const totalPagar =
-    data.tarifaNeta +
-    data.ivaTarifa +
-    data.otrosImpuestos +
-    data.tarifaAdministrativaNeta +
-    data.ivaTarifaAdministrativa +
-    data.feeAgenciaNeta +
-    data.ivaFeeAgencia +
-    data.feePagoTarjeta;
-
-  // 7. Actualizar Servicio + Tiquete
   const resultado = await prisma.$transaction(async (tx) => {
-    // -----------------------------------------
-    // Servicio
-    // -----------------------------------------
+    await validarRelaciones(tx, data);
 
     const servicio = await tx.servicio.update({
-      where: {
-        id: tiquete.servicioId,
-      },
+      where: { id: tiquete.servicioId },
       data: {
         clienteId: data.clienteId,
         proveedorId: data.proveedorId ?? null,
         pasajeroId: data.pasajeroId,
+        estado: data.estado,
 
         fechaEmision: new Date(data.fechaEmision),
+        fechaSolicitud: new Date(data.fechaSolicitud),
 
         formaPago: data.formaPago,
 
@@ -353,77 +279,76 @@ export async function updateTiquete(tiqueteId: number, data: TiqueteData) {
             : null,
 
         numeroTarjeta:
-          data.formaPago === "TARJETA_CREDITO" ? data.numeroTarjeta : null,
-        numeroAprobacion:
-          data.formaPago === "TARJETA_CREDITO" ? data.numeroAprobacion : null,
+          data.formaPago === "TARJETA_CREDITO"
+            ? data.numeroTarjeta || null
+            : null,
 
-        tipoCash: data.formaPago === "CASH" ? data.tipoCash : null,
+        numeroAprobacion:
+          data.formaPago === "TARJETA_CREDITO"
+            ? data.numeroAprobacion || null
+            : null,
+
+        tipoCash: data.formaPago === "CASH" ? (data.tipoCash ?? null) : null,
 
         ceCos: data.ceCos?.trim() || null,
-
         proyectoFCDS: data.proyectoFCDS?.trim() || null,
-
         observaciones: data.observaciones?.trim() || null,
       },
     });
 
-    // -----------------------------------------
-    // Tiquete
-    // -----------------------------------------
+    // Eliminar los trayectos anteriores y guardar el itinerario actualizado.
+    await tx.trayectoTiquete.deleteMany({
+      where: { tiqueteId },
+    });
+
+    const valoresIVA = calcularValoresIVA(data);
 
     const tiqueteActualizado = await tx.tiquete.update({
-      where: {
-        id: tiqueteId,
-      },
+      where: { id: tiqueteId },
       data: {
         numeroTiquete: data.numeroTiquete,
+        codigoReserva: data.codigoReserva,
+        canalVenta: data.canalVenta,
+        tipoViaje: data.tipoViaje,
+        tipoItinerario: data.tipoItinerario,
 
-        revision: data.revision === "SI",
-
-        numeroTiqueteRevision:
-          data.revision === "SI" ? data.numeroTiqueteRevision || null : null,
-
-        rutaId: data.rutaId,
+        revision: data.revision,
+        numeroTiqueteRevision: data.revision
+          ? data.numeroTiqueteRevision || null
+          : null,
 
         clase: data.clase,
 
-        fechaIda: new Date(data.fechaIda),
-
-        fechaRegreso: data.fechaRegreso ? new Date(data.fechaRegreso) : null,
-
         tarifaNeta: data.tarifaNeta,
-
-        ivaTarifa: data.ivaTarifa,
-
         otrosImpuestos: data.otrosImpuestos,
-
         tarifaAdministrativaNeta: data.tarifaAdministrativaNeta,
-
-        ivaTarifaAdministrativa: data.ivaTarifaAdministrativa,
-
         feeAgenciaNeta: data.feeAgenciaNeta,
+        tarifaAPH: data.tarifaAPH,
+        ...valoresIVA,
 
-        ivaFeeAgencia: data.ivaFeeAgencia,
-
-        feePagoTarjeta: data.feePagoTarjeta,
-
-        totalPagar,
-
-        aph: data.aph,
+        totalPagar: calcularTotal(
+          data,
+          valoresIVA.ivaFeeAgencia,
+          valoresIVA.ivaTarifa,
+          valoresIVA.ivaTarifaAdministrativa,
+          valoresIVA.ivaTarifaAPH ?? 0,
+        ),
 
         fechaEmisionTiqueteFES: new Date(data.fechaEmisionTiqueteFES),
+
+        trayectos: {
+          create: mapearTrayectos(data.trayectos),
+        },
       },
     });
 
-    return {
-      servicio,
-      tiquete: tiqueteActualizado,
-    };
+    return { servicio, tiquete: tiqueteActualizado };
   });
 
   return {
     success: true,
     servicioId: resultado.servicio.id,
     tiqueteId: resultado.tiquete.id,
+    error: null,
   };
 }

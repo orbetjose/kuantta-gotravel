@@ -50,6 +50,7 @@ export type ServicioMinAggregateOutputType = {
   tipo: $Enums.TipoServicio | null
   estado: $Enums.EstadoServicio | null
   fechaEmision: Date | null
+  fechaSolicitud: Date | null
   facturaProveedorUrl: string | null
   facturaGoTravelUrl: string | null
   soporteTiqueteElectronicoUrl: string | null
@@ -59,6 +60,7 @@ export type ServicioMinAggregateOutputType = {
   numeroTarjeta: string | null
   numeroAprobacion: string | null
   creditoAgencia: number | null
+  comprobantePagoUrl: string | null
   proyectoFCDS: string | null
   ceCos: string | null
   vencimientoFacturaProveedor: Date | null
@@ -83,6 +85,7 @@ export type ServicioMaxAggregateOutputType = {
   tipo: $Enums.TipoServicio | null
   estado: $Enums.EstadoServicio | null
   fechaEmision: Date | null
+  fechaSolicitud: Date | null
   facturaProveedorUrl: string | null
   facturaGoTravelUrl: string | null
   soporteTiqueteElectronicoUrl: string | null
@@ -92,6 +95,7 @@ export type ServicioMaxAggregateOutputType = {
   numeroTarjeta: string | null
   numeroAprobacion: string | null
   creditoAgencia: number | null
+  comprobantePagoUrl: string | null
   proyectoFCDS: string | null
   ceCos: string | null
   vencimientoFacturaProveedor: Date | null
@@ -116,6 +120,7 @@ export type ServicioCountAggregateOutputType = {
   tipo: number
   estado: number
   fechaEmision: number
+  fechaSolicitud: number
   facturaProveedorUrl: number
   facturaGoTravelUrl: number
   soporteTiqueteElectronicoUrl: number
@@ -125,6 +130,7 @@ export type ServicioCountAggregateOutputType = {
   numeroTarjeta: number
   numeroAprobacion: number
   creditoAgencia: number
+  comprobantePagoUrl: number
   proyectoFCDS: number
   ceCos: number
   vencimientoFacturaProveedor: number
@@ -167,6 +173,7 @@ export type ServicioMinAggregateInputType = {
   tipo?: true
   estado?: true
   fechaEmision?: true
+  fechaSolicitud?: true
   facturaProveedorUrl?: true
   facturaGoTravelUrl?: true
   soporteTiqueteElectronicoUrl?: true
@@ -176,6 +183,7 @@ export type ServicioMinAggregateInputType = {
   numeroTarjeta?: true
   numeroAprobacion?: true
   creditoAgencia?: true
+  comprobantePagoUrl?: true
   proyectoFCDS?: true
   ceCos?: true
   vencimientoFacturaProveedor?: true
@@ -200,6 +208,7 @@ export type ServicioMaxAggregateInputType = {
   tipo?: true
   estado?: true
   fechaEmision?: true
+  fechaSolicitud?: true
   facturaProveedorUrl?: true
   facturaGoTravelUrl?: true
   soporteTiqueteElectronicoUrl?: true
@@ -209,6 +218,7 @@ export type ServicioMaxAggregateInputType = {
   numeroTarjeta?: true
   numeroAprobacion?: true
   creditoAgencia?: true
+  comprobantePagoUrl?: true
   proyectoFCDS?: true
   ceCos?: true
   vencimientoFacturaProveedor?: true
@@ -233,6 +243,7 @@ export type ServicioCountAggregateInputType = {
   tipo?: true
   estado?: true
   fechaEmision?: true
+  fechaSolicitud?: true
   facturaProveedorUrl?: true
   facturaGoTravelUrl?: true
   soporteTiqueteElectronicoUrl?: true
@@ -242,6 +253,7 @@ export type ServicioCountAggregateInputType = {
   numeroTarjeta?: true
   numeroAprobacion?: true
   creditoAgencia?: true
+  comprobantePagoUrl?: true
   proyectoFCDS?: true
   ceCos?: true
   vencimientoFacturaProveedor?: true
@@ -353,6 +365,7 @@ export type ServicioGroupByOutputType = {
   tipo: $Enums.TipoServicio
   estado: $Enums.EstadoServicio
   fechaEmision: Date
+  fechaSolicitud: Date
   facturaProveedorUrl: string | null
   facturaGoTravelUrl: string | null
   soporteTiqueteElectronicoUrl: string | null
@@ -362,6 +375,7 @@ export type ServicioGroupByOutputType = {
   numeroTarjeta: string | null
   numeroAprobacion: string | null
   creditoAgencia: number | null
+  comprobantePagoUrl: string | null
   proyectoFCDS: string | null
   ceCos: string | null
   vencimientoFacturaProveedor: Date | null
@@ -409,6 +423,7 @@ export type ServicioWhereInput = {
   tipo?: Prisma.EnumTipoServicioFilter<"Servicio"> | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFilter<"Servicio"> | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFilter<"Servicio"> | Date | string
+  fechaSolicitud?: Prisma.DateTimeFilter<"Servicio"> | Date | string
   facturaProveedorUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   facturaGoTravelUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   soporteTiqueteElectronicoUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
@@ -418,6 +433,7 @@ export type ServicioWhereInput = {
   numeroTarjeta?: Prisma.StringNullableFilter<"Servicio"> | string | null
   numeroAprobacion?: Prisma.StringNullableFilter<"Servicio"> | string | null
   creditoAgencia?: Prisma.IntNullableFilter<"Servicio"> | number | null
+  comprobantePagoUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   proyectoFCDS?: Prisma.StringNullableFilter<"Servicio"> | string | null
   ceCos?: Prisma.StringNullableFilter<"Servicio"> | string | null
   vencimientoFacturaProveedor?: Prisma.DateTimeNullableFilter<"Servicio"> | Date | string | null
@@ -449,6 +465,7 @@ export type ServicioOrderByWithRelationInput = {
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
+  fechaSolicitud?: Prisma.SortOrder
   facturaProveedorUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   facturaGoTravelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   soporteTiqueteElectronicoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -458,6 +475,7 @@ export type ServicioOrderByWithRelationInput = {
   numeroTarjeta?: Prisma.SortOrderInput | Prisma.SortOrder
   numeroAprobacion?: Prisma.SortOrderInput | Prisma.SortOrder
   creditoAgencia?: Prisma.SortOrderInput | Prisma.SortOrder
+  comprobantePagoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   proyectoFCDS?: Prisma.SortOrderInput | Prisma.SortOrder
   ceCos?: Prisma.SortOrderInput | Prisma.SortOrder
   vencimientoFacturaProveedor?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -493,6 +511,7 @@ export type ServicioWhereUniqueInput = Prisma.AtLeast<{
   tipo?: Prisma.EnumTipoServicioFilter<"Servicio"> | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFilter<"Servicio"> | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFilter<"Servicio"> | Date | string
+  fechaSolicitud?: Prisma.DateTimeFilter<"Servicio"> | Date | string
   facturaProveedorUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   facturaGoTravelUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   soporteTiqueteElectronicoUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
@@ -502,6 +521,7 @@ export type ServicioWhereUniqueInput = Prisma.AtLeast<{
   numeroTarjeta?: Prisma.StringNullableFilter<"Servicio"> | string | null
   numeroAprobacion?: Prisma.StringNullableFilter<"Servicio"> | string | null
   creditoAgencia?: Prisma.IntNullableFilter<"Servicio"> | number | null
+  comprobantePagoUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   proyectoFCDS?: Prisma.StringNullableFilter<"Servicio"> | string | null
   ceCos?: Prisma.StringNullableFilter<"Servicio"> | string | null
   vencimientoFacturaProveedor?: Prisma.DateTimeNullableFilter<"Servicio"> | Date | string | null
@@ -532,6 +552,7 @@ export type ServicioOrderByWithAggregationInput = {
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
+  fechaSolicitud?: Prisma.SortOrder
   facturaProveedorUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   facturaGoTravelUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   soporteTiqueteElectronicoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -541,6 +562,7 @@ export type ServicioOrderByWithAggregationInput = {
   numeroTarjeta?: Prisma.SortOrderInput | Prisma.SortOrder
   numeroAprobacion?: Prisma.SortOrderInput | Prisma.SortOrder
   creditoAgencia?: Prisma.SortOrderInput | Prisma.SortOrder
+  comprobantePagoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   proyectoFCDS?: Prisma.SortOrderInput | Prisma.SortOrder
   ceCos?: Prisma.SortOrderInput | Prisma.SortOrder
   vencimientoFacturaProveedor?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -573,6 +595,7 @@ export type ServicioScalarWhereWithAggregatesInput = {
   tipo?: Prisma.EnumTipoServicioWithAggregatesFilter<"Servicio"> | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioWithAggregatesFilter<"Servicio"> | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeWithAggregatesFilter<"Servicio"> | Date | string
+  fechaSolicitud?: Prisma.DateTimeWithAggregatesFilter<"Servicio"> | Date | string
   facturaProveedorUrl?: Prisma.StringNullableWithAggregatesFilter<"Servicio"> | string | null
   facturaGoTravelUrl?: Prisma.StringNullableWithAggregatesFilter<"Servicio"> | string | null
   soporteTiqueteElectronicoUrl?: Prisma.StringNullableWithAggregatesFilter<"Servicio"> | string | null
@@ -582,6 +605,7 @@ export type ServicioScalarWhereWithAggregatesInput = {
   numeroTarjeta?: Prisma.StringNullableWithAggregatesFilter<"Servicio"> | string | null
   numeroAprobacion?: Prisma.StringNullableWithAggregatesFilter<"Servicio"> | string | null
   creditoAgencia?: Prisma.IntNullableWithAggregatesFilter<"Servicio"> | number | null
+  comprobantePagoUrl?: Prisma.StringNullableWithAggregatesFilter<"Servicio"> | string | null
   proyectoFCDS?: Prisma.StringNullableWithAggregatesFilter<"Servicio"> | string | null
   ceCos?: Prisma.StringNullableWithAggregatesFilter<"Servicio"> | string | null
   vencimientoFacturaProveedor?: Prisma.DateTimeNullableWithAggregatesFilter<"Servicio"> | Date | string | null
@@ -602,6 +626,7 @@ export type ServicioCreateInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -611,6 +636,7 @@ export type ServicioCreateInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -640,6 +666,7 @@ export type ServicioUncheckedCreateInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -649,6 +676,7 @@ export type ServicioUncheckedCreateInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -671,6 +699,7 @@ export type ServicioUpdateInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -680,6 +709,7 @@ export type ServicioUpdateInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -709,6 +739,7 @@ export type ServicioUncheckedUpdateInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -718,6 +749,7 @@ export type ServicioUncheckedUpdateInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -744,6 +776,7 @@ export type ServicioCreateManyInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -753,6 +786,7 @@ export type ServicioCreateManyInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -773,6 +807,7 @@ export type ServicioUpdateManyMutationInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -782,6 +817,7 @@ export type ServicioUpdateManyMutationInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -804,6 +840,7 @@ export type ServicioUncheckedUpdateManyInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -813,6 +850,7 @@ export type ServicioUncheckedUpdateManyInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -847,6 +885,7 @@ export type ServicioCountOrderByAggregateInput = {
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
+  fechaSolicitud?: Prisma.SortOrder
   facturaProveedorUrl?: Prisma.SortOrder
   facturaGoTravelUrl?: Prisma.SortOrder
   soporteTiqueteElectronicoUrl?: Prisma.SortOrder
@@ -856,6 +895,7 @@ export type ServicioCountOrderByAggregateInput = {
   numeroTarjeta?: Prisma.SortOrder
   numeroAprobacion?: Prisma.SortOrder
   creditoAgencia?: Prisma.SortOrder
+  comprobantePagoUrl?: Prisma.SortOrder
   proyectoFCDS?: Prisma.SortOrder
   ceCos?: Prisma.SortOrder
   vencimientoFacturaProveedor?: Prisma.SortOrder
@@ -888,6 +928,7 @@ export type ServicioMaxOrderByAggregateInput = {
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
+  fechaSolicitud?: Prisma.SortOrder
   facturaProveedorUrl?: Prisma.SortOrder
   facturaGoTravelUrl?: Prisma.SortOrder
   soporteTiqueteElectronicoUrl?: Prisma.SortOrder
@@ -897,6 +938,7 @@ export type ServicioMaxOrderByAggregateInput = {
   numeroTarjeta?: Prisma.SortOrder
   numeroAprobacion?: Prisma.SortOrder
   creditoAgencia?: Prisma.SortOrder
+  comprobantePagoUrl?: Prisma.SortOrder
   proyectoFCDS?: Prisma.SortOrder
   ceCos?: Prisma.SortOrder
   vencimientoFacturaProveedor?: Prisma.SortOrder
@@ -921,6 +963,7 @@ export type ServicioMinOrderByAggregateInput = {
   tipo?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fechaEmision?: Prisma.SortOrder
+  fechaSolicitud?: Prisma.SortOrder
   facturaProveedorUrl?: Prisma.SortOrder
   facturaGoTravelUrl?: Prisma.SortOrder
   soporteTiqueteElectronicoUrl?: Prisma.SortOrder
@@ -930,6 +973,7 @@ export type ServicioMinOrderByAggregateInput = {
   numeroTarjeta?: Prisma.SortOrder
   numeroAprobacion?: Prisma.SortOrder
   creditoAgencia?: Prisma.SortOrder
+  comprobantePagoUrl?: Prisma.SortOrder
   proyectoFCDS?: Prisma.SortOrder
   ceCos?: Prisma.SortOrder
   vencimientoFacturaProveedor?: Prisma.SortOrder
@@ -1147,10 +1191,6 @@ export type NullableEnumTipoPagadoProveedorFieldUpdateOperationsInput = {
   set?: $Enums.TipoPagadoProveedor | null
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type ServicioCreateNestedOneWithoutDetalleServicioInput = {
   create?: Prisma.XOR<Prisma.ServicioCreateWithoutDetalleServicioInput, Prisma.ServicioUncheckedCreateWithoutDetalleServicioInput>
   connectOrCreate?: Prisma.ServicioCreateOrConnectWithoutDetalleServicioInput
@@ -1225,6 +1265,7 @@ export type ServicioCreateWithoutCreadoPorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1234,6 +1275,7 @@ export type ServicioCreateWithoutCreadoPorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1262,6 +1304,7 @@ export type ServicioUncheckedCreateWithoutCreadoPorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1271,6 +1314,7 @@ export type ServicioUncheckedCreateWithoutCreadoPorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1302,6 +1346,7 @@ export type ServicioCreateWithoutFacturadoPorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1311,6 +1356,7 @@ export type ServicioCreateWithoutFacturadoPorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1339,6 +1385,7 @@ export type ServicioUncheckedCreateWithoutFacturadoPorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1348,6 +1395,7 @@ export type ServicioUncheckedCreateWithoutFacturadoPorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1402,6 +1450,7 @@ export type ServicioScalarWhereInput = {
   tipo?: Prisma.EnumTipoServicioFilter<"Servicio"> | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFilter<"Servicio"> | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFilter<"Servicio"> | Date | string
+  fechaSolicitud?: Prisma.DateTimeFilter<"Servicio"> | Date | string
   facturaProveedorUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   facturaGoTravelUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   soporteTiqueteElectronicoUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
@@ -1411,6 +1460,7 @@ export type ServicioScalarWhereInput = {
   numeroTarjeta?: Prisma.StringNullableFilter<"Servicio"> | string | null
   numeroAprobacion?: Prisma.StringNullableFilter<"Servicio"> | string | null
   creditoAgencia?: Prisma.IntNullableFilter<"Servicio"> | number | null
+  comprobantePagoUrl?: Prisma.StringNullableFilter<"Servicio"> | string | null
   proyectoFCDS?: Prisma.StringNullableFilter<"Servicio"> | string | null
   ceCos?: Prisma.StringNullableFilter<"Servicio"> | string | null
   vencimientoFacturaProveedor?: Prisma.DateTimeNullableFilter<"Servicio"> | Date | string | null
@@ -1447,6 +1497,7 @@ export type ServicioCreateWithoutClienteInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1456,6 +1507,7 @@ export type ServicioCreateWithoutClienteInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1483,6 +1535,7 @@ export type ServicioUncheckedCreateWithoutClienteInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1492,6 +1545,7 @@ export type ServicioUncheckedCreateWithoutClienteInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1540,6 +1594,7 @@ export type ServicioCreateWithoutPasajeroInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1549,6 +1604,7 @@ export type ServicioCreateWithoutPasajeroInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1576,6 +1632,7 @@ export type ServicioUncheckedCreateWithoutPasajeroInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1585,6 +1642,7 @@ export type ServicioUncheckedCreateWithoutPasajeroInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1633,6 +1691,7 @@ export type ServicioCreateWithoutDetalleServicioInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1642,6 +1701,7 @@ export type ServicioCreateWithoutDetalleServicioInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1670,6 +1730,7 @@ export type ServicioUncheckedCreateWithoutDetalleServicioInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1679,6 +1740,7 @@ export type ServicioUncheckedCreateWithoutDetalleServicioInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1716,6 +1778,7 @@ export type ServicioUpdateWithoutDetalleServicioInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1725,6 +1788,7 @@ export type ServicioUpdateWithoutDetalleServicioInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1753,6 +1817,7 @@ export type ServicioUncheckedUpdateWithoutDetalleServicioInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1762,6 +1827,7 @@ export type ServicioUncheckedUpdateWithoutDetalleServicioInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1783,6 +1849,7 @@ export type ServicioCreateWithoutTiqueteInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1792,6 +1859,7 @@ export type ServicioCreateWithoutTiqueteInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1820,6 +1888,7 @@ export type ServicioUncheckedCreateWithoutTiqueteInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1829,6 +1898,7 @@ export type ServicioUncheckedCreateWithoutTiqueteInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1866,6 +1936,7 @@ export type ServicioUpdateWithoutTiqueteInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1875,6 +1946,7 @@ export type ServicioUpdateWithoutTiqueteInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1903,6 +1975,7 @@ export type ServicioUncheckedUpdateWithoutTiqueteInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1912,6 +1985,7 @@ export type ServicioUncheckedUpdateWithoutTiqueteInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1933,6 +2007,7 @@ export type ServicioCreateWithoutProveedorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1942,6 +2017,7 @@ export type ServicioCreateWithoutProveedorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -1969,6 +2045,7 @@ export type ServicioUncheckedCreateWithoutProveedorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -1978,6 +2055,7 @@ export type ServicioUncheckedCreateWithoutProveedorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -2030,6 +2108,7 @@ export type ServicioCreateManyCreadoPorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -2039,6 +2118,7 @@ export type ServicioCreateManyCreadoPorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -2062,6 +2142,7 @@ export type ServicioCreateManyFacturadoPorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -2071,6 +2152,7 @@ export type ServicioCreateManyFacturadoPorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -2090,6 +2172,7 @@ export type ServicioUpdateWithoutCreadoPorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2099,6 +2182,7 @@ export type ServicioUpdateWithoutCreadoPorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2127,6 +2211,7 @@ export type ServicioUncheckedUpdateWithoutCreadoPorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2136,6 +2221,7 @@ export type ServicioUncheckedUpdateWithoutCreadoPorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2161,6 +2247,7 @@ export type ServicioUncheckedUpdateManyWithoutCreadoPorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2170,6 +2257,7 @@ export type ServicioUncheckedUpdateManyWithoutCreadoPorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2189,6 +2277,7 @@ export type ServicioUpdateWithoutFacturadoPorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2198,6 +2287,7 @@ export type ServicioUpdateWithoutFacturadoPorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2226,6 +2316,7 @@ export type ServicioUncheckedUpdateWithoutFacturadoPorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2235,6 +2326,7 @@ export type ServicioUncheckedUpdateWithoutFacturadoPorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2260,6 +2352,7 @@ export type ServicioUncheckedUpdateManyWithoutFacturadoPorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2269,6 +2362,7 @@ export type ServicioUncheckedUpdateManyWithoutFacturadoPorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2291,6 +2385,7 @@ export type ServicioCreateManyClienteInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -2300,6 +2395,7 @@ export type ServicioCreateManyClienteInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -2320,6 +2416,7 @@ export type ServicioUpdateWithoutClienteInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2329,6 +2426,7 @@ export type ServicioUpdateWithoutClienteInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2356,6 +2454,7 @@ export type ServicioUncheckedUpdateWithoutClienteInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2365,6 +2464,7 @@ export type ServicioUncheckedUpdateWithoutClienteInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2390,6 +2490,7 @@ export type ServicioUncheckedUpdateManyWithoutClienteInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2399,6 +2500,7 @@ export type ServicioUncheckedUpdateManyWithoutClienteInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2422,6 +2524,7 @@ export type ServicioCreateManyPasajeroInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -2431,6 +2534,7 @@ export type ServicioCreateManyPasajeroInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -2451,6 +2555,7 @@ export type ServicioUpdateWithoutPasajeroInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2460,6 +2565,7 @@ export type ServicioUpdateWithoutPasajeroInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2487,6 +2593,7 @@ export type ServicioUncheckedUpdateWithoutPasajeroInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2496,6 +2603,7 @@ export type ServicioUncheckedUpdateWithoutPasajeroInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2521,6 +2629,7 @@ export type ServicioUncheckedUpdateManyWithoutPasajeroInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2530,6 +2639,7 @@ export type ServicioUncheckedUpdateManyWithoutPasajeroInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2553,6 +2663,7 @@ export type ServicioCreateManyProveedorInput = {
   tipo: $Enums.TipoServicio
   estado?: $Enums.EstadoServicio
   fechaEmision: Date | string
+  fechaSolicitud: Date | string
   facturaProveedorUrl?: string | null
   facturaGoTravelUrl?: string | null
   soporteTiqueteElectronicoUrl?: string | null
@@ -2562,6 +2673,7 @@ export type ServicioCreateManyProveedorInput = {
   numeroTarjeta?: string | null
   numeroAprobacion?: string | null
   creditoAgencia?: number | null
+  comprobantePagoUrl?: string | null
   proyectoFCDS?: string | null
   ceCos?: string | null
   vencimientoFacturaProveedor?: Date | string | null
@@ -2582,6 +2694,7 @@ export type ServicioUpdateWithoutProveedorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2591,6 +2704,7 @@ export type ServicioUpdateWithoutProveedorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2618,6 +2732,7 @@ export type ServicioUncheckedUpdateWithoutProveedorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2627,6 +2742,7 @@ export type ServicioUncheckedUpdateWithoutProveedorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2652,6 +2768,7 @@ export type ServicioUncheckedUpdateManyWithoutProveedorInput = {
   tipo?: Prisma.EnumTipoServicioFieldUpdateOperationsInput | $Enums.TipoServicio
   estado?: Prisma.EnumEstadoServicioFieldUpdateOperationsInput | $Enums.EstadoServicio
   fechaEmision?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fechaSolicitud?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   facturaProveedorUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   facturaGoTravelUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   soporteTiqueteElectronicoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2661,6 +2778,7 @@ export type ServicioUncheckedUpdateManyWithoutProveedorInput = {
   numeroTarjeta?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   numeroAprobacion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditoAgencia?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  comprobantePagoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   proyectoFCDS?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ceCos?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   vencimientoFacturaProveedor?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2687,6 +2805,7 @@ export type ServicioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   tipo?: boolean
   estado?: boolean
   fechaEmision?: boolean
+  fechaSolicitud?: boolean
   facturaProveedorUrl?: boolean
   facturaGoTravelUrl?: boolean
   soporteTiqueteElectronicoUrl?: boolean
@@ -2696,6 +2815,7 @@ export type ServicioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   numeroTarjeta?: boolean
   numeroAprobacion?: boolean
   creditoAgencia?: boolean
+  comprobantePagoUrl?: boolean
   proyectoFCDS?: boolean
   ceCos?: boolean
   vencimientoFacturaProveedor?: boolean
@@ -2727,6 +2847,7 @@ export type ServicioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   tipo?: boolean
   estado?: boolean
   fechaEmision?: boolean
+  fechaSolicitud?: boolean
   facturaProveedorUrl?: boolean
   facturaGoTravelUrl?: boolean
   soporteTiqueteElectronicoUrl?: boolean
@@ -2736,6 +2857,7 @@ export type ServicioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   numeroTarjeta?: boolean
   numeroAprobacion?: boolean
   creditoAgencia?: boolean
+  comprobantePagoUrl?: boolean
   proyectoFCDS?: boolean
   ceCos?: boolean
   vencimientoFacturaProveedor?: boolean
@@ -2765,6 +2887,7 @@ export type ServicioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   tipo?: boolean
   estado?: boolean
   fechaEmision?: boolean
+  fechaSolicitud?: boolean
   facturaProveedorUrl?: boolean
   facturaGoTravelUrl?: boolean
   soporteTiqueteElectronicoUrl?: boolean
@@ -2774,6 +2897,7 @@ export type ServicioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   numeroTarjeta?: boolean
   numeroAprobacion?: boolean
   creditoAgencia?: boolean
+  comprobantePagoUrl?: boolean
   proyectoFCDS?: boolean
   ceCos?: boolean
   vencimientoFacturaProveedor?: boolean
@@ -2803,6 +2927,7 @@ export type ServicioSelectScalar = {
   tipo?: boolean
   estado?: boolean
   fechaEmision?: boolean
+  fechaSolicitud?: boolean
   facturaProveedorUrl?: boolean
   facturaGoTravelUrl?: boolean
   soporteTiqueteElectronicoUrl?: boolean
@@ -2812,6 +2937,7 @@ export type ServicioSelectScalar = {
   numeroTarjeta?: boolean
   numeroAprobacion?: boolean
   creditoAgencia?: boolean
+  comprobantePagoUrl?: boolean
   proyectoFCDS?: boolean
   ceCos?: boolean
   vencimientoFacturaProveedor?: boolean
@@ -2828,7 +2954,7 @@ export type ServicioSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ServicioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clienteId" | "proveedorId" | "pasajeroId" | "tipo" | "estado" | "fechaEmision" | "facturaProveedorUrl" | "facturaGoTravelUrl" | "soporteTiqueteElectronicoUrl" | "observaciones" | "formaPago" | "tipoCash" | "numeroTarjeta" | "numeroAprobacion" | "creditoAgencia" | "proyectoFCDS" | "ceCos" | "vencimientoFacturaProveedor" | "pagadoProveedor" | "fechaPagoProveedor" | "fechaPagoCliente" | "pagadoCliente" | "creadoPorId" | "facturadoPorId" | "fechaFacturacion" | "motivoDevolucion" | "uuid" | "createdAt" | "updatedAt", ExtArgs["result"]["servicio"]>
+export type ServicioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clienteId" | "proveedorId" | "pasajeroId" | "tipo" | "estado" | "fechaEmision" | "fechaSolicitud" | "facturaProveedorUrl" | "facturaGoTravelUrl" | "soporteTiqueteElectronicoUrl" | "observaciones" | "formaPago" | "tipoCash" | "numeroTarjeta" | "numeroAprobacion" | "creditoAgencia" | "comprobantePagoUrl" | "proyectoFCDS" | "ceCos" | "vencimientoFacturaProveedor" | "pagadoProveedor" | "fechaPagoProveedor" | "fechaPagoCliente" | "pagadoCliente" | "creadoPorId" | "facturadoPorId" | "fechaFacturacion" | "motivoDevolucion" | "uuid" | "createdAt" | "updatedAt", ExtArgs["result"]["servicio"]>
 export type ServicioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cliente?: boolean | Prisma.ClienteDefaultArgs<ExtArgs>
   proveedor?: boolean | Prisma.Servicio$proveedorArgs<ExtArgs>
@@ -2872,6 +2998,7 @@ export type $ServicioPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     tipo: $Enums.TipoServicio
     estado: $Enums.EstadoServicio
     fechaEmision: Date
+    fechaSolicitud: Date
     facturaProveedorUrl: string | null
     facturaGoTravelUrl: string | null
     soporteTiqueteElectronicoUrl: string | null
@@ -2881,6 +3008,7 @@ export type $ServicioPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     numeroTarjeta: string | null
     numeroAprobacion: string | null
     creditoAgencia: number | null
+    comprobantePagoUrl: string | null
     proyectoFCDS: string | null
     ceCos: string | null
     vencimientoFacturaProveedor: Date | null
@@ -3332,6 +3460,7 @@ export interface ServicioFieldRefs {
   readonly tipo: Prisma.FieldRef<"Servicio", 'TipoServicio'>
   readonly estado: Prisma.FieldRef<"Servicio", 'EstadoServicio'>
   readonly fechaEmision: Prisma.FieldRef<"Servicio", 'DateTime'>
+  readonly fechaSolicitud: Prisma.FieldRef<"Servicio", 'DateTime'>
   readonly facturaProveedorUrl: Prisma.FieldRef<"Servicio", 'String'>
   readonly facturaGoTravelUrl: Prisma.FieldRef<"Servicio", 'String'>
   readonly soporteTiqueteElectronicoUrl: Prisma.FieldRef<"Servicio", 'String'>
@@ -3341,6 +3470,7 @@ export interface ServicioFieldRefs {
   readonly numeroTarjeta: Prisma.FieldRef<"Servicio", 'String'>
   readonly numeroAprobacion: Prisma.FieldRef<"Servicio", 'String'>
   readonly creditoAgencia: Prisma.FieldRef<"Servicio", 'Int'>
+  readonly comprobantePagoUrl: Prisma.FieldRef<"Servicio", 'String'>
   readonly proyectoFCDS: Prisma.FieldRef<"Servicio", 'String'>
   readonly ceCos: Prisma.FieldRef<"Servicio", 'String'>
   readonly vencimientoFacturaProveedor: Prisma.FieldRef<"Servicio", 'DateTime'>

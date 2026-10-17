@@ -34,19 +34,12 @@ export default async function ProveedorDetailPage({
               totalPagar: true,
             },
           },
-          // Cuando existan:
-          // hotel: {
-          //   select: {
-          //     id: true,
-          //     totalPagar: true,
-          //   },
-          // },
-          // transporte: {
-          //   select: {
-          //     id: true,
-          //     totalPagar: true,
-          //   },
-          // },
+          detalleServicio: {
+            select: {
+              id: true,
+              totalVentaAgencia: true,
+            },
+          },
         },
       },
     },
@@ -63,6 +56,14 @@ export default async function ProveedorDetailPage({
         ? {
             ...servicio.tiquete,
             totalPagar: Number(servicio.tiquete.totalPagar),
+          }
+        : null,
+      detalleServicio: servicio.detalleServicio
+        ? {
+            ...servicio.detalleServicio,
+            totalVentaAgencia: Number(
+              servicio.detalleServicio.totalVentaAgencia,
+            ),
           }
         : null,
     })),

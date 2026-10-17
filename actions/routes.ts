@@ -2,7 +2,7 @@
 
 import { prisma } from "@/libs/prisma";
 import { auth } from "@/auth";
-import { routeSchema, type RouteFormValues } from "@/libs/schemas/routeSchema";
+import { RouteFormData, routeSchema, type RouteFormValues } from "@/libs/schemas/routeSchema";
 
 export async function createRuta(data: RouteFormValues) {
   const validatedData = routeSchema.safeParse(data);
@@ -17,10 +17,11 @@ export async function createRuta(data: RouteFormValues) {
   try {
     const ruta = await prisma.ruta.create({
       data: {
-        origen: validatedData.data.origen,
-        codigoOrigen: validatedData.data.codigoOrigen,
-        destino: validatedData.data.destino,
-        codigoDestino: validatedData.data.codigoDestino,
+        codigoIATA: validatedData.data.codigoIATA,
+        nombreAeropuerto: validatedData.data.nombreAeropuerto,
+        ciudad: validatedData.data.ciudad,
+        pais: validatedData.data.pais,
+        region: validatedData.data.region,
       },
     });
 
@@ -28,10 +29,11 @@ export async function createRuta(data: RouteFormValues) {
       success: true,
       ruta: {
         id: ruta.id,
-        origen: ruta.origen,
-        codigoOrigen: ruta.codigoOrigen,
-        destino: ruta.destino,
-        codigoDestino: ruta.codigoDestino,
+        codigoIATA: ruta.codigoIATA,
+        nombreAeropuerto: ruta.nombreAeropuerto,
+        ciudad: ruta.ciudad,
+        pais: ruta.pais,
+        region: ruta.region,
       },
     };
   } catch (error) {
@@ -46,12 +48,7 @@ export async function createRuta(data: RouteFormValues) {
 
 export async function updateRuta(
   routeId: number,
-  data: {
-    origen: string;
-    destino: string;
-    codigoOrigen: string;
-    codigoDestino: string;
-  },
+  data: RouteFormData
 ) {
   const session = await auth();
 
@@ -81,10 +78,11 @@ export async function updateRuta(
         id: routeId,
       },
       data: {
-        origen: data.origen,
-        destino: data.destino,
-        codigoOrigen: data.codigoOrigen,
-        codigoDestino: data.codigoDestino,
+        codigoIATA: data.codigoIATA,
+        nombreAeropuerto: data.nombreAeropuerto,
+        ciudad: data.ciudad,
+        pais: data.pais,
+        region: data.region,
       },
     });
 

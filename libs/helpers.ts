@@ -1,4 +1,4 @@
-import type { TableAction } from "@/app/components/dashboard/table-actions";
+import type { TableAction } from "@/app/components/dashboard/ui/table-actions";
 import { Dispatch, SetStateAction } from "react";
 import { TableFilterValues } from "@/types";
 
@@ -68,6 +68,15 @@ export const getEstadoStyles = (estado: string) => {
 
     case "VENCIDO":
       return "bg-red-100 text-red-700";
+
+    case "ASESOR":
+      return "bg-amber-400 text-white";
+
+    case "FACTURADOR":
+      return "bg-green-400 text-white";
+
+    case "ADMINISTRADOR":
+      return "bg-indigo-400 text-white";
 
     default:
       return "bg-gray-100 text-gray-700";
@@ -294,5 +303,325 @@ export function getServiceTypeConfig(tipo: string, index: number) {
       label: formatServiceType(tipo),
       color: fallbackColors[index % fallbackColors.length],
     }
+  );
+}
+
+export const formatDate = (date: Date | string | null) => {
+  if (!date) return "—";
+
+  return new Intl.DateTimeFormat("es-CO", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date(date));
+};
+
+
+const titleRules = [
+  // Administración > Usuarios
+  {
+    pattern: /^\/dashboard\/administracion\/usuarios\/nuevo$/,
+    title: "Crear usuario",
+  },
+  {
+    pattern: /^\/dashboard\/administracion\/usuarios\/[^/]+\/editar$/,
+    title: "Editar usuario",
+  },
+  {
+    pattern: /^\/dashboard\/administracion\/usuarios\/[^/]+$/,
+    title: "Detalle del usuario",
+  },
+  {
+    pattern: /^\/dashboard\/administracion\/usuarios$/,
+    title: "Usuarios",
+  },
+
+  // Servicios > Hotel
+  {
+    pattern: /^\/dashboard\/servicios\/hotel\/nuevo$/,
+    title: "Crear hotel",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/hotel\/[^/]+\/editar$/,
+    title: "Editar hotel",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/hotel\/[^/]+$/,
+    title: "Detalle del hotel",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/hotel$/,
+    title: "Hoteles",
+  },
+
+  // Servicios > Alquiler de auto
+  {
+    pattern: /^\/dashboard\/servicios\/alquiler-auto\/nuevo$/,
+    title: "Crear alquiler de auto",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/alquiler-auto\/[^/]+\/editar$/,
+    title: "Editar alquiler de auto",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/alquiler-auto\/[^/]+$/,
+    title: "Detalle del alquiler de auto",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/alquiler-auto$/,
+    title: "Alquiler de autos",
+  },
+
+  // Servicios > Salón
+  {
+    pattern: /^\/dashboard\/servicios\/salon\/nuevo$/,
+    title: "Crear salón",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/salon\/[^/]+\/editar$/,
+    title: "Editar salón",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/salon\/[^/]+$/,
+    title: "Detalle del salón",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/salon$/,
+    title: "Salones",
+  },
+
+  // Servicios > Evento
+  {
+    pattern: /^\/dashboard\/servicios\/evento\/nuevo$/,
+    title: "Crear evento",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/evento\/[^/]+\/editar$/,
+    title: "Editar evento",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/evento\/[^/]+$/,
+    title: "Detalle del evento",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/evento$/,
+    title: "Eventos",
+  },
+
+  // Servicios > Silla
+  {
+    pattern: /^\/dashboard\/servicios\/silla\/nuevo$/,
+    title: "Crear silla",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/silla\/[^/]+\/editar$/,
+    title: "Editar silla",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/silla\/[^/]+$/,
+    title: "Detalle de la silla",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/silla$/,
+    title: "Sillas",
+  },
+
+  // Servicios > Tarjeta de asistencia
+  {
+    pattern: /^\/dashboard\/servicios\/tarjeta-asistencia\/nuevo$/,
+    title: "Crear tarjeta de asistencia",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/tarjeta-asistencia\/[^/]+\/editar$/,
+    title: "Editar tarjeta de asistencia",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/tarjeta-asistencia\/[^/]+$/,
+    title: "Detalle de la tarjeta de asistencia",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/tarjeta-asistencia$/,
+    title: "Tarjetas de asistencia",
+  },
+
+  // Servicios > Traslado
+  {
+    pattern: /^\/dashboard\/servicios\/traslado\/nuevo$/,
+    title: "Crear traslado",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/traslado\/[^/]+\/editar$/,
+    title: "Editar traslado",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/traslado\/[^/]+$/,
+    title: "Detalle del traslado",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/traslado$/,
+    title: "Traslados",
+  },
+
+  // Servicios > Visa
+  {
+    pattern: /^\/dashboard\/servicios\/visa\/nuevo$/,
+    title: "Crear visa",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/visa\/[^/]+\/editar$/,
+    title: "Editar visa",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/visa\/[^/]+$/,
+    title: "Detalle de la visa",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/visa$/,
+    title: "Visas",
+  },
+
+  // Servicios > Web check-in
+  {
+    pattern: /^\/dashboard\/servicios\/web-checkin\/nuevo$/,
+    title: "Crear web check-in",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/web-checkin\/[^/]+\/editar$/,
+    title: "Editar web check-in",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/web-checkin\/[^/]+$/,
+    title: "Detalle del web check-in",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/web-checkin$/,
+    title: "Web check-in",
+  },
+
+  // Servicios > Plan vacacional
+  {
+    pattern: /^\/dashboard\/servicios\/plan-vacacional\/nuevo$/,
+    title: "Crear plan vacacional",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/plan-vacacional\/[^/]+\/editar$/,
+    title: "Editar plan vacacional",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/plan-vacacional\/[^/]+$/,
+    title: "Detalle del plan vacacional",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/plan-vacacional$/,
+    title: "Planes vacacionales",
+  },
+
+  // Clientes
+  {
+    pattern: /^\/dashboard\/clientes\/nuevo$/,
+    title: "Crear cliente",
+  },
+  {
+    pattern: /^\/dashboard\/clientes\/[^/]+\/editar$/,
+    title: "Editar cliente",
+  },
+  {
+    pattern: /^\/dashboard\/clientes\/[^/]+$/,
+    title: "Detalle del cliente",
+  },
+  {
+    pattern: /^\/dashboard\/clientes$/,
+    title: "Clientes",
+  },
+
+  // Proveedores
+  {
+    pattern: /^\/dashboard\/proveedores\/nuevo$/,
+    title: "Crear proveedor",
+  },
+  {
+    pattern: /^\/dashboard\/proveedores\/[^/]+\/editar$/,
+    title: "Editar proveedor",
+  },
+  {
+    pattern: /^\/dashboard\/proveedores\/[^/]+$/,
+    title: "Detalle del proveedor",
+  },
+  {
+    pattern: /^\/dashboard\/proveedores$/,
+    title: "Proveedores",
+  },
+
+  // Pasajeros
+  {
+    pattern: /^\/dashboard\/pasajeros\/nuevo$/,
+    title: "Crear pasajero",
+  },
+  {
+    pattern: /^\/dashboard\/pasajeros\/[^/]+\/editar$/,
+    title: "Editar pasajero",
+  },
+  {
+    pattern: /^\/dashboard\/pasajeros\/[^/]+$/,
+    title: "Detalle del pasajero",
+  },
+  {
+    pattern: /^\/dashboard\/pasajeros$/,
+    title: "Pasajeros",
+  },
+
+  // Rutas
+  {
+    pattern: /^\/dashboard\/rutas\/nuevo$/,
+    title: "Crear ruta",
+  },
+  {
+    pattern: /^\/dashboard\/rutas\/[^/]+\/editar$/,
+    title: "Editar ruta",
+  },
+  {
+    pattern: /^\/dashboard\/rutas\/[^/]+$/,
+    title: "Detalle de la ruta",
+  },
+  {
+    pattern: /^\/dashboard\/rutas$/,
+    title: "Rutas",
+  },
+
+  // Secciones principales
+  {
+    pattern: /^\/dashboard\/cartera$/,
+    title: "Cartera",
+  },
+  {
+    pattern: /^\/dashboard\/facturacion$/,
+    title: "Facturación",
+  },
+  {
+    pattern: /^\/dashboard\/reportes$/,
+    title: "Reportes",
+  },
+  {
+    pattern: /^\/dashboard\/ajustes$/,
+    title: "Ajustes",
+  },
+  {
+    pattern: /^\/dashboard\/administracion$/,
+    title: "Administración",
+  },
+  {
+    pattern: /^\/dashboard\/servicios$/,
+    title: "Servicios",
+  },
+  {
+    pattern: /^\/dashboard$/,
+    title: "Dashboard",
+  },
+];
+
+export function getDashboardTitle(pathname: string) {
+  return (
+    titleRules.find((rule) => rule.pattern.test(pathname))?.title ??
+    "Kuantta"
   );
 }

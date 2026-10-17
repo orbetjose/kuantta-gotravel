@@ -3,11 +3,12 @@
 import { prisma } from "@/libs/prisma";
 import { auth } from "@/auth";
 import {
+  PasajeroFormData,
   pasajeroSchema,
   type PasajeroFormValues,
 } from "@/libs/schemas/pasajeroSchema";
 
-export async function createPasajero(data: PasajeroFormValues) {
+export async function createPasajero(data: PasajeroFormData) {
   const validatedData = pasajeroSchema.safeParse(data);
 
   if (!validatedData.success) {
@@ -22,6 +23,9 @@ export async function createPasajero(data: PasajeroFormValues) {
       data: {
         nombre: validatedData.data.nombre,
         apellido: validatedData.data.apellido,
+        documento: validatedData.data.documento,
+        fechaNacimiento: new Date(validatedData.data.fechaNacimiento),
+        preferenciaSilla: validatedData.data.preferenciaSilla,
         correo: validatedData.data.correo,
         telefono: validatedData.data.telefono,
       },
@@ -43,12 +47,7 @@ export async function createPasajero(data: PasajeroFormValues) {
 
 export async function updatePasajero(
   pasajeroId: number,
-  data: {
-    nombre: string;
-    apellido: string;
-    correo: string;
-    telefono: string;
-  },
+  data: PasajeroFormData,
 ) {
   const session = await auth();
 
@@ -80,6 +79,9 @@ export async function updatePasajero(
       data: {
         nombre: data.nombre,
         apellido: data.apellido,
+        documento: data.documento,
+        fechaNacimiento: new Date(data.fechaNacimiento),
+        preferenciaSilla: data.preferenciaSilla,
         correo: data.correo,
         telefono: data.telefono,
       },

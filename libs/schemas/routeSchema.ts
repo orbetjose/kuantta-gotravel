@@ -1,23 +1,17 @@
 import { z } from "zod";
 
 export const routeSchema = z.object({
-  origen: z
-    .string()
-    .min(1, "Ingresa el origen"),
+  codigoIATA: z.string().min(1, "Ingresa el codigo IATA"),
 
-  codigoOrigen: z
-    .string()
-    .min(1, "Ingresa el código de origen")
-    .length(3, "El código debe tener 3 caracteres"),
+  nombreAeropuerto: z.string().min(1, "Ingresa el nombre del aeropuerto"),
 
-  destino: z
-    .string()
-    .min(1, "Ingresa el destino"),
+  ciudad: z.string().min(1, "Ingresa la ciudad"),
 
-  codigoDestino: z
-    .string()
-    .min(1, "Ingresa el código de destino")
-    .length(3, "El código debe tener 3 caracteres"),
+  pais: z.string().min(1, "Ingresa el pais"),
+
+  region: z.string().min(1, "Ingresa la región"),
 });
 
 export type RouteFormValues = z.infer<typeof routeSchema>;
+export type RouteFormInput = z.input<typeof routeSchema>;
+export type RouteFormData = z.output<typeof routeSchema>;
