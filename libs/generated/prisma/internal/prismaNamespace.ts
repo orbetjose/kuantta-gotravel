@@ -399,6 +399,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Account: 'Account',
+  Nota: 'Nota',
   Cliente: 'Cliente',
   Pasajero: 'Pasajero',
   Servicio: 'Servicio',
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "cliente" | "pasajero" | "servicio" | "detalleServicio" | "tiquete" | "trayectoTiquete" | "proveedor" | "ruta"
+    modelProps: "user" | "account" | "nota" | "cliente" | "pasajero" | "servicio" | "detalleServicio" | "tiquete" | "trayectoTiquete" | "proveedor" | "ruta"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -571,6 +572,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AccountCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AccountCountAggregateOutputType> | number
+        }
+      }
+    }
+    Nota: {
+      payload: Prisma.$NotaPayload<ExtArgs>
+      fields: Prisma.NotaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>
+        }
+        findFirst: {
+          args: Prisma.NotaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>
+        }
+        findMany: {
+          args: Prisma.NotaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>[]
+        }
+        create: {
+          args: Prisma.NotaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>
+        }
+        createMany: {
+          args: Prisma.NotaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>[]
+        }
+        delete: {
+          args: Prisma.NotaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>
+        }
+        update: {
+          args: Prisma.NotaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotaPayload>
+        }
+        aggregate: {
+          args: Prisma.NotaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNota>
+        }
+        groupBy: {
+          args: Prisma.NotaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotaCountAggregateOutputType> | number
         }
       }
     }
@@ -1239,6 +1314,19 @@ export const AccountScalarFieldEnum = {
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
 
 
+export const NotaScalarFieldEnum = {
+  id: 'id',
+  titulo: 'titulo',
+  contenido: 'contenido',
+  fijada: 'fijada',
+  usuarioId: 'usuarioId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotaScalarFieldEnum = (typeof NotaScalarFieldEnum)[keyof typeof NotaScalarFieldEnum]
+
+
 export const ClienteScalarFieldEnum = {
   id: 'id',
   nombre: 'nombre',
@@ -1412,7 +1500,8 @@ export const RutaScalarFieldEnum = {
   pais: 'pais',
   region: 'region',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  activo: 'activo'
 } as const
 
 export type RutaScalarFieldEnum = (typeof RutaScalarFieldEnum)[keyof typeof RutaScalarFieldEnum]
@@ -1505,6 +1594,13 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'TipoDocumento'
  */
 export type EnumTipoDocumentoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoDocumento'>
@@ -1529,13 +1625,6 @@ export type EnumTipoPersonaFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'TipoPersona[]'
  */
 export type ListEnumTipoPersonaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoPersona[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1901,6 +1990,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   account?: Prisma.AccountOmit
+  nota?: Prisma.NotaOmit
   cliente?: Prisma.ClienteOmit
   pasajero?: Prisma.PasajeroOmit
   servicio?: Prisma.ServicioOmit

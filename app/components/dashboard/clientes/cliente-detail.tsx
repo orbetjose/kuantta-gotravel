@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { TipoServicio, EstadoServicio } from "@/libs/generated/prisma/client";
 import { getEstadoStyles } from "@/libs/helpers";
+import { deleteCliente } from "@/actions/clients";
+import ModalConfirmacion from "../ui/modal-confirmacion";
 
 type ClienteDetailProps = {
   cliente: {
@@ -46,6 +49,7 @@ type ClienteDetailProps = {
 
 export default function ClienteDetail({ cliente }: ClienteDetailProps) {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fechaRegistro = new Intl.DateTimeFormat("es-CO", {
     dateStyle: "long",
@@ -91,6 +95,16 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
     }
   };
 
+  async function handleEliminar(proveedorId: number) {
+    const response = await deleteCliente(proveedorId);
+
+    if (!response) {
+      console.log(response);
+    }
+
+    router.push(`/dashboard/clientes/`);
+  }
+
   return (
     <div className="font-inter p-6 bg-fourth-gray rounded-lg w-full text-fifth-gray">
       {/* Encabezado */}
@@ -114,6 +128,7 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
 
             <button
               type="button"
+              onClick={() => setIsModalOpen(true)}
               className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
             >
               Eliminar cliente
@@ -121,7 +136,12 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
           </div>
         </div>
       </div>
-
+      <ModalConfirmacion
+        open={isModalOpen}
+        onEliminar={handleEliminar}
+        id={cliente.id}
+        onCerrar={() => setIsModalOpen(false)}
+      />
       {/* Información del cliente */}
       <div className="rounded-lg bg-white p-6">
         <h2 className="mb-6 text-xl font-bold">Información del cliente</h2>

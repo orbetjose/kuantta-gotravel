@@ -215,6 +215,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
+  notas?: Prisma.NotaListRelationFilter
   serviciosCreados?: Prisma.ServicioListRelationFilter
   serviciosFacturados?: Prisma.ServicioListRelationFilter
 }
@@ -230,6 +231,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  notas?: Prisma.NotaOrderByRelationAggregateInput
   serviciosCreados?: Prisma.ServicioOrderByRelationAggregateInput
   serviciosFacturados?: Prisma.ServicioOrderByRelationAggregateInput
 }
@@ -248,6 +250,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
+  notas?: Prisma.NotaListRelationFilter
   serviciosCreados?: Prisma.ServicioListRelationFilter
   serviciosFacturados?: Prisma.ServicioListRelationFilter
 }, "id" | "email">
@@ -293,6 +296,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  notas?: Prisma.NotaCreateNestedManyWithoutUsuarioInput
   serviciosCreados?: Prisma.ServicioCreateNestedManyWithoutCreadoPorInput
   serviciosFacturados?: Prisma.ServicioCreateNestedManyWithoutFacturadoPorInput
 }
@@ -308,6 +312,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  notas?: Prisma.NotaUncheckedCreateNestedManyWithoutUsuarioInput
   serviciosCreados?: Prisma.ServicioUncheckedCreateNestedManyWithoutCreadoPorInput
   serviciosFacturados?: Prisma.ServicioUncheckedCreateNestedManyWithoutFacturadoPorInput
 }
@@ -323,6 +328,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  notas?: Prisma.NotaUpdateManyWithoutUsuarioNestedInput
   serviciosCreados?: Prisma.ServicioUpdateManyWithoutCreadoPorNestedInput
   serviciosFacturados?: Prisma.ServicioUpdateManyWithoutFacturadoPorNestedInput
 }
@@ -338,6 +344,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  notas?: Prisma.NotaUncheckedUpdateManyWithoutUsuarioNestedInput
   serviciosCreados?: Prisma.ServicioUncheckedUpdateManyWithoutCreadoPorNestedInput
   serviciosFacturados?: Prisma.ServicioUncheckedUpdateManyWithoutFacturadoPorNestedInput
 }
@@ -458,6 +465,20 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateNestedOneWithoutNotasInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotasInput, Prisma.UserUncheckedCreateWithoutNotasInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotasInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotasNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotasInput, Prisma.UserUncheckedCreateWithoutNotasInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotasInput
+  upsert?: Prisma.UserUpsertWithoutNotasInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotasInput, Prisma.UserUpdateWithoutNotasInput>, Prisma.UserUncheckedUpdateWithoutNotasInput>
+}
+
 export type UserCreateNestedOneWithoutServiciosCreadosInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutServiciosCreadosInput, Prisma.UserUncheckedCreateWithoutServiciosCreadosInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutServiciosCreadosInput
@@ -498,6 +519,7 @@ export type UserCreateWithoutAccountsInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  notas?: Prisma.NotaCreateNestedManyWithoutUsuarioInput
   serviciosCreados?: Prisma.ServicioCreateNestedManyWithoutCreadoPorInput
   serviciosFacturados?: Prisma.ServicioCreateNestedManyWithoutFacturadoPorInput
 }
@@ -512,6 +534,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  notas?: Prisma.NotaUncheckedCreateNestedManyWithoutUsuarioInput
   serviciosCreados?: Prisma.ServicioUncheckedCreateNestedManyWithoutCreadoPorInput
   serviciosFacturados?: Prisma.ServicioUncheckedCreateNestedManyWithoutFacturadoPorInput
 }
@@ -542,6 +565,7 @@ export type UserUpdateWithoutAccountsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notas?: Prisma.NotaUpdateManyWithoutUsuarioNestedInput
   serviciosCreados?: Prisma.ServicioUpdateManyWithoutCreadoPorNestedInput
   serviciosFacturados?: Prisma.ServicioUpdateManyWithoutFacturadoPorNestedInput
 }
@@ -556,6 +580,83 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notas?: Prisma.NotaUncheckedUpdateManyWithoutUsuarioNestedInput
+  serviciosCreados?: Prisma.ServicioUncheckedUpdateManyWithoutCreadoPorNestedInput
+  serviciosFacturados?: Prisma.ServicioUncheckedUpdateManyWithoutFacturadoPorNestedInput
+}
+
+export type UserCreateWithoutNotasInput = {
+  id?: string
+  name?: string | null
+  email: string
+  password?: string | null
+  emailVerified?: Date | string | null
+  image?: string | null
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  serviciosCreados?: Prisma.ServicioCreateNestedManyWithoutCreadoPorInput
+  serviciosFacturados?: Prisma.ServicioCreateNestedManyWithoutFacturadoPorInput
+}
+
+export type UserUncheckedCreateWithoutNotasInput = {
+  id?: string
+  name?: string | null
+  email: string
+  password?: string | null
+  emailVerified?: Date | string | null
+  image?: string | null
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  serviciosCreados?: Prisma.ServicioUncheckedCreateNestedManyWithoutCreadoPorInput
+  serviciosFacturados?: Prisma.ServicioUncheckedCreateNestedManyWithoutFacturadoPorInput
+}
+
+export type UserCreateOrConnectWithoutNotasInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotasInput, Prisma.UserUncheckedCreateWithoutNotasInput>
+}
+
+export type UserUpsertWithoutNotasInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotasInput, Prisma.UserUncheckedUpdateWithoutNotasInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotasInput, Prisma.UserUncheckedCreateWithoutNotasInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotasInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotasInput, Prisma.UserUncheckedUpdateWithoutNotasInput>
+}
+
+export type UserUpdateWithoutNotasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  serviciosCreados?: Prisma.ServicioUpdateManyWithoutCreadoPorNestedInput
+  serviciosFacturados?: Prisma.ServicioUpdateManyWithoutFacturadoPorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   serviciosCreados?: Prisma.ServicioUncheckedUpdateManyWithoutCreadoPorNestedInput
   serviciosFacturados?: Prisma.ServicioUncheckedUpdateManyWithoutFacturadoPorNestedInput
 }
@@ -571,6 +672,7 @@ export type UserCreateWithoutServiciosCreadosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  notas?: Prisma.NotaCreateNestedManyWithoutUsuarioInput
   serviciosFacturados?: Prisma.ServicioCreateNestedManyWithoutFacturadoPorInput
 }
 
@@ -585,6 +687,7 @@ export type UserUncheckedCreateWithoutServiciosCreadosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  notas?: Prisma.NotaUncheckedCreateNestedManyWithoutUsuarioInput
   serviciosFacturados?: Prisma.ServicioUncheckedCreateNestedManyWithoutFacturadoPorInput
 }
 
@@ -604,6 +707,7 @@ export type UserCreateWithoutServiciosFacturadosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  notas?: Prisma.NotaCreateNestedManyWithoutUsuarioInput
   serviciosCreados?: Prisma.ServicioCreateNestedManyWithoutCreadoPorInput
 }
 
@@ -618,6 +722,7 @@ export type UserUncheckedCreateWithoutServiciosFacturadosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  notas?: Prisma.NotaUncheckedCreateNestedManyWithoutUsuarioInput
   serviciosCreados?: Prisma.ServicioUncheckedCreateNestedManyWithoutCreadoPorInput
 }
 
@@ -648,6 +753,7 @@ export type UserUpdateWithoutServiciosCreadosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  notas?: Prisma.NotaUpdateManyWithoutUsuarioNestedInput
   serviciosFacturados?: Prisma.ServicioUpdateManyWithoutFacturadoPorNestedInput
 }
 
@@ -662,6 +768,7 @@ export type UserUncheckedUpdateWithoutServiciosCreadosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  notas?: Prisma.NotaUncheckedUpdateManyWithoutUsuarioNestedInput
   serviciosFacturados?: Prisma.ServicioUncheckedUpdateManyWithoutFacturadoPorNestedInput
 }
 
@@ -687,6 +794,7 @@ export type UserUpdateWithoutServiciosFacturadosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  notas?: Prisma.NotaUpdateManyWithoutUsuarioNestedInput
   serviciosCreados?: Prisma.ServicioUpdateManyWithoutCreadoPorNestedInput
 }
 
@@ -701,6 +809,7 @@ export type UserUncheckedUpdateWithoutServiciosFacturadosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  notas?: Prisma.NotaUncheckedUpdateManyWithoutUsuarioNestedInput
   serviciosCreados?: Prisma.ServicioUncheckedUpdateManyWithoutCreadoPorNestedInput
 }
 
@@ -711,12 +820,14 @@ export type UserUncheckedUpdateWithoutServiciosFacturadosInput = {
 
 export type UserCountOutputType = {
   accounts: number
+  notas: number
   serviciosCreados: number
   serviciosFacturados: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  notas?: boolean | UserCountOutputTypeCountNotasArgs
   serviciosCreados?: boolean | UserCountOutputTypeCountServiciosCreadosArgs
   serviciosFacturados?: boolean | UserCountOutputTypeCountServiciosFacturadosArgs
 }
@@ -736,6 +847,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AccountWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotaWhereInput
 }
 
 /**
@@ -764,6 +882,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  notas?: boolean | Prisma.User$notasArgs<ExtArgs>
   serviciosCreados?: boolean | Prisma.User$serviciosCreadosArgs<ExtArgs>
   serviciosFacturados?: boolean | Prisma.User$serviciosFacturadosArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -808,6 +927,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "emailVerified" | "image" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  notas?: boolean | Prisma.User$notasArgs<ExtArgs>
   serviciosCreados?: boolean | Prisma.User$serviciosCreadosArgs<ExtArgs>
   serviciosFacturados?: boolean | Prisma.User$serviciosFacturadosArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -819,6 +939,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    notas: Prisma.$NotaPayload<ExtArgs>[]
     serviciosCreados: Prisma.$ServicioPayload<ExtArgs>[]
     serviciosFacturados: Prisma.$ServicioPayload<ExtArgs>[]
   }
@@ -1227,6 +1348,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notas<T extends Prisma.User$notasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviciosCreados<T extends Prisma.User$serviciosCreadosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$serviciosCreadosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviciosFacturados<T extends Prisma.User$serviciosFacturadosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$serviciosFacturadosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1681,6 +1803,30 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.notas
+ */
+export type User$notasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Nota
+   */
+  select?: Prisma.NotaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Nota
+   */
+  omit?: Prisma.NotaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotaInclude<ExtArgs> | null
+  where?: Prisma.NotaWhereInput
+  orderBy?: Prisma.NotaOrderByWithRelationInput | Prisma.NotaOrderByWithRelationInput[]
+  cursor?: Prisma.NotaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotaScalarFieldEnum | Prisma.NotaScalarFieldEnum[]
 }
 
 /**

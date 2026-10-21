@@ -98,3 +98,45 @@ export async function updateRuta(
     };
   }
 }
+
+export async function deleteRuta(rutaId: number) {
+  const session = await auth();
+
+  if (!session) {
+    return {
+      success: false,
+      error: "No autorizado.",
+    };
+  }
+
+  try {
+    const ruta = await prisma.ruta.findUnique({
+      where: {
+        id: rutaId,
+      },
+    });
+    if (!ruta) {
+      return {
+        success: false,
+        error: "Rutas no encontrado.",
+      };
+    }
+    await prisma.ruta.update({
+      where: {
+        id: rutaId,
+      },
+      data: {
+        activo: false,
+      },
+    });
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error("Error actualizando ruta:", error);
+    return {
+      success: false,
+      error: "No fue posible actualizar el ruta.",
+    };
+  }
+}

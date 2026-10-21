@@ -4,7 +4,11 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu, X, Road,   LayoutDashboard,
+import {
+  Menu,
+  X,
+  Road,
+  LayoutDashboard,
   BriefcaseBusiness,
   Users,
   Building2,
@@ -15,8 +19,10 @@ import { Menu, X, Road,   LayoutDashboard,
   Settings2,
   Monitor,
   Settings,
+  NotebookPen,
   LogOut,
-  ChevronDown, } from "lucide-react";
+  ChevronDown,
+} from "lucide-react";
 import { can, type Resource, type Action } from "@/libs/permissions";
 
 type MenuItem = {
@@ -32,7 +38,6 @@ type MenuItem = {
   }[];
 };
 
-
 type SidebarProps = {
   role: "ASESOR" | "FACTURADOR" | "ADMINISTRADOR";
 };
@@ -44,6 +49,14 @@ const menuItems: MenuItem[] = [
     icon: LayoutDashboard,
     type: "link",
     resource: "dashboard",
+    action: "view",
+  },
+  {
+    label: "Notas",
+    href: "/dashboard/notas",
+    icon: NotebookPen,
+    type: "link",
+    resource: "notas",
     action: "view",
   },
   {
@@ -129,7 +142,7 @@ const menuItems: MenuItem[] = [
     resource: "pasajeros",
     action: "view",
   },
-    {
+  {
     label: "Rutas",
     href: "/dashboard/rutas",
     icon: Road,

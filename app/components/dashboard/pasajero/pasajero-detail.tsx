@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { TipoServicio, EstadoServicio } from "@/libs/generated/prisma/client";
 import { formatCurrency, getEstadoStyles, formatDate } from "@/libs/helpers";
+import ModalConfirmacion from "../ui/modal-confirmacion";
+import { deletePasajero } from "@/actions/pasajeros";
 
 type PasajeroDetailProps = {
   pasajero: {
@@ -43,8 +46,7 @@ type PasajeroDetailProps = {
 
 export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
   const router = useRouter();
-
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getServicioInfo = (
     servicio: PasajeroDetailProps["pasajero"]["servicios"][number],
@@ -81,10 +83,20 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
         return {
           id: null,
           totalPagar: null,
-          href: null, 
+          href: null,
         };
     }
   };
+
+  async function handleEliminar(pasajeroId: number) {
+    const response = await deletePasajero(pasajeroId);
+
+    if (!response) {
+      console.log(response);
+    }
+
+    router.push(`/dashboard/pasajeros/`);
+  }
 
   return (
     <div className="font-inter p-6 bg-fourth-gray rounded-lg w-full text-fifth-gray">
@@ -111,6 +123,7 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
 
             <button
               type="button"
+              onClick={() => setIsModalOpen(true)}
               className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
             >
               Eliminar pasajero
@@ -118,13 +131,18 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
           </div>
         </div>
       </div>
+      <ModalConfirmacion
+        open={isModalOpen}
+        onEliminar={handleEliminar}
+        id={pasajero.id}
+        onCerrar={() => setIsModalOpen(false)}
+      />
 
       {/* Información del pasajero */}
       <div className="rounded-lg bg-white p-6">
         <h2 className="mb-6 text-xl font-bold">Información del pasajero</h2>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          
           <div>
             <p className="mb-1 text-sm text-fifth-gray"># Documento</p>
 

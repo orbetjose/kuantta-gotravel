@@ -64,7 +64,7 @@ export default function DashboardCalendar({
           day_button:
             "h-9 w-9 rounded-lg font-inter text-sm text-inherit hover:bg-primary-blue hover:text-white transition",
 
-          today: "font-semibold text-gray-900",
+          today: "font-semibold text-gray-900 underline",
 
           outside: "text-gray-300",
 
@@ -77,7 +77,7 @@ export default function DashboardCalendar({
 
           range_end: "bg-primary-blue text-white rounded-r-lg hover:opacity-70",
 
-          selected: "bg-primary-blue ",
+          selected: "bg-primary-blue",
 
           hidden: "invisible",
         }}

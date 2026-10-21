@@ -95,3 +95,45 @@ export async function updateProveedor(
     };
   }
 }
+
+export async function deleteProveedor(proveedorId: number) {
+  const session = await auth();
+
+  if (!session) {
+    return {
+      success: false,
+      error: "No autorizado.",
+    };
+  }
+
+  try {
+    const proveedor = await prisma.proveedor.findUnique({
+      where: {
+        id: proveedorId,
+      },
+    });
+    if (!proveedor) {
+      return {
+        success: false,
+        error: "Proveedor no encontrado.",
+      };
+    }
+    await prisma.proveedor.update({
+      where: {
+        id: proveedorId,
+      },
+      data: {
+        activo: false,
+      },
+    });
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error("Error actualizando proveedor:", error);
+    return {
+      success: false,
+      error: "No fue posible actualizar el proveedor.",
+    };
+  }
+}

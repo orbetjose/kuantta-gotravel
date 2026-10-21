@@ -47,7 +47,6 @@ export default function Dashboard() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
@@ -103,7 +102,9 @@ export default function Dashboard() {
               pendientePorFacturar={summary.pendientePorFacturar}
               loading={loading}
             />
+            {/*
             <div className="mt-4 flex flex-col-reverse gap-4 2xl:flex-row">
+              
               <div className="flex-1">
                 <DashboardServicesByQuantity
                   data={summary.serviciosPorCantidad}
@@ -119,6 +120,7 @@ export default function Dashboard() {
                 periodoAgrupacion={summary.periodoAgrupacion}
               />
             </div>
+            */}
           </div>
 
           <aside className="w-full shrink-0 lg:w-65 3xl:w-80">

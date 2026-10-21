@@ -4,8 +4,7 @@ import { prisma } from "@/libs/prisma";
 import { auth } from "@/auth";
 import {
   PasajeroFormData,
-  pasajeroSchema,
-  type PasajeroFormValues,
+  pasajeroSchema,  
 } from "@/libs/schemas/pasajeroSchema";
 
 export async function createPasajero(data: PasajeroFormData) {
@@ -93,6 +92,48 @@ export async function updatePasajero(
   } catch (error) {
     console.error("Error actualizando pasajero:", error);
 
+    return {
+      success: false,
+      error: "No fue posible actualizar el pasajero.",
+    };
+  }
+}
+
+export async function deletePasajero(pasajeroId: number) {
+  const session = await auth();
+
+  if (!session) {
+    return {
+      success: false,
+      error: "No autorizado.",
+    };
+  }
+
+  try {
+    const pasajero = await prisma.pasajero.findUnique({
+      where: {
+        id: pasajeroId,
+      },
+    });
+    if (!pasajero) {
+      return {
+        success: false,
+        error: "Pasajero no encontrado.",
+      };
+    }
+    await prisma.pasajero.update({
+      where: {
+        id: pasajeroId,
+      },
+      data: {
+        activo: false,
+      },
+    });
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error("Error actualizando pasajero:", error);
     return {
       success: false,
       error: "No fue posible actualizar el pasajero.",

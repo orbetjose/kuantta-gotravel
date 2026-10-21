@@ -11,30 +11,33 @@ export async function GET(request: Request) {
   const skip = (page - 1) * limit;
 
   try {
-    const where = search
-      ? {
-          OR: [
-            {
-              codigoIATA: {
-                contains: search,
-                mode: "insensitive" as const,
+    const where = {
+      activo: true,
+      ...(search
+        ? {
+            OR: [
+              {
+                codigoIATA: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              nombreAeropuerto: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                nombreAeropuerto: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              ciudad: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                ciudad: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-          ],
-        }
-      : undefined;
+            ],
+          }
+        : {}),
+    };
 
     const [rutas, total] = await Promise.all([
       prisma.ruta.findMany({

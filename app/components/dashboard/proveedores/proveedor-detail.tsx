@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getEstadoStyles } from "@/libs/helpers";
 import type {
@@ -10,6 +11,8 @@ import type {
   TipoServicio,
   EstadoServicio,
 } from "@/libs/generated/prisma/client";
+import { deleteProveedor } from "@/actions/providers";
+import ModalConfirmacion from "../ui/modal-confirmacion";
 
 type ProveedorDetailProps = {
   proveedor: {
@@ -57,6 +60,8 @@ type ProveedorDetailProps = {
 };
 
 export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const router = useRouter();
 
   const fechaRegistro = new Intl.DateTimeFormat("es-CO", {
@@ -101,6 +106,16 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
     }
   };
 
+  async function handleEliminar(proveedorId: number) {
+    const response = await deleteProveedor(proveedorId);
+
+    if (!response) {
+      console.log(response);
+    }
+
+    router.push(`/dashboard/proveedores/`);
+  }
+
   return (
     <div className="font-inter p-6 bg-fourth-gray rounded-lg w-full text-fifth-gray">
       {/* Encabezado */}
@@ -124,6 +139,7 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
 
             <button
               type="button"
+              onClick={() => setIsModalOpen(true)}
               className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
             >
               Eliminar proveedor
@@ -131,6 +147,12 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
           </div>
         </div>
       </div>
+      <ModalConfirmacion
+        open={isModalOpen}
+        onEliminar={handleEliminar}
+        id={proveedor.id}
+        onCerrar={() => setIsModalOpen(false)}
+      />
 
       {/* Información del proveedor */}
       <div className="rounded-lg bg-white p-6">

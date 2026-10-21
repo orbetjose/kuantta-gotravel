@@ -43,6 +43,7 @@ export type RutaMinAggregateOutputType = {
   region: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  activo: boolean | null
 }
 
 export type RutaMaxAggregateOutputType = {
@@ -54,6 +55,7 @@ export type RutaMaxAggregateOutputType = {
   region: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  activo: boolean | null
 }
 
 export type RutaCountAggregateOutputType = {
@@ -65,6 +67,7 @@ export type RutaCountAggregateOutputType = {
   region: number
   createdAt: number
   updatedAt: number
+  activo: number
   _all: number
 }
 
@@ -86,6 +89,7 @@ export type RutaMinAggregateInputType = {
   region?: true
   createdAt?: true
   updatedAt?: true
+  activo?: true
 }
 
 export type RutaMaxAggregateInputType = {
@@ -97,6 +101,7 @@ export type RutaMaxAggregateInputType = {
   region?: true
   createdAt?: true
   updatedAt?: true
+  activo?: true
 }
 
 export type RutaCountAggregateInputType = {
@@ -108,6 +113,7 @@ export type RutaCountAggregateInputType = {
   region?: true
   createdAt?: true
   updatedAt?: true
+  activo?: true
   _all?: true
 }
 
@@ -206,6 +212,7 @@ export type RutaGroupByOutputType = {
   region: string | null
   createdAt: Date
   updatedAt: Date
+  activo: boolean
   _count: RutaCountAggregateOutputType | null
   _avg: RutaAvgAggregateOutputType | null
   _sum: RutaSumAggregateOutputType | null
@@ -240,6 +247,7 @@ export type RutaWhereInput = {
   region?: Prisma.StringNullableFilter<"Ruta"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Ruta"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Ruta"> | Date | string
+  activo?: Prisma.BoolFilter<"Ruta"> | boolean
   origenes?: Prisma.TrayectoTiqueteListRelationFilter
   destinos?: Prisma.TrayectoTiqueteListRelationFilter
 }
@@ -253,6 +261,7 @@ export type RutaOrderByWithRelationInput = {
   region?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   origenes?: Prisma.TrayectoTiqueteOrderByRelationAggregateInput
   destinos?: Prisma.TrayectoTiqueteOrderByRelationAggregateInput
 }
@@ -269,6 +278,7 @@ export type RutaWhereUniqueInput = Prisma.AtLeast<{
   region?: Prisma.StringNullableFilter<"Ruta"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Ruta"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Ruta"> | Date | string
+  activo?: Prisma.BoolFilter<"Ruta"> | boolean
   origenes?: Prisma.TrayectoTiqueteListRelationFilter
   destinos?: Prisma.TrayectoTiqueteListRelationFilter
 }, "id" | "codigoIATA">
@@ -282,6 +292,7 @@ export type RutaOrderByWithAggregationInput = {
   region?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
   _count?: Prisma.RutaCountOrderByAggregateInput
   _avg?: Prisma.RutaAvgOrderByAggregateInput
   _max?: Prisma.RutaMaxOrderByAggregateInput
@@ -301,6 +312,7 @@ export type RutaScalarWhereWithAggregatesInput = {
   region?: Prisma.StringNullableWithAggregatesFilter<"Ruta"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Ruta"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Ruta"> | Date | string
+  activo?: Prisma.BoolWithAggregatesFilter<"Ruta"> | boolean
 }
 
 export type RutaCreateInput = {
@@ -311,6 +323,7 @@ export type RutaCreateInput = {
   region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  activo?: boolean
   origenes?: Prisma.TrayectoTiqueteCreateNestedManyWithoutOrigenInput
   destinos?: Prisma.TrayectoTiqueteCreateNestedManyWithoutDestinoInput
 }
@@ -324,6 +337,7 @@ export type RutaUncheckedCreateInput = {
   region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  activo?: boolean
   origenes?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutOrigenInput
   destinos?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutDestinoInput
 }
@@ -336,6 +350,7 @@ export type RutaUpdateInput = {
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   origenes?: Prisma.TrayectoTiqueteUpdateManyWithoutOrigenNestedInput
   destinos?: Prisma.TrayectoTiqueteUpdateManyWithoutDestinoNestedInput
 }
@@ -349,6 +364,7 @@ export type RutaUncheckedUpdateInput = {
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   origenes?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutOrigenNestedInput
   destinos?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutDestinoNestedInput
 }
@@ -362,6 +378,7 @@ export type RutaCreateManyInput = {
   region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  activo?: boolean
 }
 
 export type RutaUpdateManyMutationInput = {
@@ -372,6 +389,7 @@ export type RutaUpdateManyMutationInput = {
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type RutaUncheckedUpdateManyInput = {
@@ -383,6 +401,7 @@ export type RutaUncheckedUpdateManyInput = {
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type RutaScalarRelationFilter = {
@@ -399,6 +418,7 @@ export type RutaCountOrderByAggregateInput = {
   region?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
 }
 
 export type RutaAvgOrderByAggregateInput = {
@@ -414,6 +434,7 @@ export type RutaMaxOrderByAggregateInput = {
   region?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
 }
 
 export type RutaMinOrderByAggregateInput = {
@@ -425,6 +446,7 @@ export type RutaMinOrderByAggregateInput = {
   region?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  activo?: Prisma.SortOrder
 }
 
 export type RutaSumOrderByAggregateInput = {
@@ -467,6 +489,7 @@ export type RutaCreateWithoutOrigenesInput = {
   region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  activo?: boolean
   destinos?: Prisma.TrayectoTiqueteCreateNestedManyWithoutDestinoInput
 }
 
@@ -479,6 +502,7 @@ export type RutaUncheckedCreateWithoutOrigenesInput = {
   region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  activo?: boolean
   destinos?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutDestinoInput
 }
 
@@ -495,6 +519,7 @@ export type RutaCreateWithoutDestinosInput = {
   region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  activo?: boolean
   origenes?: Prisma.TrayectoTiqueteCreateNestedManyWithoutOrigenInput
 }
 
@@ -507,6 +532,7 @@ export type RutaUncheckedCreateWithoutDestinosInput = {
   region?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  activo?: boolean
   origenes?: Prisma.TrayectoTiqueteUncheckedCreateNestedManyWithoutOrigenInput
 }
 
@@ -534,6 +560,7 @@ export type RutaUpdateWithoutOrigenesInput = {
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   destinos?: Prisma.TrayectoTiqueteUpdateManyWithoutDestinoNestedInput
 }
 
@@ -546,6 +573,7 @@ export type RutaUncheckedUpdateWithoutOrigenesInput = {
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   destinos?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutDestinoNestedInput
 }
 
@@ -568,6 +596,7 @@ export type RutaUpdateWithoutDestinosInput = {
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   origenes?: Prisma.TrayectoTiqueteUpdateManyWithoutOrigenNestedInput
 }
 
@@ -580,6 +609,7 @@ export type RutaUncheckedUpdateWithoutDestinosInput = {
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
   origenes?: Prisma.TrayectoTiqueteUncheckedUpdateManyWithoutOrigenNestedInput
 }
 
@@ -632,6 +662,7 @@ export type RutaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   region?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  activo?: boolean
   origenes?: boolean | Prisma.Ruta$origenesArgs<ExtArgs>
   destinos?: boolean | Prisma.Ruta$destinosArgs<ExtArgs>
   _count?: boolean | Prisma.RutaCountOutputTypeDefaultArgs<ExtArgs>
@@ -646,6 +677,7 @@ export type RutaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   region?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  activo?: boolean
 }, ExtArgs["result"]["ruta"]>
 
 export type RutaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -657,6 +689,7 @@ export type RutaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   region?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  activo?: boolean
 }, ExtArgs["result"]["ruta"]>
 
 export type RutaSelectScalar = {
@@ -668,9 +701,10 @@ export type RutaSelectScalar = {
   region?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  activo?: boolean
 }
 
-export type RutaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "codigoIATA" | "nombreAeropuerto" | "ciudad" | "pais" | "region" | "createdAt" | "updatedAt", ExtArgs["result"]["ruta"]>
+export type RutaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "codigoIATA" | "nombreAeropuerto" | "ciudad" | "pais" | "region" | "createdAt" | "updatedAt" | "activo", ExtArgs["result"]["ruta"]>
 export type RutaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   origenes?: boolean | Prisma.Ruta$origenesArgs<ExtArgs>
   destinos?: boolean | Prisma.Ruta$destinosArgs<ExtArgs>
@@ -694,6 +728,7 @@ export type $RutaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     region: string | null
     createdAt: Date
     updatedAt: Date
+    activo: boolean
   }, ExtArgs["result"]["ruta"]>
   composites: {}
 }
@@ -1127,6 +1162,7 @@ export interface RutaFieldRefs {
   readonly region: Prisma.FieldRef<"Ruta", 'String'>
   readonly createdAt: Prisma.FieldRef<"Ruta", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Ruta", 'DateTime'>
+  readonly activo: Prisma.FieldRef<"Ruta", 'Boolean'>
 }
     
 

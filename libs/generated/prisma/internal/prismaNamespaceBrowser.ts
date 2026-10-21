@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Account: 'Account',
+  Nota: 'Nota',
   Cliente: 'Cliente',
   Pasajero: 'Pasajero',
   Servicio: 'Servicio',
@@ -111,6 +112,19 @@ export const AccountScalarFieldEnum = {
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const NotaScalarFieldEnum = {
+  id: 'id',
+  titulo: 'titulo',
+  contenido: 'contenido',
+  fijada: 'fijada',
+  usuarioId: 'usuarioId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotaScalarFieldEnum = (typeof NotaScalarFieldEnum)[keyof typeof NotaScalarFieldEnum]
 
 
 export const ClienteScalarFieldEnum = {
@@ -286,7 +300,8 @@ export const RutaScalarFieldEnum = {
   pais: 'pais',
   region: 'region',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  activo: 'activo'
 } as const
 
 export type RutaScalarFieldEnum = (typeof RutaScalarFieldEnum)[keyof typeof RutaScalarFieldEnum]

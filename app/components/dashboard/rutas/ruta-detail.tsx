@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/libs/helpers";
+import ModalConfirmacion from "../ui/modal-confirmacion";
+import { deleteRuta } from "@/actions/routes";
 
 type RutaDetailProps = {
   ruta: {
@@ -18,8 +21,18 @@ type RutaDetailProps = {
 
 export default function RutaDetail({ ruta }: RutaDetailProps) {
   const router = useRouter();
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const fechaRegistro = formatDate(ruta.createdAt);
+
+  async function handleEliminar(rutaId: number) {
+    const response = await deleteRuta(rutaId);
+
+    if (!response) {
+      console.log(response);
+    }
+
+    router.push(`/dashboard/rutas/`);
+  }
 
   return (
     <div className="font-inter p-6 bg-fourth-gray rounded-lg w-full text-fifth-gray">
@@ -43,7 +56,7 @@ export default function RutaDetail({ ruta }: RutaDetailProps) {
             </button>
 
             <button
-              type="button"
+              onClick={() => setIsModalOpen(true)}
               className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
             >
               Eliminar ruta
@@ -51,6 +64,12 @@ export default function RutaDetail({ ruta }: RutaDetailProps) {
           </div>
         </div>
       </div>
+      <ModalConfirmacion
+        open={isModalOpen}
+        onEliminar={handleEliminar}
+        id={ruta.id}
+        onCerrar={() => setIsModalOpen(false)}
+      />
 
       {/* Información de la ruta */}
       <div className="rounded-lg bg-white p-6">

@@ -11,42 +11,45 @@ export async function GET(request: Request) {
   const skip = (page - 1) * limit;
 
   try {
-    const where = search
-      ? {
-          OR: [
-            {
-              razonSocial: {
-                contains: search,
-                mode: "insensitive" as const,
+    const where = {
+      activo: true,
+      ...(search
+        ? {
+            OR: [
+              {
+                razonSocial: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              nombreComercial: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                nombreComercial: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              nit: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                nit: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              correoComercial: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                correoComercial: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              correoFacturacion: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                correoFacturacion: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-          ],
-        }
-      : undefined;
+            ],
+          }
+        : {}),
+    };
 
     const [proveedores, total] = await Promise.all([
       prisma.proveedor.findMany({

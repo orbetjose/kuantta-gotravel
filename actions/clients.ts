@@ -114,3 +114,45 @@ export async function updateCliente(
     };
   }
 }
+
+export async function deleteCliente(clienteId: number) {
+  const session = await auth();
+
+  if (!session) {
+    return {
+      success: false,
+      error: "No autorizado.",
+    };
+  }
+
+  try {
+    const cliente = await prisma.cliente.findUnique({
+      where: {
+        id: clienteId,
+      },
+    });
+    if (!cliente) {
+      return {
+        success: false,
+        error: "Proveedor no encontrado.",
+      };
+    }
+    await prisma.cliente.update({
+      where: {
+        id: clienteId,
+      },
+      data: {
+        activo: false,
+      },
+    });
+    return {
+      success: true,
+    };
+  } catch (error) {
+    console.error("Error actualizando cliente:", error);
+    return {
+      success: false,
+      error: "No fue posible actualizar el cliente.",
+    };
+  }
+}

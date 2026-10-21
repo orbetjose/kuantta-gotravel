@@ -11,42 +11,45 @@ export async function GET(request: Request) {
   const skip = (page - 1) * limit;
 
   try {
-    const where = search
-      ? {
-          OR: [
-            {
-              nombre: {
-                contains: search,
-                mode: "insensitive" as const,
+    const where = {
+      activo: true,
+      ...(search
+        ? {
+            OR: [
+              {
+                nombre: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              apellido: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                apellido: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              documento: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                documento: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              correo: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                correo: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-            {
-              telefono: {
-                contains: search,
-                mode: "insensitive" as const,
+              {
+                telefono: {
+                  contains: search,
+                  mode: "insensitive" as const,
+                },
               },
-            },
-          ],
-        }
-      : undefined;
+            ],
+          }
+        : {}),
+    };
 
     const [pasajeros, total] = await Promise.all([
       prisma.pasajero.findMany({

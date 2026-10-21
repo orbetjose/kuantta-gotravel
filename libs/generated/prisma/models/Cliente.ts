@@ -564,10 +564,6 @@ export type EnumTipoPersonaFieldUpdateOperationsInput = {
   set?: $Enums.TipoPersona
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number

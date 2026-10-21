@@ -10,6 +10,7 @@
  */
 export type * from './models/User'
 export type * from './models/Account'
+export type * from './models/Nota'
 export type * from './models/Cliente'
 export type * from './models/Pasajero'
 export type * from './models/Servicio'

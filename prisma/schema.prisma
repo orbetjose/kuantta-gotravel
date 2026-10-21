@@ -18,6 +18,7 @@ model User {
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
   accounts            Account[]
+  notas               Nota[]
   serviciosCreados    Servicio[] @relation("ServiciosCreados")
   serviciosFacturados Servicio[] @relation("ServiciosFacturados")
 }
@@ -39,6 +40,20 @@ model Account {
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
+}
+
+model Nota {
+  id        String  @id @default(cuid())
+  titulo    String  @db.VarChar(100)
+  contenido String  @db.Text
+  fijada    Boolean @default(false)
+  usuarioId String
+  usuario   User    @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([usuarioId, createdAt])
 }
 
 model Cliente {
@@ -121,11 +136,11 @@ model Servicio {
   observaciones                String?
 
   // Forma de pago
-  formaPago        TipoPago
-  tipoCash         TipoCash?
-  numeroTarjeta    String?
-  numeroAprobacion String?
-  creditoAgencia   Int?
+  formaPago          TipoPago
+  tipoCash           TipoCash?
+  numeroTarjeta      String?
+  numeroAprobacion   String?
+  creditoAgencia     Int?
   comprobantePagoUrl String?
 
   // Información administrativa
@@ -244,15 +259,15 @@ model Tiquete {
 }
 
 model TrayectoTiquete {
-  id            Int      @id @default(autoincrement())
-  tiqueteId     Int
-  orden         Int
-  origenId      Int
-  destinoId     Int
-  fechaSalida   DateTime
-  fechaRegreso  DateTime?
+  id           Int       @id @default(autoincrement())
+  tiqueteId    Int
+  orden        Int
+  origenId     Int
+  destinoId    Int
+  fechaSalida  DateTime
+  fechaRegreso DateTime?
 
-  tiquete Tiquete @relation(fields: [tiqueteId],references: [id],onDelete: Cascade)
+  tiquete Tiquete @relation(fields: [tiqueteId], references: [id], onDelete: Cascade)
 
   origen Ruta @relation("AeropuertoOrigen", fields: [origenId], references: [id])
 
@@ -328,6 +343,7 @@ model Ruta {
   region           String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+  activo           Boolean  @default(true)
 
   origenes TrayectoTiquete[] @relation("AeropuertoOrigen")
   destinos TrayectoTiquete[] @relation("AeropuertoDestino")
