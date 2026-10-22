@@ -73,3 +73,11 @@ export type RutaOption = {
   ciudad: string;
   pais: string;
 };
+
+export type Nota = {
+  id: string;
+  titulo: string;
+  contenido: string;
+  fijada: boolean;
+  createdAt: Date;
+};

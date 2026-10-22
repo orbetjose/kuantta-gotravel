@@ -8,14 +8,8 @@ import NotaLecturaModal from "./nota-lectura-modal";
 import Pagination from "../ui/pagination";
 import { alternarNotaFijada, eliminarNota, crearNota } from "@/actions/notas";
 import { NotaFormValues } from "@/libs/schemas/notaSchema";
+import { Nota } from "@/types";
 
-type Nota = {
-  id: string;
-  titulo: string;
-  contenido: string;
-  fijada: boolean;
-  createdAt: Date;
-};
 
 type Pagination = {
   page: number;

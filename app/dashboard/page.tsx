@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import DashboardCalendar from "@/app/components/dashboard/dashboard-calendar";
 import DashboardStats from "@/app/components/dashboard/dashboard-stats";
+import DashboardNotas from "../components/dashboard-notas";
 import DashboardSalesByType from "@/app/components/dashboard/dahsboard-sales-by-type";
 import DashboardSalesByPeriod from "@/app/components/dashboard/dashboard-sales-by-period";
 import DashboardServicesByQuantity from "../components/dashboard/dashboard-services-by-quantity";
+
 
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
@@ -86,12 +88,12 @@ export default function Dashboard() {
     <>
       <div className="w-full rounded-lg bg-fourth-gray md:p-6 p-2">
         <div className="mb-4">
-          <p className="font-inter text-sm text-fifth-gray">
-            Resumen general de ventas y servicios
-          </p>
           <h1 className="font-inter text-4xl font-bold text-fifth-gray">
             Dashboard
           </h1>
+          <p className="font-inter text-sm text-fifth-gray">
+            Resumen general de ventas y servicios
+          </p>
         </div>
 
         <div className="flex flex-col gap-4 lg:flex-row">
@@ -126,6 +128,7 @@ export default function Dashboard() {
           <aside className="w-full shrink-0 lg:w-65 3xl:w-80">
             <div className="lg:sticky lg:top-6">
               <DashboardCalendar range={dateRange} onChange={setDateRange} />
+              <DashboardNotas />
             </div>
           </aside>
         </div>
