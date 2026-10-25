@@ -711,25 +711,6 @@ export default function TicketForm({
           {/* Ruta */}
           <div className="xl:col-span-4">
             <section className="space-y-4">
-              <div className="flex items-center justify-between">
-                {watch("tipoItinerario") === "MULTIDESTINO" && (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      agregarTrayecto({
-                        origenId: "",
-                        destinoId: "",
-                        fechaSalida: "",
-                        fechaRegreso: "",
-                      })
-                    }
-                    className="rounded-md border px-3 py-2 text-sm"
-                  >
-                    Agregar trayecto
-                  </button>
-                )}
-              </div>
-
               {trayectoFields.map((trayecto, index) => (
                 <div key={trayecto.id} className="space-y-4 ">
                   {watch("tipoItinerario") === "MULTIDESTINO" && (
@@ -742,7 +723,7 @@ export default function TicketForm({
                         <button
                           type="button"
                           onClick={() => eliminarTrayecto(index)}
-                          className="text-sm text-red-500"
+                          className="text-sm text-red-500 py-1 px-4 rounded-lg cursor-pointer"
                         >
                           Eliminar
                         </button>
@@ -761,7 +742,7 @@ export default function TicketForm({
                           value={field.value}
                           onChange={field.onChange}
                           options={rutasOptionsCompletas}
-                          searchEndpoint="/api/rutas/buscar"
+                          searchEndpoint="/api/rutas/search"
                           searchPlaceholder="Buscar aeropuerto o ciudad..."
                           error={errors.trayectos?.[index]?.origenId?.message}
                         />
@@ -772,12 +753,14 @@ export default function TicketForm({
                       name={`trayectos.${index}.destinoId`}
                       control={control}
                       render={({ field }) => (
-                        <FormSelect
+                        <FormComboBox
                           label="Destino"
                           name={field.name}
                           value={field.value}
                           onChange={field.onChange}
                           options={rutasOptionsCompletas}
+                          searchEndpoint="/api/rutas/search"
+                          searchPlaceholder="Buscar aeropuerto o ciudad..."
                           error={errors.trayectos?.[index]?.destinoId?.message}
                         />
                       )}
@@ -808,7 +791,7 @@ export default function TicketForm({
                 <button
                   type="button"
                   onClick={() => agregarTrayecto({ ...trayectoVacio })}
-                  className="text-sm font-medium text-primary-blue"
+                  className="text-sm font-medium text-white bg-primary-blue rounded-lg p-2 cursor-pointer"
                 >
                   + Agregar trayecto
                 </button>

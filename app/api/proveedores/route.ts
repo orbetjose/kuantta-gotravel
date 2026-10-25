@@ -4,49 +4,46 @@ import { prisma } from "@/libs/prisma";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
-  const page = Number(searchParams.get("page")) || 1;
-  const limit = Number(searchParams.get("limit")) || 10;
+  const page = Math.max(1, Number(searchParams.get("page")) || 1);
+  const limit = Math.max(1, Number(searchParams.get("limit")) || 10);
   const search = searchParams.get("search")?.trim() ?? "";
 
   const skip = (page - 1) * limit;
 
   try {
+    let idsEncontrados: number[] | undefined;
+
+    if (search) {
+      const termino = `%${search}%`;
+
+      const resultados = await prisma.$queryRaw<{ id: number }[]>`
+        SELECT "id"
+        FROM "Proveedor"
+        WHERE "activo" = true
+          AND (
+            unaccent(lower(COALESCE("razonSocial", '')))
+              LIKE unaccent(lower(${termino}))
+            OR unaccent(lower(COALESCE("nombreComercial", '')))
+              LIKE unaccent(lower(${termino}))
+            OR unaccent(lower(COALESCE("nit", '')))
+              LIKE unaccent(lower(${termino}))
+            OR unaccent(lower(COALESCE("correoComercial", '')))
+              LIKE unaccent(lower(${termino}))
+            OR unaccent(lower(COALESCE("correoFacturacion", '')))
+              LIKE unaccent(lower(${termino}))
+          )
+      `;
+
+      idsEncontrados = resultados.map((proveedor) => proveedor.id);
+    }
+
     const where = {
       activo: true,
-      ...(search
+      ...(idsEncontrados !== undefined
         ? {
-            OR: [
-              {
-                razonSocial: {
-                  contains: search,
-                  mode: "insensitive" as const,
-                },
-              },
-              {
-                nombreComercial: {
-                  contains: search,
-                  mode: "insensitive" as const,
-                },
-              },
-              {
-                nit: {
-                  contains: search,
-                  mode: "insensitive" as const,
-                },
-              },
-              {
-                correoComercial: {
-                  contains: search,
-                  mode: "insensitive" as const,
-                },
-              },
-              {
-                correoFacturacion: {
-                  contains: search,
-                  mode: "insensitive" as const,
-                },
-              },
-            ],
+            id: {
+              in: idsEncontrados,
+            },
           }
         : {}),
     };

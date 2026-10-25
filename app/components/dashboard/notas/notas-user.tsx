@@ -175,7 +175,7 @@ export default function NotasUser() {
             <article
               key={nota.id}
               onClick={() => setNotaSeleccionada(nota)}
-              className="flex h-63 flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md cursor-pointer"
+              className="flex h-54 flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
                 <h2 className="min-w-0 wrap-break-word text-base font-semibold text-primary-blue">
@@ -200,7 +200,7 @@ export default function NotasUser() {
                 </button>
               </div>
 
-              <p className="mt-3 flex-1 overflow-hidden whitespace-pre-wrap wrap-break-word text-sm leading-5 text-fifth-gray [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:5]">
+              <p className="mt-3 flex-1 overflow-hidden whitespace-pre-wrap wrap-break-word text-sm leading-5 text-fifth-gray [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3]">
                 {nota.contenido}
               </p>
 

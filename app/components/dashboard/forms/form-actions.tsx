@@ -24,15 +24,18 @@ export default function FormActions({
       >
         {cancelText}
       </button>
-      <button
-        type="submit"
-        disabled={isLoading}
-        name="estado"
-        value="POR_FACTURAR"
-        className="rounded-lg bg-primary-green px-6 py-3 text-sm font-medium text-white transition hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {isLoading ? "Cargando..." : facturarText}
-      </button>
+      {facturarText && (
+        <button
+          type="submit"
+          disabled={isLoading}
+          name="estado"
+          value="POR_FACTURAR"
+          className="rounded-lg bg-primary-green px-6 py-3 text-sm font-medium text-white transition hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {isLoading ? "Cargando..." : facturarText}
+        </button>
+      )}
+
       <button
         type="submit"
         disabled={isLoading}

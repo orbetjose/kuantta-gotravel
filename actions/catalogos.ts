@@ -38,11 +38,21 @@ export async function getProveedores() {
 }
 
 export async function getRutas() {
-  return await prisma.ruta.findMany({
-    orderBy: {
-      createdAt: "desc",
+  const rutasPopulares = [
+    50,
+    52,
+    38,
+    11,
+    17,
+    27,
+  ];
+
+  const rutas = await prisma.ruta.findMany({
+    where: {
+      id: {
+        in: rutasPopulares,
+      },
     },
-    take: 6,
     select: {
       id: true,
       codigoIATA: true,
@@ -51,6 +61,15 @@ export async function getRutas() {
       pais: true,
     },
   });
+
+  // Mantener el orden definido en rutasPopulares
+  const orden = new Map(
+    rutasPopulares.map((id, index) => [id, index])
+  );
+
+  return rutas.sort(
+    (a, b) => orden.get(a.id)! - orden.get(b.id)!
+  );
 }
 
 export async function getPasajeros() {
