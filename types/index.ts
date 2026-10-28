@@ -2,6 +2,13 @@ export type ActionResult<T> =
   | { success: true; data: T; total: number }
   | { success: false; error: string };
 
+export type PaginationType = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+};
+
 export type Servicios = {
   id: number;
   tipo: string;
@@ -40,7 +47,6 @@ export interface DashboardFilterValues {
 
 export type TableFilter = "date" | "tipo" | "estado" | "credito";
 
- 
 export type ClienteOption = {
   id: number;
   nombre: string;

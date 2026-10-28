@@ -347,14 +347,6 @@ export default function Sidebar({ role }: SidebarProps) {
 
         {/* Bottom actions */}
         <div className="space-y-2 ">
-          <Link
-            href="/dashboard/ajustes"
-            className="flex gap-4 w-full items-center px-4 py-2 text-white hover:bg-third-green/20"
-          >
-            <Settings className="h-5 w-5" />
-            Ajustes
-          </Link>
-
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: "/login" })}

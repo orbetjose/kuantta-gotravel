@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
 import { prisma } from "@/libs/prisma";
 import UserForm from "@/app/components/dashboard/forms/user-form";
 
@@ -24,6 +25,13 @@ export default async function EditarUsuario({
   if (!user) {
     notFound();
   }
+
+  try {
+    await requirePermission("usuarios", "edit");
+  } catch {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="font-inter">
       <UserForm

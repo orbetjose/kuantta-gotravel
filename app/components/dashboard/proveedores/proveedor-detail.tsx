@@ -13,6 +13,7 @@ import type {
 } from "@/libs/generated/prisma/client";
 import { deleteProveedor } from "@/actions/providers";
 import ModalConfirmacion from "../ui/modal-confirmacion";
+import { can, type Role } from "@/libs/permissions";
 
 type ProveedorDetailProps = {
   proveedor: {
@@ -57,9 +58,10 @@ type ProveedorDetailProps = {
       } | null;
     }[];
   };
+  role: Role;
 };
 
-export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
+export default function ProveedorDetail({ proveedor, role }: ProveedorDetailProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
@@ -127,23 +129,26 @@ export default function ProveedorDetail({ proveedor }: ProveedorDetailProps) {
         </div>
         <div>
           <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() =>
-                router.push(`/dashboard/proveedores/${proveedor.id}/editar`)
-              }
-              className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
-            >
-              Editar proveedor
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
-            >
-              Eliminar proveedor
-            </button>
+            {can(role, "proveedores", "edit") && (
+              <button
+                type="button"
+                onClick={() =>
+                  router.push(`/dashboard/proveedores/${proveedor.id}/editar`)
+                }
+                className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
+              >
+                Editar proveedor
+              </button>
+            )}
+            {can(role, "proveedores", "delete") && (
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
+              >
+                Eliminar proveedor
+              </button>
+            )}
           </div>
         </div>
       </div>

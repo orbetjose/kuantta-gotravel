@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-
 import Sidebar from "@/app/components/dashboard/sidebar";
 import DashboardNavbar from "@/app/components/dashboard/dashboard-navbar";
+import type { Role } from "@/libs/permissions";
 
 export default async function DashboardLayout({
   children,
@@ -14,9 +14,11 @@ export default async function DashboardLayout({
   if (!session) {
     redirect("/login");
   }
+  const role = session.user.role as Role;
+
   return (
     <div className="flex h-screen overflow-hidden bg-secondary-gray/15">
-      <Sidebar role={session.user.role} />
+      <Sidebar role={role} />
       <div className="flex min-w-0 min-h-0 flex-1 flex-col ">
         <DashboardNavbar user={session.user} />
         <main className="min-h-0 min-w-0 flex-1 overflow-y-auto ">

@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
-
+import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/libs/prisma";
+import { requirePermission } from "@/libs/authorization";
 import RutaDetail from "@/app/components/dashboard/rutas/ruta-detail";
 
 export default async function RutasDetailPage({
@@ -8,6 +8,14 @@ export default async function RutasDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  let usuario;
+
+  try {
+    usuario = await requirePermission("rutas", "view");
+  } catch {
+    redirect("/dashboard");
+  }
+
   const { id } = await params;
 
   const rutaId = Number(id);
@@ -26,5 +34,5 @@ export default async function RutasDetailPage({
     notFound();
   }
 
-  return <RutaDetail ruta={ruta} />;
+  return <RutaDetail ruta={ruta} role={usuario.role} />;
 }

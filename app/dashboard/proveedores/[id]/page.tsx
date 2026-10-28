@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-
+import { requirePermission } from "@/libs/authorization";
+import { redirect } from "next/navigation";
 import { prisma } from "@/libs/prisma";
 import ProveedorDetail from "@/app/components/dashboard/proveedores/proveedor-detail";
 
@@ -69,5 +70,13 @@ export default async function ProveedorDetailPage({
     })),
   };
 
-  return <ProveedorDetail proveedor={proveedorData} />;
+  let usuario;
+
+  try {
+    usuario = await requirePermission("proveedores", "view");
+  } catch {
+    redirect("/dashboard");
+  }
+
+  return <ProveedorDetail proveedor={proveedorData} role={usuario.role} />;
 }

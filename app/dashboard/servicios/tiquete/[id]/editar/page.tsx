@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/libs/prisma";
 import TicketForm from "@/app/components/dashboard/forms/ticket-form";
 import { TicketFormInitialData } from "@/libs/schemas/ticketSchema";
+import { requirePermission } from "@/libs/authorization";
 import {
   getClientes,
   getPasajeros,
@@ -60,6 +61,12 @@ export default async function EditarTiquetePage({
     tiquete.servicio.estado === "ANULADO"
   ) {
     redirect(`/dashboard/servicios/tiquete/${tiqueteId}`);
+  }
+
+  try {
+    await requirePermission("servicios", "edit");
+  } catch {
+    redirect("/dashboard/servicios/tiquete");
   }
 
   const initialData: TicketFormInitialData = {

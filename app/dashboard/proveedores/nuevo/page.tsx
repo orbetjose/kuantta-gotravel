@@ -1,6 +1,13 @@
+import { redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
 import ProviderForm from "@/app/components/dashboard/forms/provider-form";
 
-export default function page() {
+export default async function page() {
+  try {
+    await requirePermission("proveedores", "create");
+  } catch {
+    redirect("/dashboard");
+  }
   return (
     <div className="w-full  bg-fourth-gray p-4 rounded-lg ">
       <div className="font-inter font-bold">

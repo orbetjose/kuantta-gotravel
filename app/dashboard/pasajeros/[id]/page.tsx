@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
-
+import { notFound, redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
 import { prisma } from "@/libs/prisma";
 import PasajeroDetail from "@/app/components/dashboard/pasajero/pasajero-detail";
 
@@ -8,6 +8,15 @@ export default async function PasajeroDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  
+  let usuario;
+
+  try {
+    usuario = await requirePermission("pasajeros", "view");
+  } catch {
+    redirect("/dashboard");
+  }
+
   const { id } = await params;
 
   const pasajeroId = Number(id);
@@ -49,26 +58,28 @@ export default async function PasajeroDetailPage({
     notFound();
   }
 
-const pasajeroData = {
-  ...pasajero,
-  servicios: pasajero.servicios.map((servicio) => ({
-    ...servicio,
+  const pasajeroData = {
+    ...pasajero,
+    servicios: pasajero.servicios.map((servicio) => ({
+      ...servicio,
 
-    tiquete: servicio.tiquete
-      ? {
-          ...servicio.tiquete,
-          totalPagar: Number(servicio.tiquete.totalPagar),
-        }
-      : null,
+      tiquete: servicio.tiquete
+        ? {
+            ...servicio.tiquete,
+            totalPagar: Number(servicio.tiquete.totalPagar),
+          }
+        : null,
 
-    detalleServicio: servicio.detalleServicio
-      ? {
-          ...servicio.detalleServicio,
-          totalVentaAgencia: Number(servicio.detalleServicio.totalVentaAgencia),
-        }
-      : null,
-  })),
-};
+      detalleServicio: servicio.detalleServicio
+        ? {
+            ...servicio.detalleServicio,
+            totalVentaAgencia: Number(
+              servicio.detalleServicio.totalVentaAgencia,
+            ),
+          }
+        : null,
+    })),
+  };
 
-  return <PasajeroDetail pasajero={pasajeroData} />;
+  return <PasajeroDetail pasajero={pasajeroData} role={usuario.role} />;
 }

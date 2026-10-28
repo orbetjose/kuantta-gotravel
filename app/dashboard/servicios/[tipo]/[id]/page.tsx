@@ -1,5 +1,6 @@
-import { notFound } from "next/navigation";
-import { auth } from "@/auth";
+import { notFound, redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
+
 import { prisma } from "@/libs/prisma";
 import ServiciosDetail from "@/app/components/dashboard/servicios/servicios-detail";
 
@@ -63,13 +64,11 @@ export default async function ServicioDetailPage({
 
   const servicioData = {
     ...servicio,
-    
+
     detalleServicio: servicio.detalleServicio
       ? {
           ...servicio.detalleServicio,
-          totalPagado: Number(
-            servicio.detalleServicio.totalPagado,
-          ),
+          totalPagado: Number(servicio.detalleServicio.totalPagado),
           feePagoTarjetaCredito: Number(
             servicio.detalleServicio.feePagoTarjetaCredito,
           ),
@@ -82,11 +81,13 @@ export default async function ServicioDetailPage({
     notFound();
   }
 
-  const session = await auth();
+  let usuario;
 
-  if (!session?.user) {
-    notFound();
+  try {
+    usuario = await requirePermission("pasajeros", "view");
+  } catch {
+    redirect("/dashboard");
   }
 
-  return <ServiciosDetail servicio={servicioData} role={session.user.role} />;
+  return <ServiciosDetail servicio={servicioData} role={usuario.role} />;
 }

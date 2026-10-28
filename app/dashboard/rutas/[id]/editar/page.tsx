@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
 import { prisma } from "@/libs/prisma";
 import RouteForm from "@/app/components/dashboard/forms/routes-form";
 
@@ -23,6 +24,12 @@ export default async function EditarRutaPage({
 
   if (!ruta) {
     notFound();
+  }
+
+  try {
+    await requirePermission("rutas", "edit");
+  } catch {
+    redirect("/dashboard/rutas");
   }
 
   return (

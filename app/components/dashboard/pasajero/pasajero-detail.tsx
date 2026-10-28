@@ -6,6 +6,7 @@ import { TipoServicio, EstadoServicio } from "@/libs/generated/prisma/client";
 import { formatCurrency, getEstadoStyles, formatDate } from "@/libs/helpers";
 import ModalConfirmacion from "../ui/modal-confirmacion";
 import { deletePasajero } from "@/actions/pasajeros";
+import { can, type Role } from "@/libs/permissions";
 
 type PasajeroDetailProps = {
   pasajero: {
@@ -42,9 +43,13 @@ type PasajeroDetailProps = {
       } | null;
     }[];
   };
+  role: Role;
 };
 
-export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
+export default function PasajeroDetail({
+  pasajero,
+  role,
+}: PasajeroDetailProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -111,16 +116,18 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
         </div>
         <div>
           <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() =>
-                router.push(`/dashboard/pasajeros/${pasajero.id}/editar`)
-              }
-              className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
-            >
-              Editar pasajero
-            </button>
-
+            {can(role, "pasajeros", "edit") && (
+              <button
+                type="button"
+                onClick={() =>
+                  router.push(`/dashboard/pasajeros/${pasajero.id}/editar`)
+                }
+                className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
+              >
+                Editar pasajero
+              </button>
+            )}
+            {can(role, "pasajeros", "delete") && (
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
@@ -128,6 +135,7 @@ export default function PasajeroDetail({ pasajero }: PasajeroDetailProps) {
             >
               Eliminar pasajero
             </button>
+            )}
           </div>
         </div>
       </div>

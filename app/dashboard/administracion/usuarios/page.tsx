@@ -1,8 +1,14 @@
-import UsuariosTable from '@/app/components/dashboard/usuarios/usuarios-table'
+import { redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
+import UsuariosTable from "@/app/components/dashboard/usuarios/usuarios-table";
 
+export default async function UsuariosPage() {
+  let usuario;
 
-export default function UsuariosPage() {
-  return (
-    <UsuariosTable />
-  )
+  try {
+    usuario = await requirePermission("usuarios", "view");
+  } catch {
+    redirect("/dashboard");
+  }
+  return <UsuariosTable />;
 }

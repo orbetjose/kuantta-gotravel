@@ -26,6 +26,7 @@ const getEstadoCartera = (fechaEmision: Date, creditoAgencia: number) => {
 
 export async function GET(request: Request) {
   const user = await getAuthenticatedUser();
+  
   if (user.role !== "ADMINISTRADOR") {
     return NextResponse.json(
       { error: "No tienes permisos para acceder a cartera" },

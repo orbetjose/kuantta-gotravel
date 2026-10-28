@@ -13,16 +13,15 @@ import Pagination from "@/app/components/dashboard/ui/pagination";
 import PaymentModal from "@/app/components/dashboard/cartera/paymentModal";
 import TableActions from "@/app/components/dashboard/ui/table-actions";
 import TableFilters from "@/app/components/dashboard/ui/table-filters";
+import { PaginationType } from "@/types";
+import { type Role } from "@/libs/permissions";
 
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
+type Props = {
+  role: Role;
 };
 
-export default function CarteraTable() {
-    const initialFilters: TableFilterValues = {
+export default function CarteraTable({ role }: Props) {
+  const initialFilters: TableFilterValues = {
     fechaDesde: "",
     fechaHasta: "",
     tipo: "",
@@ -30,7 +29,7 @@ export default function CarteraTable() {
     creditoAgencia: "",
   };
   const [servicios, setServicios] = useState<Servicios[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,
@@ -140,7 +139,6 @@ export default function CarteraTable() {
   return (
     <>
       <div className="w-full rounded-lg bg-fourth-gray p-6">
-        {/* Header */}
         <div className="mb-4 flex md:items-center justify-between flex-col md:flex-row gap-4">
           <div>
             <p className=" text-sm text-fifth-gray">Gestión de</p>
@@ -156,8 +154,6 @@ export default function CarteraTable() {
           </div>
         </div>
 
-        {/* Search */}
-
         <TableFilters
           filters={["date", "credito"]}
           search={search}
@@ -168,7 +164,6 @@ export default function CarteraTable() {
           onReset={resetFilters}
         />
 
-        {/* Table */}
         <div className="overflow-x-auto w-full rounded-lg p-4 bg-white shadow-sm">
           <table className="w-full md:table-fixed  md:w-250 3xl:table-auto 3xl:w-full border-separate border-spacing-y-3 ">
             <thead>
@@ -272,19 +267,21 @@ export default function CarteraTable() {
 
                       <td className="px-4 py-2 rounded-r-lg flex justify-center items-center gap-4">
                         <TableActions
-                          actions={getActions(
+                          actions={[
                             {
-                              tipo: servicio.tipo,
-                              id: servicio.id,
-                              idTiquete: servicio.idTiquete,
+                              label: "Revisar",
+                              href: `/dashboard/servicios/${servicio.tipo.toLowerCase()}/${servicio.tipo === "TIQUETE" ? servicio.idTiquete : servicio.id}`,
                             },
                             {
-                              action: {
-                                label: "Adjuntar pago",
-                                onClick: () => handleAddPayment(servicio),
+                              label: "Adjuntar pago",
+                              onClick: () => handleAddPayment(servicio),
+                              permission: {
+                                resource: "cartera",
+                                action: "view",
                               },
                             },
-                          )}
+                          ]}
+                          role={role}
                         />
                       </td>
                     </tr>
@@ -295,7 +292,6 @@ export default function CarteraTable() {
           </table>
         </div>
 
-        {/* Pagination */}
         {!isLoading && pagination.totalPages > 0 && (
           <Pagination
             currentPage={pagination.page}

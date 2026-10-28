@@ -6,6 +6,7 @@ import { TipoServicio, EstadoServicio } from "@/libs/generated/prisma/client";
 import { getEstadoStyles } from "@/libs/helpers";
 import { deleteCliente } from "@/actions/clients";
 import ModalConfirmacion from "../ui/modal-confirmacion";
+import { can, type Role } from "@/libs/permissions";
 
 type ClienteDetailProps = {
   cliente: {
@@ -45,9 +46,10 @@ type ClienteDetailProps = {
       } | null;
     }[];
   };
+  role: Role;
 };
 
-export default function ClienteDetail({ cliente }: ClienteDetailProps) {
+export default function ClienteDetail({ cliente, role }: ClienteDetailProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -116,23 +118,26 @@ export default function ClienteDetail({ cliente }: ClienteDetailProps) {
         </div>
         <div>
           <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() =>
-                router.push(`/dashboard/clientes/${cliente.id}/editar`)
-              }
-              className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
-            >
-              Editar cliente
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
-            >
-              Eliminar cliente
-            </button>
+            {can(role, "clientes", "edit") && (
+              <button
+                type="button"
+                onClick={() =>
+                  router.push(`/dashboard/clientes/${cliente.id}/editar`)
+                }
+                className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
+              >
+                Editar cliente
+              </button>
+            )}
+            {can(role, "clientes", "delete") && (
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
+              >
+                Eliminar cliente
+              </button>
+            )}
           </div>
         </div>
       </div>

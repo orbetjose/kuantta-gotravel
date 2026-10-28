@@ -8,22 +8,14 @@ import NotaLecturaModal from "./nota-lectura-modal";
 import Pagination from "../ui/pagination";
 import { alternarNotaFijada, eliminarNota, crearNota } from "@/actions/notas";
 import { NotaFormValues } from "@/libs/schemas/notaSchema";
-import { Nota } from "@/types";
-
-
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-};
+import { Nota, PaginationType } from "@/types";
 
 export default function NotasUser() {
   const [notas, setNotas] = useState<Nota[]>([]);
   const [notaSeleccionada, setNotaSeleccionada] = useState<Nota | null>(null);
   const [modalAbierta, setModalAbierta] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,

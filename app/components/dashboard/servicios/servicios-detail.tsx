@@ -1,28 +1,14 @@
-import { getEstadoStyles, getTiposStyles } from "@/libs/helpers";
+import {
+  getEstadoStyles,
+  getTiposStyles,
+  formatCurrency,
+  formatDate,
+} from "@/libs/helpers";
 import ServicioActions from "./servicio-actions";
 
 type ServicioDetailProps = {
   servicio: any;
   role: "ADMINISTRADOR" | "ASESOR" | "FACTURADOR";
-};
-
-const formatCurrency = (value: unknown) => {
-  return new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(Number(value));
-};
-
-const formatDate = (date: Date | string | null) => {
-  if (!date) return "—";
-
-  return new Intl.DateTimeFormat("es-CO", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(new Date(date));
 };
 
 const formatEstado = (estado: string) => {
@@ -351,7 +337,7 @@ function InfoItem({
   );
 }
 
-function AmountRow({ label, value }: { label: string; value: unknown }) {
+function AmountRow({ label, value }: { label: string; value: number }) {
   return (
     <div className="flex items-center justify-between gap-4 text-sm">
       <span className="text-fifth-gray">{label}</span>

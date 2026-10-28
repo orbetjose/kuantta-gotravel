@@ -1,19 +1,11 @@
 import { TiqueteDetailData } from "@/types/tiquete";
 import ServicioActions from "../servicios/servicio-actions";
 import { getEstadoStyles, formatDate } from "@/libs/helpers";
+import { formatCurrency } from "@/libs/helpers";
 
 type TiqueteDetailProps = {
   tiquete: TiqueteDetailData;
   role: "ADMINISTRADOR" | "ASESOR" | "FACTURADOR";
-};
-
-const formatCurrency = (value: unknown) => {
-  return new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
-  }).format(Number(value));
 };
 
 const formatEstado = (estado: string) => {
@@ -28,7 +20,7 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
   return (
     <div className="space-y-6 font-inter p-6 w-full rounded-lg bg-fourth-gray text-fifth-gray">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex items-center justify-between">
         <div>
           <p className="mb-1 text-sm text-fifth-gray">Detalle del tiquete</p>
 
@@ -93,15 +85,9 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
             value={`${servicio.pasajero.nombre} ${servicio.pasajero.apellido}`}
           />
 
-          <InfoItem
-            label="Documento"
-            value={servicio.pasajero.documento}
-          />
+          <InfoItem label="Documento" value={servicio.pasajero.documento} />
 
-          <InfoItem
-            label="Número de tiquete"
-            value={tiquete.numeroTiquete}
-          />
+          <InfoItem label="Número de tiquete" value={tiquete.numeroTiquete} />
           <InfoItem label="Teléfono" value={`${servicio.pasajero.telefono}`} />
         </div>
       </section>
@@ -198,33 +184,45 @@ export default function TiqueteDetail({ tiquete, role }: TiqueteDetailProps) {
         <h2 className="mb-2 text-lg font-bold">Valores</h2>
 
         <div className="space-y-3">
-          <AmountRow label="Tarifa neta" value={tiquete.tarifaNeta} />
+          <AmountRow label="Tarifa neta" value={Number(tiquete.tarifaNeta)} />
 
-          <AmountRow label="IVA tarifa" value={tiquete.ivaTarifa} />
+          <AmountRow label="IVA tarifa" value={Number(tiquete.ivaTarifa)} />
 
-          <AmountRow label="Otros impuestos" value={tiquete.otrosImpuestos} />
+          <AmountRow
+            label="Otros impuestos"
+            value={Number(tiquete.otrosImpuestos)}
+          />
 
           <AmountRow
             label="Tarifa administrativa neta"
-            value={tiquete.tarifaAdministrativaNeta}
+            value={Number(tiquete.tarifaAdministrativaNeta)}
           />
 
           <AmountRow
             label="IVA tarifa administrativa"
-            value={tiquete.ivaTarifaAdministrativa}
+            value={Number(tiquete.ivaTarifaAdministrativa)}
           />
 
-          <AmountRow label="Fee agencia neta" value={tiquete.feeAgenciaNeta} />
+          <AmountRow
+            label="Fee agencia neta"
+            value={Number(tiquete.feeAgenciaNeta)}
+          />
 
-          <AmountRow label="IVA fee agencia" value={tiquete.ivaFeeAgencia} />
-          <AmountRow label="Tarifa APH" value={tiquete.tarifaAPH} />
-          <AmountRow label="IVA tarifa APH" value={tiquete.ivaTarifaAPH} />
+          <AmountRow
+            label="IVA fee agencia"
+            value={Number(tiquete.ivaFeeAgencia)}
+          />
+          <AmountRow label="Tarifa APH" value={Number(tiquete.tarifaAPH)} />
+          <AmountRow
+            label="IVA tarifa APH"
+            value={Number(tiquete.ivaTarifaAPH)}
+          />
 
           <div className="mt-4 flex items-center justify-between border-t pt-4">
             <span className="text-lg font-bold">Total a pagar</span>
 
             <span className="text-xl font-bold">
-              {formatCurrency(tiquete.totalPagar)}
+              {formatCurrency(Number(tiquete.totalPagar))}
             </span>
           </div>
         </div>
@@ -354,7 +352,7 @@ function InfoItem({
   );
 }
 
-function AmountRow({ label, value }: { label: string; value: unknown }) {
+function AmountRow({ label, value }: { label: string; value: number }) {
   return (
     <div className="flex items-center justify-between gap-4 text-sm">
       <span className="text-fifth-gray">{label}</span>

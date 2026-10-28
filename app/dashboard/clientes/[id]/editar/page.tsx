@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/libs/prisma";
+import { redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
 import ClientForm from "@/app/components/dashboard/forms/client-form";
 
 export default async function EditarClientePage({
@@ -23,6 +25,12 @@ export default async function EditarClientePage({
 
   if (!cliente) {
     notFound();
+  }
+
+  try {
+    await requirePermission("clientes", "edit");
+  } catch {
+    redirect("/dashboard/clientes");
   }
 
   return (

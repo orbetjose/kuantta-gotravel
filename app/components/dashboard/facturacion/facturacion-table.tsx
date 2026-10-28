@@ -9,20 +9,18 @@ import {
 import { facturarServicio } from "@/actions/servicios";
 import Pagination from "../ui/pagination";
 import TableActions, { type TableAction } from "../ui/table-actions";
-import { getActions } from "@/libs/helpers";
 import { Servicios } from "@/types";
 import TableFilters from "../ui/table-filters";
 import { TableFilterValues } from "@/types";
 import { handleTableFiltersChange } from "@/libs/helpers";
+import { PaginationType } from "@/types";
+import { type Role } from "@/libs/permissions";
 
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
+type Props = {
+  role: Role;
 };
 
-export default function FacturacionTable() {
+export default function FacturacionTable({ role }: Props) {
   const initialFilters: TableFilterValues = {
     fechaDesde: "",
     fechaHasta: "",
@@ -31,7 +29,7 @@ export default function FacturacionTable() {
     creditoAgencia: "",
   };
   const [servicios, setServicios] = useState<Servicios[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,
@@ -225,62 +223,70 @@ export default function FacturacionTable() {
                   </td>
                 </tr>
               ) : (
-                servicios.map((servicio) => (
-                  <tr
-                    key={servicio.id}
-                    className="bg-fifth-gray/11 border-b border-gray-100 last:border-0 rounded-lg"
-                  >
-                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray rounded-l-lg">
-                      <span
-                        className={` inline-flex rounded-full px-3 py-1 font-inter text-xs font-bold ${getTiposStyles(
-                          servicio.tipo,
-                        )}`}
-                      >
-                        {servicio.tipo.replace("_", " ")}
-                      </span>
-                    </td>
+                servicios.map((servicio) => {
+                  const actions: TableAction[] = [
+                    {
+                      label: "Revisar",
+                      href: `/dashboard/servicios/${servicio.tipo.toLowerCase()}/${servicio.tipo === "TIQUETE" ? servicio.idTiquete : servicio.id}`,
+                    },
+                  ];
 
-                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
-                      {servicio.cliente.nombre}
-                    </td>
+                  if (servicio.estado === "POR_FACTURAR") {
+                    actions.push({
+                      label: "Facturar",
+                      onClick: () => handleFacturar(servicio),
+                      permission: {
+                        resource: "servicios",
+                        action: "facturar",
+                      },
+                    });
+                  }
+                  return (
+                    <tr
+                      key={servicio.id}
+                      className="bg-fifth-gray/11 border-b border-gray-100 last:border-0 rounded-lg"
+                    >
+                      <td className="px-4 py-2 font-inter text-sm text-fifth-gray rounded-l-lg">
+                        <span
+                          className={` inline-flex rounded-full px-3 py-1 font-inter text-xs font-bold ${getTiposStyles(
+                            servicio.tipo,
+                          )}`}
+                        >
+                          {servicio.tipo.replace("_", " ")}
+                        </span>
+                      </td>
 
-                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
-                      {new Date(servicio.fechaEmision).toLocaleDateString(
-                        "es-CO",
-                      )}
-                    </td>
-                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
-                      {formatCurrency(servicio.total)}
-                    </td>
-                    <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
-                      <span
-                        className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${getEstadoStyles(
-                          servicio.estado,
-                        )}`}
-                      >
-                        {servicio.estado.replace("_", " ")}
-                      </span>
-                    </td>
+                      <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
+                        {servicio.cliente.nombre}
+                      </td>
 
-                    <td className="px-4 py-2 rounded-r-lg flex gap-4">
-                      <TableActions
-                        actions={getActions(
-                          {
-                            tipo: servicio.tipo,
-                            id: servicio.id,
-                            idTiquete: servicio.idTiquete,
-                          },
-                          {
-                            action: {
-                              label: "Facturar",
-                              onClick: () => handleFacturar(servicio),
-                            },
-                          },
+                      <td className="px-4 py-2 font-inter text-sm text-fifth-gray ">
+                        {new Date(servicio.fechaEmision).toLocaleDateString(
+                          "es-CO",
                         )}
-                      />
-                    </td>
-                  </tr>
-                ))
+                      </td>
+                      <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
+                        {formatCurrency(servicio.total)}
+                      </td>
+                      <td className="px-4 py-2 font-inter text-sm text-fifth-gray">
+                        <span
+                          className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${getEstadoStyles(
+                            servicio.estado,
+                          )}`}
+                        >
+                          {servicio.estado.replace("_", " ")}
+                        </span>
+                      </td>
+
+                      <td className="px-4 py-2 rounded-r-lg flex gap-4">
+                        <TableActions
+                          actions={actions}
+                          role={role}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>

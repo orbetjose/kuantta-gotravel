@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
 
 import ServiciosTable from "@/app/components/dashboard/servicios/servicios-table";
 
@@ -31,5 +32,13 @@ export default async function TipoServicios({
     notFound();
   }
 
-  return <ServiciosTable tipo={tipoServicio} />;
+  let usuario;
+
+  try {
+    usuario = await requirePermission("servicios", "view");
+  } catch {
+    redirect("/dashboard");
+  }
+
+  return <ServiciosTable tipo={tipoServicio} role={usuario.role} />;
 }

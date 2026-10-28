@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Role } from "@/libs/generated/prisma/enums";
 import { getEstadoStyles } from "@/libs/helpers";
+import { can } from "@/libs/permissions";
 
 type UsuarioDetailProps = {
   usuario: {
@@ -16,9 +17,10 @@ type UsuarioDetailProps = {
     createdAt: Date;
     updatedAt: Date;
   };
+  role: "ADMINISTRADOR" | "ASESOR" | "FACTURADOR";
 };
 
-export default function UsuarioDetail({ usuario }: UsuarioDetailProps) {
+export default function UsuarioDetail({ usuario, role }: UsuarioDetailProps) {
   const router = useRouter();
 
   const fechaRegistro = new Intl.DateTimeFormat("es-CO", {
@@ -36,24 +38,27 @@ export default function UsuarioDetail({ usuario }: UsuarioDetailProps) {
         </div>
         <div>
           <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() =>
-                router.push(
-                  `/dashboard/administracion/usuarios/${usuario.id}/editar`,
-                )
-              }
-              className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
-            >
-              Editar usuario
-            </button>
-
-            <button
-              type="button"
-              className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
-            >
-              Eliminar usuario
-            </button>
+            {can(role, "usuarios", "edit") && (
+              <button
+                type="button"
+                onClick={() =>
+                  router.push(
+                    `/dashboard/administracion/usuarios/${usuario.id}/editar`,
+                  )
+                }
+                className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
+              >
+                Editar usuario
+              </button>
+            )}
+            {can(role, "usuarios", "delete") && (
+              <button
+                type="button"
+                className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
+              >
+                Eliminar usuario
+              </button>
+            )}
           </div>
         </div>
       </div>

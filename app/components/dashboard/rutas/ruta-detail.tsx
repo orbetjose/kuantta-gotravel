@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { formatDate } from "@/libs/helpers";
 import ModalConfirmacion from "../ui/modal-confirmacion";
 import { deleteRuta } from "@/actions/routes";
+import { can, type Role } from "@/libs/permissions";
 
 type RutaDetailProps = {
   ruta: {
@@ -17,9 +18,10 @@ type RutaDetailProps = {
     createdAt: Date;
     updatedAt: Date;
   };
+  role: Role;
 };
 
-export default function RutaDetail({ ruta }: RutaDetailProps) {
+export default function RutaDetail({ ruta, role }: RutaDetailProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const fechaRegistro = formatDate(ruta.createdAt);
@@ -47,20 +49,25 @@ export default function RutaDetail({ ruta }: RutaDetailProps) {
         </div>
         <div>
           <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() => router.push(`/dashboard/rutas/${ruta.id}/editar`)}
-              className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
-            >
-              Editar ruta
-            </button>
-
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
-            >
-              Eliminar ruta
-            </button>
+            {can(role, "rutas", "edit") && (
+              <button
+                type="button"
+                onClick={() =>
+                  router.push(`/dashboard/rutas/${ruta.id}/editar`)
+                }
+                className="rounded-lg bg-primary-blue px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-70"
+              >
+                Editar ruta
+              </button>
+            )}
+            {can(role, "rutas", "delete") && (
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="rounded-lg border border-red-300 bg-white px-5 py-2.5 text-sm font-bold text-red-600 transition hover:bg-red-50"
+              >
+                Eliminar ruta
+              </button>
+            )}
           </div>
         </div>
       </div>

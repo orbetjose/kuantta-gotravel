@@ -2,32 +2,27 @@
 
 import { useEffect, useState } from "react";
 import BtnAdd from "@/app/components/dashboard/ui/btn-add";
+import Pagination from "../ui/pagination";
+import TableActions from "../ui/table-actions";
+import TableFilters from "../ui/table-filters";
+import { Servicios } from "@/types";
+import { TableFilterValues, TableFilter, PaginationType } from "@/types";
 import {
   formatCurrency,
   getEstadoStyles,
   getTiposStyles,
 } from "@/libs/helpers";
-import { TipoServicio } from "@/libs/generated/prisma/client";
-import Pagination from "../ui/pagination";
-import TableActions from "../ui/table-actions";
 import { getActions } from "@/libs/helpers";
-import { Servicios } from "@/types";
-import { TableFilterValues, TableFilter } from "@/types";
-import TableFilters from "../ui/table-filters";
 import { handleTableFiltersChange } from "@/libs/helpers";
+import { can, type Role } from "@/libs/permissions";
+import { TipoServicio } from "@/libs/generated/prisma/client";
 
 type ServiciosTableProps = {
   tipo?: TipoServicio;
+  role: Role;
 };
 
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-};
-
-export default function ServiciosTable({ tipo }: ServiciosTableProps) {
+export default function ServiciosTable({ tipo, role }: ServiciosTableProps) {
   const initialFilters: TableFilterValues = {
     fechaDesde: "",
     fechaHasta: "",
@@ -36,7 +31,7 @@ export default function ServiciosTable({ tipo }: ServiciosTableProps) {
     creditoAgencia: "",
   };
   const [servicios, setServicios] = useState<Servicios[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,
@@ -133,8 +128,12 @@ export default function ServiciosTable({ tipo }: ServiciosTableProps) {
             {tipo ? tipo.replace("_", " ") : "Servicios"}
           </h1>
         </div>
-
-        <BtnAdd href="/dashboard/servicios/nuevo" services="Nuevo servicio" />
+        {can(role, "servicios", "create") && (
+          <BtnAdd
+            href="/dashboard/servicios/tiquete/nuevo"
+            services="Nuevo servicio"
+          />
+        )}
       </div>
 
       {/* Search */}
@@ -252,16 +251,25 @@ export default function ServiciosTable({ tipo }: ServiciosTableProps) {
                     <td className="px-4 py-2 rounded-r-lg">
                       <div className="flex justify-center gap-2">
                         <TableActions
-                          actions={getActions(
+                          actions={[
                             {
-                              tipo: servicio.tipo,
-                              id: servicio.id,
-                              idTiquete: servicio.idTiquete,
+                              label: "Revisar",
+                              href: `/dashboard/servicios/${servicio.tipo.toLowerCase()}/${servicio.tipo === "TIQUETE" ? servicio.idTiquete : servicio.id}`,
+                              permission: {
+                                resource: "servicios",
+                                action: "view",
+                              },
                             },
                             {
-                              edit: canEdit,
+                              label: "Editar",
+                              href: `/dashboard/servicios/${servicio.tipo.toLowerCase()}/${servicio.tipo === "TIQUETE" ? servicio.idTiquete : servicio.id}/editar`,
+                              permission: {
+                                resource: "servicios",
+                                action: "edit",
+                              },
                             },
-                          )}
+                          ]}
+                          role={role}
                         />
                       </div>
                     </td>

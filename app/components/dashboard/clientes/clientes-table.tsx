@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Pagination from "../ui/pagination";
 import TableActions from "../ui/table-actions";
 import { SearchInput } from "../ui/search";
+import { PaginationType } from "@/types";
+import { can, type Role } from "@/libs/permissions";
+import BtnAdd from "@/app/components/dashboard/ui/btn-add";
 
 type Cliente = {
   id: number;
@@ -16,16 +18,13 @@ type Cliente = {
   createdAt: string;
 };
 
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
+type Props = {
+  role: Role;
 };
 
-export default function ClientesTable() {
+export default function ClientesTable({ role }: Props) {
   const [clientes, setClientes] = useState<Cliente[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,
@@ -88,7 +87,6 @@ export default function ClientesTable() {
 
   return (
     <div className="w-full rounded-lg bg-fourth-gray p-6">
-      {/* Header */}
       <div className="mb-4 flex md:items-center justify-between flex-col md:flex-row gap-4">
         <div>
           <p className="font-inter text-sm text-fifth-gray">
@@ -99,16 +97,14 @@ export default function ClientesTable() {
             Clientes
           </h1>
         </div>
-
-        <Link
-          href="/dashboard/clientes/nuevo"
-          className="rounded-lg bg-primary-blue px-6 py-3 font-inter text-sm font-bold text-white hover:opacity-90 transition w-fit"
-        >
-          + Nuevo cliente
-        </Link>
+        {can(role, "clientes", "create") && (
+          <BtnAdd
+            href="/dashboard/clientes/nuevo"
+            services="Nuevo cliente"
+          />
+        )}
       </div>
 
-      {/* Search */}
       <div className="mb-4">
         <div className="relative max-w-md">
           <SearchInput
@@ -119,7 +115,6 @@ export default function ClientesTable() {
         </div>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto rounded-lg p-4 bg-white shadow-sm">
         <table className="w-full min-w-175 border-separate border-spacing-y-3">
           <thead>
@@ -211,12 +206,21 @@ export default function ClientesTable() {
                         {
                           label: "Revisar",
                           href: `/dashboard/clientes/${cliente.id}`,
+                          permission: {
+                            resource: "clientes",
+                            action: "view",
+                          },
                         },
                         {
                           label: "Editar",
                           href: `/dashboard/clientes/${cliente.id}/editar`,
+                          permission: {
+                            resource: "clientes",
+                            action: "edit",
+                          },
                         },
                       ]}
+                      role={role}
                     />
                   </td>
                 </tr>
@@ -226,7 +230,6 @@ export default function ClientesTable() {
         </table>
       </div>
 
-      {/* Pagination */}
       {!isLoading && pagination.totalPages > 0 && (
         <Pagination
           currentPage={pagination.page}

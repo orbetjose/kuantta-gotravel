@@ -5,6 +5,9 @@ import Link from "next/link";
 import Pagination from "../ui/pagination";
 import TableActions from "../ui/table-actions";
 import { SearchInput } from "../ui/search";
+import { PaginationType } from "@/types";
+import { can, type Role } from "@/libs/permissions";
+import BtnAdd from "@/app/components/dashboard/ui/btn-add";
 
 type Pasajero = {
   id: number;
@@ -16,16 +19,13 @@ type Pasajero = {
   createdAt: string;
 };
 
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
+type Props = {
+  role: Role;
 };
 
-export default function PasajerosTable() {
+export default function PasajerosTable({ role }: Props) {
   const [pasajeros, setPasajeros] = useState<Pasajero[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,
@@ -99,13 +99,9 @@ export default function PasajerosTable() {
             Pasajeros
           </h1>
         </div>
-
-        <Link
-          href="/dashboard/pasajeros/nuevo"
-          className="rounded-lg bg-primary-blue px-6 py-3 font-inter text-sm font-bold text-white hover:opacity-90 transition w-fit"
-        >
-          + Nuevo pasajero
-        </Link>
+        {can(role, "pasajeros", "create") && (
+          <BtnAdd href="/dashboard/pasajeros/nuevo" services="Nuevo pasajero" />
+        )}
       </div>
 
       {/* Search */}
@@ -201,12 +197,21 @@ export default function PasajerosTable() {
                         {
                           label: "Revisar",
                           href: `/dashboard/pasajeros/${pasajero.id}`,
+                          permission: {
+                            resource: "pasajeros",
+                            action: "view",
+                          },
                         },
                         {
                           label: "Editar",
                           href: `/dashboard/pasajeros/${pasajero.id}/editar`,
+                          permission: {
+                            resource: "pasajeros",
+                            action: "edit",
+                          },
                         },
                       ]}
+                      role={role}
                     />
                   </td>
                 </tr>

@@ -316,7 +316,6 @@ export const formatDate = (date: Date | string | null) => {
   }).format(new Date(date));
 };
 
-
 const titleRules = [
   // Administración > Usuarios
   {
@@ -334,6 +333,24 @@ const titleRules = [
   {
     pattern: /^\/dashboard\/administracion\/usuarios$/,
     title: "Usuarios",
+  },
+
+  // Servicios > Tiquete
+  {
+    pattern: /^\/dashboard\/servicios\/tiquete\/nuevo$/,
+    title: "Crear tiquete",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/tiquete\/[^/]+\/editar$/,
+    title: "Editar tiquete",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/tiquete\/[^/]+$/,
+    title: "Detalle del tiquete",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/tiquete$/,
+    title: "Tiquetes",
   },
 
   // Servicios > Hotel
@@ -621,7 +638,6 @@ const titleRules = [
 
 export function getDashboardTitle(pathname: string) {
   return (
-    titleRules.find((rule) => rule.pattern.test(pathname))?.title ??
-    "Kuantta"
+    titleRules.find((rule) => rule.pattern.test(pathname))?.title ?? "Kuantta"
   );
 }

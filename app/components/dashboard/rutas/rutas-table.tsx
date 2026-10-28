@@ -5,26 +5,25 @@ import BtnAdd from "@/app/components/dashboard/ui/btn-add";
 import Pagination from "../ui/pagination";
 import TableActions from "../ui/table-actions";
 import { SearchInput } from "../ui/search";
+import { PaginationType } from "@/types";
+import { can, type Role } from "@/libs/permissions";
 
 type Ruta = {
   id: number;
   codigoIATA: string;
   nombreAeropuerto: string;
   ciudad: string;
-  pais: string; 
+  pais: string;
   createdAt: string;
 };
 
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
+type Props = {
+  role: Role;
 };
 
-export default function RutasTable() {
+export default function RutasTable({ role }: Props) {
   const [rutas, setRutas] = useState<Ruta[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,
@@ -96,10 +95,7 @@ export default function RutasTable() {
             Rutas
           </h1>
         </div>
-        <BtnAdd
-          href="/dashboard/rutas/nuevo"
-          services="Nueva ruta"
-        />
+        <BtnAdd href="/dashboard/rutas/nuevo" services="Nueva ruta" />
       </div>
 
       {/* Search */}
@@ -189,12 +185,21 @@ export default function RutasTable() {
                         {
                           label: "Revisar",
                           href: `/dashboard/rutas/${ruta.id}`,
+                          permission: {
+                            resource: "rutas",
+                            action: "view",
+                          },
                         },
                         {
                           label: "Editar",
                           href: `/dashboard/rutas/${ruta.id}/editar`,
+                          permission: {
+                            resource: "rutas",
+                            action: "edit",
+                          },
                         },
                       ]}
+                      role={role}
                     />
                   </td>
                 </tr>

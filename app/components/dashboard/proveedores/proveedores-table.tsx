@@ -5,6 +5,8 @@ import BtnAdd from "@/app/components/dashboard/ui/btn-add";
 import Pagination from "../ui/pagination";
 import TableActions from "../ui/table-actions";
 import { SearchInput } from "../ui/search";
+import { PaginationType } from "@/types";
+import { can, type Role } from "@/libs/permissions";
 
 type Proveedor = {
   id: number;
@@ -16,16 +18,13 @@ type Proveedor = {
   createdAt: string;
 };
 
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
+type Props = {
+  role: Role;
 };
 
-export default function ProveedoresTable() {
+export default function ProveedoresTable({ role }: Props) {
   const [proveedores, setProveedores] = useState<Proveedor[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,
@@ -34,7 +33,6 @@ export default function ProveedoresTable() {
 
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
@@ -100,10 +98,12 @@ export default function ProveedoresTable() {
             Proveedores
           </h1>
         </div>
-        <BtnAdd
-          href="/dashboard/proveedores/nuevo"
-          services="Nuevo proveedor"
-        />
+        {can(role, "proveedores", "create") && (
+          <BtnAdd
+            href="/dashboard/proveedores/nuevo"
+            services="Nuevo proveedor"
+          />
+        )}
       </div>
 
       {/* Search */}
@@ -203,12 +203,21 @@ export default function ProveedoresTable() {
                         {
                           label: "Revisar",
                           href: `/dashboard/proveedores/${proveedor.id}`,
+                          permission: {
+                            resource: "proveedores",
+                            action: "view",
+                          },
                         },
                         {
                           label: "Editar",
                           href: `/dashboard/proveedores/${proveedor.id}/editar`,
+                          permission: {
+                            resource: "proveedores",
+                            action: "edit",
+                          },
                         },
                       ]}
+                      role={role}
                     />
                   </td>
                 </tr>

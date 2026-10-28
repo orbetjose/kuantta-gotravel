@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
 import { prisma } from "@/libs/prisma";
 import PasajeroForm from "@/app/components/dashboard/forms/pasajero-form";
 
@@ -23,6 +24,12 @@ export default async function EditarPasajeroPage({
 
   if (!pasajero) {
     notFound();
+  }
+
+  try {
+    await requirePermission("pasajeros", "edit");
+  } catch {
+    redirect("/dashboard/pasajeros");
   }
 
   return (

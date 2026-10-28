@@ -115,6 +115,7 @@ export async function GET(request: Request) {
 
           tiquete: {
             select: {
+              id: true,
               totalPagar: true,
             },
           },
@@ -140,6 +141,8 @@ export async function GET(request: Request) {
 
       return {
         id: servicio.id,
+
+        idTiquete: servicio.tiquete?.id,
 
         tipo: servicio.tipo,
 

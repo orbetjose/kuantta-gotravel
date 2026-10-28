@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import BtnAdd from "@/app/components/dashboard/ui/btn-add";
-import { formatCurrency, getEstadoStyles } from "@/libs/helpers";
 import Pagination from "../ui/pagination";
-import { getActions } from "@/libs/helpers";
 import TableActions from "../ui/table-actions";
-import { TableFilterValues } from "@/types";
 import TableFilters from "../ui/table-filters";
+import { TableFilterValues, PaginationType } from "@/types";
+import { formatCurrency, getEstadoStyles } from "@/libs/helpers";
 import { handleTableFiltersChange } from "@/libs/helpers";
+import { can, type Role, Resource, Action } from "@/libs/permissions";
 
 type Tiquetes = {
   id: number;
@@ -20,14 +20,11 @@ type Tiquetes = {
   estado: string;
 };
 
-type Pagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
+type Props = {
+  role: Role;
 };
 
-export default function TiquetesTable() {
+export default function TiquetesTable({ role }: Props) {
   const initialFilters: TableFilterValues = {
     fechaDesde: "",
     fechaHasta: "",
@@ -37,7 +34,7 @@ export default function TiquetesTable() {
   };
 
   const [tiquetes, setTiquetes] = useState<Tiquetes[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({
+  const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
     limit: 10,
     total: 0,
@@ -123,11 +120,12 @@ export default function TiquetesTable() {
             Tiquetes
           </h1>
         </div>
-
-        <BtnAdd
-          href="/dashboard/servicios/tiquete/nuevo"
-          services="Nuevo tiquete"
-        />
+        {can(role, "servicios", "create") && (
+          <BtnAdd
+            href="/dashboard/servicios/tiquete/nuevo"
+            services="Nuevo tiquete"
+          />
+        )}
       </div>
 
       {/* Search */}
@@ -195,10 +193,6 @@ export default function TiquetesTable() {
               </tr>
             ) : (
               tiquetes.map((tiquete) => {
-                const canEdit =
-                  tiquete.estado !== "FACTURADO" &&
-                  tiquete.estado !== "ANULADO" &&
-                  tiquete.estado !== "POR_FACTURAR";
                 return (
                   <tr
                     key={tiquete.id}
@@ -241,15 +235,25 @@ export default function TiquetesTable() {
                     <td className="px-4 py-2 rounded-r-lg">
                       <div className="flex gap-2">
                         <TableActions
-                          actions={getActions(
+                          actions={[
                             {
-                              tipo: "TIQUETE",
-                              idTiquete: tiquete.id,
+                              label: "Revisar",
+                              href: `/dashboard/servicios/tiquete/${tiquete.id}`,
+                              permission: {
+                                resource: "servicios",
+                                action: "view",
+                              },
                             },
                             {
-                              edit: canEdit,
+                              label: "Editar",
+                              href: `/dashboard/servicios/tiquete/${tiquete.id}/editar`,
+                              permission: {
+                                resource: "servicios",
+                                action: "edit",
+                              },
                             },
-                          )}
+                          ]}
+                          role={role}
                         />
                       </div>
                     </td>

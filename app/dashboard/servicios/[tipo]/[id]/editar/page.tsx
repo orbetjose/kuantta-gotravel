@@ -4,6 +4,7 @@ import { prisma } from "@/libs/prisma";
 import { getClientes, getPasajeros, getProveedores } from "@/actions/catalogos";
 import { ServiceFormInitialData } from "@/libs/schemas/serviceSchema";
 import ServiceForm from "@/app/components/dashboard/forms/service-form";
+import { requirePermission } from "@/libs/authorization";
 
 export default async function EditarServicioPage({
   params,
@@ -44,6 +45,12 @@ export default async function EditarServicioPage({
     redirect(
       `/dashboard/servicios/${servicio.tipo.replace("_", "-").toLowerCase()}/${serviceId}`,
     );
+  }
+
+  try {
+    await requirePermission("servicios", "edit");
+  } catch {
+    redirect("/dashboard/servicios");
   }
 
   const initialData: ServiceFormInitialData = {

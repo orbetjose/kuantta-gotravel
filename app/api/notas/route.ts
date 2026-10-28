@@ -1,15 +1,21 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
+import { getAuthenticatedUser } from "@/actions/auth-actions";
 
 export async function GET(request: Request) {
+  const user = await getAuthenticatedUser();
   const { searchParams } = new URL(request.url);
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 8;
   const skip = (page - 1) * limit;
 
   try {
+    const where = {
+      usuarioId: user.id,
+    };
     const [notas, total] = await Promise.all([
       prisma.nota.findMany({
+        where,
         orderBy: {
           createdAt: "desc",
         },

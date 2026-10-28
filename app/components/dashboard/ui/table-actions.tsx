@@ -3,23 +3,35 @@
 import { useEffect, useRef, useState } from "react";
 import { EllipsisVertical } from "lucide-react";
 import Link from "next/link";
+import { can, type Role, Resource, Action } from "@/libs/permissions";
 
-export interface TableAction {
+export type TableAction = {
   label: string;
   href?: string;
   onClick?: () => void;
   disabled?: boolean;
-}
+  permission?: {
+    resource: Resource;
+    action: Action;
+  };
+};
 
-interface TableActionsProps {
+type TableActionsProps = {
   actions: TableAction[];
-}
+  role: Role;
+};
 
-export default function TableActions({
-  actions,
-}: TableActionsProps) {
+export default function TableActions({ actions, role }: TableActionsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const visibleActions = actions.filter((action) => {
+    if (!action.permission) {
+      return true;
+    }
+
+    return can(role, action.permission.resource, action.permission.action);
+  });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -38,15 +50,12 @@ export default function TableActions({
     };
   }, []);
 
-  if (actions.length === 0) {
+  if (visibleActions.length === 0) {
     return null;
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="relative flex justify-center "
-    >
+    <div ref={containerRef} className="relative flex justify-center ">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
@@ -59,7 +68,7 @@ export default function TableActions({
 
       {isOpen && (
         <div className="absolute right-0 top-full z-50 mt-1 min-w-40 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
-          {actions.map((action) => {
+          {visibleActions.map((action) => {
             if (action.href) {
               return (
                 <Link
@@ -67,9 +76,7 @@ export default function TableActions({
                   href={action.href}
                   onClick={() => setIsOpen(false)}
                   className={`block px-4 py-2 text-sm font-inter transition hover:bg-gray-100 ${
-                    action.disabled
-                      ? "pointer-events-none opacity-50"
-                      : ""
+                    action.disabled ? "pointer-events-none opacity-50" : ""
                   }`}
                 >
                   {action.label}

@@ -17,7 +17,7 @@ type ServicioActionsProps = {
   tiqueteId?: number;
   estado: "BORRADOR" | "POR_FACTURAR" | "DEVUELTO" | "FACTURADO" | "ANULADO";
   role: Role;
-  tipoServicio: string
+  tipoServicio: string;
 };
 
 export default function ServicioActions({
@@ -25,7 +25,7 @@ export default function ServicioActions({
   estado,
   role,
   tipoServicio,
-  tiqueteId
+  tiqueteId,
 }: ServicioActionsProps) {
   const router = useRouter();
 
@@ -38,7 +38,11 @@ export default function ServicioActions({
   const [motivo, setMotivo] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const canEdit = estado !== "FACTURADO" && estado !== "ANULADO" && estado !== "POR_FACTURAR";
+  const canEdit =
+    (role === "ASESOR" || role === "ADMINISTRADOR") &&
+    estado !== "FACTURADO" &&
+    estado !== "ANULADO" &&
+    estado !== "POR_FACTURAR";
 
   const canSubmit =
     (role === "ASESOR" || role === "ADMINISTRADOR") &&
@@ -117,7 +121,7 @@ export default function ServicioActions({
     });
   };
 
-  const handleCancelar = () => {
+  const handleAnular = () => {
     setError(null);
 
     startTransition(async () => {
@@ -132,7 +136,7 @@ export default function ServicioActions({
         setError(
           error instanceof Error
             ? error.message
-            : "No se pudo cancelar el servicio.",
+            : "No se pudo anular el servicio.",
         );
       }
     });
@@ -146,12 +150,16 @@ export default function ServicioActions({
             type="button"
             className="rounded-lg bg-primary-green px-4 py-2 text-sm font-medium text-white transition hover:opacity-70"
             onClick={() => {
-              tipoServicio === "TIQUETE" ? router.push(`/dashboard/servicios/${tipoServicio.replace("_","-").toLocaleLowerCase()}/${tiqueteId}/editar`) : 
-              router.push(`/dashboard/servicios/${tipoServicio.replace("_","-").toLocaleLowerCase()}/${servicioId}/editar`);
+              tipoServicio === "TIQUETE"
+                ? router.push(
+                    `/dashboard/servicios/${tipoServicio.replace("_", "-").toLocaleLowerCase()}/${tiqueteId}/editar`,
+                  )
+                : router.push(
+                    `/dashboard/servicios/${tipoServicio.replace("_", "-").toLocaleLowerCase()}/${servicioId}/editar`,
+                  );
             }}
           >
-            Editar
-            
+            Editar {tipoServicio.toLowerCase()}
           </button>
         )}
 
@@ -220,7 +228,7 @@ export default function ServicioActions({
                       }}
                       className="w-full rounded-md px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
                     >
-                      Cancelar tiquete
+                      Anular servicio
                     </button>
                   </>
                 )}
@@ -237,7 +245,7 @@ export default function ServicioActions({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
             <h2 className="text-lg font-semibold text-gray-900">
-              Devolver tiquete
+              Devolver servicio
             </h2>
 
             <p className="mt-2 text-sm text-gray-500">
@@ -284,17 +292,17 @@ export default function ServicioActions({
         </div>
       )}
 
-      {/* Modal cancelar */}
+      {/* Modal anular */}
       {showCancelModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
             <h2 className="text-lg font-semibold text-gray-900">
-              Cancelar tiquete
+              Anular servicio
             </h2>
 
             <p className="mt-2 text-sm text-gray-500">
-              ¿Estás seguro de que deseas cancelar este tiquete? Esta acción
-              cambiará su estado a CANCELADO.
+              ¿Estás seguro de que deseas anular este servicio? Esta acción
+              cambiará su estado a ANULADO.
             </p>
 
             {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
@@ -315,10 +323,10 @@ export default function ServicioActions({
               <button
                 type="button"
                 disabled={isPending}
-                onClick={handleCancelar}
+                onClick={handleAnular}
                 className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
               >
-                {isPending ? "Cancelando..." : "Sí, cancelar"}
+                {isPending ? "Anulando..." : "Sí, anular"}
               </button>
             </div>
           </div>

@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/libs/prisma";
+import { redirect } from "next/navigation";
+import { requirePermission } from "@/libs/authorization";
 import ProviderForm from "@/app/components/dashboard/forms/provider-form";
 
 export default async function EditarProveedorPage({
@@ -23,6 +25,12 @@ export default async function EditarProveedorPage({
 
   if (!proveedor) {
     notFound();
+  }
+
+  try {
+    await requirePermission("proveedores", "edit");
+  } catch {
+    redirect("/dashboard/proveedores");
   }
 
   return (

@@ -125,7 +125,7 @@ export default function RouteForm({
       <FormActions
         isLoading={isLoading}
         mode={mode}
-        createText="Registrar proveedor"
+        createText="Registrar ruta"
       />
     </form>
   );
