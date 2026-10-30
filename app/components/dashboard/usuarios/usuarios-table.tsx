@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import BtnAdd from "@/app/components/dashboard/ui/btn-add";
 import Pagination from "../ui/pagination";
 import TableActions from "../ui/table-actions";
 import { SearchInput } from "../ui/search";
 import { getEstadoStyles } from "@/libs/helpers";
+import { can, type Role } from "@/libs/permissions";
 
 type Usuario = {
   id: string;
@@ -16,6 +17,10 @@ type Usuario = {
   createdAt: string;
 };
 
+type Props = {
+  role: Role;
+};
+
 type Pagination = {
   page: number;
   limit: number;
@@ -23,7 +28,7 @@ type Pagination = {
   totalPages: number;
 };
 
-export default function UsuariosTable() {
+export default function UsuariosTable({ role }: Props) {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [pagination, setPagination] = useState<Pagination>({
     page: 1,
@@ -98,13 +103,12 @@ export default function UsuariosTable() {
             Usuarios
           </h1>
         </div>
-
-        <Link
-          href="/dashboard/administracion/usuarios/nuevo"
-          className="rounded-lg bg-primary-blue px-6 py-3 font-inter text-sm font-bold text-white hover:opacity-90 transition w-fit"
-        >
-          + Nuevo usuario
-        </Link>
+        {can(role, "usuarios", "create") && (
+          <BtnAdd
+            href="/dashboard/administracion/usuarios/nuevo"
+            services="Nuevo usuario"
+          />
+        )}
       </div>
 
       {/* Search */}
@@ -200,12 +204,21 @@ export default function UsuariosTable() {
                         {
                           label: "Revisar",
                           href: `/dashboard/administracion/usuarios/${usuario.id}`,
+                          permission: {
+                            resource: "usuarios",
+                            action: "view",
+                          },
                         },
                         {
                           label: "Editar",
                           href: `/dashboard/administracion/usuarios/${usuario.id}/editar`,
+                          permission: {
+                            resource: "usuarios",
+                            action: "edit",
+                          },
                         },
                       ]}
+                      role={role}
                     />
                   </td>
                 </tr>

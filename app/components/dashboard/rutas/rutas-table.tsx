@@ -95,7 +95,9 @@ export default function RutasTable({ role }: Props) {
             Rutas
           </h1>
         </div>
-        <BtnAdd href="/dashboard/rutas/nuevo" services="Nueva ruta" />
+        {can(role, "rutas", "create") && (
+          <BtnAdd href="/dashboard/rutas/nuevo" services="Nueva ruta" />
+        )}
       </div>
 
       {/* Search */}
