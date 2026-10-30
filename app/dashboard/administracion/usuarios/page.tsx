@@ -10,5 +10,5 @@ export default async function UsuariosPage() {
   } catch {
     redirect("/dashboard");
   }
-  return <UsuariosTable />;
+  return <UsuariosTable role={usuario.role} />;
 }
