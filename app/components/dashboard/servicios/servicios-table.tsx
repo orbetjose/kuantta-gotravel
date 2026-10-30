@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import BtnAdd from "@/app/components/dashboard/ui/btn-add";
 import Pagination from "../ui/pagination";
-import TableActions from "../ui/table-actions";
+import TableActions, { type TableAction } from "../ui/table-actions";
+
 import TableFilters from "../ui/table-filters";
 import { Servicios } from "@/types";
 import { TableFilterValues, TableFilter, PaginationType } from "@/types";
@@ -12,7 +13,6 @@ import {
   getEstadoStyles,
   getTiposStyles,
 } from "@/libs/helpers";
-import { getActions } from "@/libs/helpers";
 import { handleTableFiltersChange } from "@/libs/helpers";
 import { can, type Role } from "@/libs/permissions";
 import { TipoServicio } from "@/libs/generated/prisma/client";
@@ -129,10 +129,7 @@ export default function ServiciosTable({ tipo, role }: ServiciosTableProps) {
           </h1>
         </div>
         {can(role, "servicios", "create") && (
-          <BtnAdd
-            href="/dashboard/servicios/tiquete/nuevo"
-            services="Nuevo servicio"
-          />
+          <BtnAdd href="/dashboard/servicios/nuevo" services="Nuevo servicio" />
         )}
       </div>
 
@@ -201,10 +198,27 @@ export default function ServiciosTable({ tipo, role }: ServiciosTableProps) {
               </tr>
             ) : (
               servicios.map((servicio) => {
-                const canEdit =
-                  servicio.estado !== "FACTURADO" &&
-                  servicio.estado !== "ANULADO" &&
-                  servicio.estado !== "POR_FACTURAR";
+                const actions: TableAction[] = [
+                  {
+                    label: "Revisar",
+                    href: `/dashboard/servicios/${servicio.tipo.toLowerCase()}/${servicio.tipo === "TIQUETE" ? servicio.idTiquete : servicio.id}`,
+                    permission: {
+                      resource: "servicios",
+                      action: "view",
+                    },
+                  },
+                ];
+
+                if (servicio.estado != "POR_FACTURAR" && servicio.estado != "ANULADO" && servicio.estado != "FACTURADO") {
+                  actions.push({
+                    label: "Editar",
+                    href: `/dashboard/servicios/${servicio.tipo.toLowerCase()}/${servicio.tipo === "TIQUETE" ? servicio.idTiquete : servicio.id}/editar`,
+                    permission: {
+                      resource: "servicios",
+                      action: "edit",
+                    },
+                  });
+                }
                 return (
                   <tr
                     key={servicio.id}
@@ -250,27 +264,7 @@ export default function ServiciosTable({ tipo, role }: ServiciosTableProps) {
 
                     <td className="px-4 py-2 rounded-r-lg">
                       <div className="flex justify-center gap-2">
-                        <TableActions
-                          actions={[
-                            {
-                              label: "Revisar",
-                              href: `/dashboard/servicios/${servicio.tipo.toLowerCase()}/${servicio.tipo === "TIQUETE" ? servicio.idTiquete : servicio.id}`,
-                              permission: {
-                                resource: "servicios",
-                                action: "view",
-                              },
-                            },
-                            {
-                              label: "Editar",
-                              href: `/dashboard/servicios/${servicio.tipo.toLowerCase()}/${servicio.tipo === "TIQUETE" ? servicio.idTiquete : servicio.id}/editar`,
-                              permission: {
-                                resource: "servicios",
-                                action: "edit",
-                              },
-                            },
-                          ]}
-                          role={role}
-                        />
+                        <TableActions actions={actions} role={role} />
                       </div>
                     </td>
                   </tr>

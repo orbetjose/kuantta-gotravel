@@ -18,7 +18,7 @@ export default function DashboardCalendar({
   return (
     <div className="rounded-xl border border-gray-200 bg-white px-5 pt-3 pb-5 shadow-sm relative">
       <div className="text-left pl-4">
-        <p className="font-inter font-medium text-gray-500 capitalize">
+        <p className="font-inter font-medium text-fifth-gray capitalize text-sm">
           {format(today, "EEEE, d", { locale: es })}
         </p>
       </div>
@@ -40,7 +40,7 @@ export default function DashboardCalendar({
 
           caption_label: "hidden",
 
-          dropdowns: "flex items-center justify-center gap-4",
+          dropdowns: "flex items-center justify-center gap-1",
 
           dropdown:
             "h-9 appearance-none rounded-lg border border-gray-200 bg-white px-3 pr-8 font-inter text-sm font-medium text-gray-700 outline-none transition hover:border-gray-300 focus:border-gray-400 focus:ring-2 focus:ring-gray-100",

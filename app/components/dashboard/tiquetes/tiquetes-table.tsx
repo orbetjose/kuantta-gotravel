@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import BtnAdd from "@/app/components/dashboard/ui/btn-add";
 import Pagination from "../ui/pagination";
-import TableActions from "../ui/table-actions";
+import TableActions, { type TableAction } from "../ui/table-actions";
 import TableFilters from "../ui/table-filters";
 import { TableFilterValues, PaginationType } from "@/types";
 import { formatCurrency, getEstadoStyles } from "@/libs/helpers";
@@ -193,6 +193,31 @@ export default function TiquetesTable({ role }: Props) {
               </tr>
             ) : (
               tiquetes.map((tiquete) => {
+                const actions: TableAction[] = [
+                  {
+                    label: "Revisar",
+                    href: `/dashboard/servicios/tiquete/${tiquete.id}`,
+                    permission: {
+                      resource: "servicios",
+                      action: "view",
+                    },
+                  },
+                ];
+
+                if (
+                  tiquete.estado != "POR_FACTURAR" &&
+                  tiquete.estado != "ANULADO" &&
+                  tiquete.estado != "FACTURADO"
+                ) {
+                  actions.push({
+                    label: "Editar",
+                    href: `/dashboard/servicios/tiquete/${tiquete.id}/editar`,
+                    permission: {
+                      resource: "servicios",
+                      action: "edit",
+                    },
+                  });
+                }
                 return (
                   <tr
                     key={tiquete.id}
@@ -235,24 +260,7 @@ export default function TiquetesTable({ role }: Props) {
                     <td className="px-4 py-2 rounded-r-lg">
                       <div className="flex gap-2">
                         <TableActions
-                          actions={[
-                            {
-                              label: "Revisar",
-                              href: `/dashboard/servicios/tiquete/${tiquete.id}`,
-                              permission: {
-                                resource: "servicios",
-                                action: "view",
-                              },
-                            },
-                            {
-                              label: "Editar",
-                              href: `/dashboard/servicios/tiquete/${tiquete.id}/editar`,
-                              permission: {
-                                resource: "servicios",
-                                action: "edit",
-                              },
-                            },
-                          ]}
+                          actions={actions}
                           role={role}
                         />
                       </div>

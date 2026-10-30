@@ -1,37 +1,60 @@
 import DashboardCard from "../dashboard-card";
 import { formatCurrency } from "@/libs/helpers";
+import {
+  HandCoinsIcon,
+  NewspaperIcon,
+  TruckIcon,
+  CalendarDaysIcon,
+} from "lucide-react";
 
 interface DashboardStatsProps {
   totalVendido: number;
   totalCartera: number;
-  pendientePorFacturar: number;
+  pagoPendienteProveedores: number;
+  ventasDelDia: number;
+  clientesConCartera?: number;
+  proveedoresPendientes?: number;
   loading?: boolean;
 }
 
 export default function DashboardStats({
   totalVendido,
   totalCartera,
-  pendientePorFacturar,
+  pagoPendienteProveedores,
+  ventasDelDia,
+  clientesConCartera,
+  proveedoresPendientes,
   loading,
 }: DashboardStatsProps) {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
       <DashboardCard
-        title="Total vendido"
+        title="Total ventas"
         value={formatCurrency(totalVendido)}
-        description="Total registrado"
+        moneda="COP"
+        icon={HandCoinsIcon}
       />
 
       <DashboardCard
-        title="Total en cartera"
+        title="Cartera pendiente"
         value={formatCurrency(totalCartera)}
-        description="Pendiente de pago"
+        moneda="COP"
+        icon={NewspaperIcon}
+        clientesConCartera={clientesConCartera}
       />
 
       <DashboardCard
-        title="Pendiente por facturar"
-        value={formatCurrency(pendientePorFacturar)}
-        description="Servicios por facturar"
+        title="Pago pendiente a proveedores"
+        value={formatCurrency(pagoPendienteProveedores)}
+        moneda="COP"
+        icon={TruckIcon}
+        proveedoresPendientes={proveedoresPendientes}
+      />
+      <DashboardCard
+        title="Ventas del dia"
+        value={formatCurrency(ventasDelDia)}
+        moneda="COP"
+        icon={CalendarDaysIcon}
       />
     </div>
   );

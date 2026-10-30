@@ -2,6 +2,7 @@ export const permissions = {
   ADMINISTRADOR: {
     dashboard: ["view"],
     servicios: ["view", "create", "edit", "delete", "facturar"],
+    gestion: ["view", "create", "edit", "delete"],
     clientes: ["view", "create", "edit", "delete"],
     proveedores: ["view", "create", "edit", "delete"],
     pasajeros: ["view", "create", "edit", "delete"],
@@ -18,6 +19,7 @@ export const permissions = {
   ASESOR: {
     dashboard: ["view"],
     servicios: ["view", "create", "edit"],
+    gestion: ["view", "create", "edit", "delete"],
     clientes: ["view", "create", "edit"],
     proveedores: ["view", "create", "edit"],
     pasajeros: ["view", "create", "edit"],
@@ -34,6 +36,7 @@ export const permissions = {
   FACTURADOR: {
     dashboard: ["view"],
     servicios: ["view", "facturar"],
+    gestion: ["view"],
     clientes: ["view"],
     proveedores: ["view"],
     pasajeros: [],

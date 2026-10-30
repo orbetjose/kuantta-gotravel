@@ -353,184 +353,94 @@ const titleRules = [
     title: "Tiquetes",
   },
 
-  // Servicios > Hotel
+  // Servicios
   {
-    pattern: /^\/dashboard\/servicios\/hotel\/nuevo$/,
-    title: "Crear hotel",
+    pattern: /^\/dashboard\/servicios\/nuevo$/,
+    title: "Crear servicio",
   },
   {
-    pattern: /^\/dashboard\/servicios\/hotel\/[^/]+\/editar$/,
-    title: "Editar hotel",
+    pattern: /^\/dashboard\/servicios\/[^/]+\/editar$/,
+    title: "Editar servicio",
+  },
+  {
+    pattern: /^\/dashboard\/servicios\/hotel$/,
+    title: "Hoteles",
   },
   {
     pattern: /^\/dashboard\/servicios\/hotel\/[^/]+$/,
     title: "Detalle del hotel",
   },
   {
-    pattern: /^\/dashboard\/servicios\/hotel$/,
-    title: "Hoteles",
-  },
-
-  // Servicios > Alquiler de auto
-  {
-    pattern: /^\/dashboard\/servicios\/alquiler-auto\/nuevo$/,
-    title: "Crear alquiler de auto",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/alquiler-auto\/[^/]+\/editar$/,
-    title: "Editar alquiler de auto",
+    pattern: /^\/dashboard\/servicios\/alquiler-auto$/,
+    title: "Alquiler de autos",
   },
   {
     pattern: /^\/dashboard\/servicios\/alquiler-auto\/[^/]+$/,
     title: "Detalle del alquiler de auto",
   },
   {
-    pattern: /^\/dashboard\/servicios\/alquiler-auto$/,
-    title: "Alquiler de autos",
-  },
-
-  // Servicios > Salón
-  {
-    pattern: /^\/dashboard\/servicios\/salon\/nuevo$/,
-    title: "Crear salón",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/salon\/[^/]+\/editar$/,
-    title: "Editar salón",
+    pattern: /^\/dashboard\/servicios\/salon$/,
+    title: "Salones",
   },
   {
     pattern: /^\/dashboard\/servicios\/salon\/[^/]+$/,
     title: "Detalle del salón",
   },
   {
-    pattern: /^\/dashboard\/servicios\/salon$/,
-    title: "Salones",
-  },
-
-  // Servicios > Evento
-  {
-    pattern: /^\/dashboard\/servicios\/evento\/nuevo$/,
-    title: "Crear evento",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/evento\/[^/]+\/editar$/,
-    title: "Editar evento",
+    pattern: /^\/dashboard\/servicios\/evento$/,
+    title: "Eventos",
   },
   {
     pattern: /^\/dashboard\/servicios\/evento\/[^/]+$/,
     title: "Detalle del evento",
   },
   {
-    pattern: /^\/dashboard\/servicios\/evento$/,
-    title: "Eventos",
-  },
-
-  // Servicios > Silla
-  {
-    pattern: /^\/dashboard\/servicios\/silla\/nuevo$/,
-    title: "Crear silla",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/silla\/[^/]+\/editar$/,
-    title: "Editar silla",
+    pattern: /^\/dashboard\/servicios\/silla$/,
+    title: "Sillas",
   },
   {
     pattern: /^\/dashboard\/servicios\/silla\/[^/]+$/,
     title: "Detalle de la silla",
   },
   {
-    pattern: /^\/dashboard\/servicios\/silla$/,
-    title: "Sillas",
-  },
-
-  // Servicios > Tarjeta de asistencia
-  {
-    pattern: /^\/dashboard\/servicios\/tarjeta-asistencia\/nuevo$/,
-    title: "Crear tarjeta de asistencia",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/tarjeta-asistencia\/[^/]+\/editar$/,
-    title: "Editar tarjeta de asistencia",
+    pattern: /^\/dashboard\/servicios\/tarjeta-asistencia$/,
+    title: "Tarjetas de asistencia",
   },
   {
     pattern: /^\/dashboard\/servicios\/tarjeta-asistencia\/[^/]+$/,
     title: "Detalle de la tarjeta de asistencia",
   },
   {
-    pattern: /^\/dashboard\/servicios\/tarjeta-asistencia$/,
-    title: "Tarjetas de asistencia",
-  },
-
-  // Servicios > Traslado
-  {
-    pattern: /^\/dashboard\/servicios\/traslado\/nuevo$/,
-    title: "Crear traslado",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/traslado\/[^/]+\/editar$/,
-    title: "Editar traslado",
+    pattern: /^\/dashboard\/servicios\/traslado$/,
+    title: "Traslados",
   },
   {
     pattern: /^\/dashboard\/servicios\/traslado\/[^/]+$/,
     title: "Detalle del traslado",
   },
   {
-    pattern: /^\/dashboard\/servicios\/traslado$/,
-    title: "Traslados",
-  },
-
-  // Servicios > Visa
-  {
-    pattern: /^\/dashboard\/servicios\/visa\/nuevo$/,
-    title: "Crear visa",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/visa\/[^/]+\/editar$/,
-    title: "Editar visa",
+    pattern: /^\/dashboard\/servicios\/visa$/,
+    title: "Visas",
   },
   {
     pattern: /^\/dashboard\/servicios\/visa\/[^/]+$/,
     title: "Detalle de la visa",
   },
   {
-    pattern: /^\/dashboard\/servicios\/visa$/,
-    title: "Visas",
-  },
-
-  // Servicios > Web check-in
-  {
-    pattern: /^\/dashboard\/servicios\/web-checkin\/nuevo$/,
-    title: "Crear web check-in",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/web-checkin\/[^/]+\/editar$/,
-    title: "Editar web check-in",
+    pattern: /^\/dashboard\/servicios\/web-checkin$/,
+    title: "Web check-in",
   },
   {
     pattern: /^\/dashboard\/servicios\/web-checkin\/[^/]+$/,
     title: "Detalle del web check-in",
   },
   {
-    pattern: /^\/dashboard\/servicios\/web-checkin$/,
-    title: "Web check-in",
-  },
-
-  // Servicios > Plan vacacional
-  {
-    pattern: /^\/dashboard\/servicios\/plan-vacacional\/nuevo$/,
-    title: "Crear plan vacacional",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/plan-vacacional\/[^/]+\/editar$/,
-    title: "Editar plan vacacional",
+    pattern: /^\/dashboard\/servicios\/plan-vacacional$/,
+    title: "Planes vacacionales",
   },
   {
     pattern: /^\/dashboard\/servicios\/plan-vacacional\/[^/]+$/,
     title: "Detalle del plan vacacional",
-  },
-  {
-    pattern: /^\/dashboard\/servicios\/plan-vacacional$/,
-    title: "Planes vacacionales",
   },
 
   // Clientes

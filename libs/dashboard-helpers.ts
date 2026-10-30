@@ -117,3 +117,24 @@ export function getPeriodoKey(fecha: Date, agrupacion: PeriodoAgrupacion) {
 
   return `${year}-${month}-${dayOfMonth}`;
 }
+
+
+const TIME_ZONE = "America/Bogota";
+
+export function obtenerFecha(fecha: Date) {
+  const partes = new Intl.DateTimeFormat("en-CA", {
+    timeZone: TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(fecha);
+
+  const obtenerParte = (tipo: string) =>
+    partes.find((parte) => parte.type === tipo)!.value;
+
+  return `${obtenerParte("year")}-${obtenerParte("month")}-${obtenerParte("day")}`;
+}
+
+export function inicioDelDia(fecha: string) {
+  return new Date(`${fecha}T00:00:00-05:00`);
+}
