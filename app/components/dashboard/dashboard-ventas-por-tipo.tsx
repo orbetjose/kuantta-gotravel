@@ -1,7 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Pie, PieChart, ResponsiveContainer, Sector, Tooltip } from "recharts";
+import {
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Sector,
+  LabelList,
+} from "recharts";
+import {
+  Plane,
+  Hotel,
+  CarFront,
+  Building2,
+  PartyPopper,
+  Armchair,
+  ShieldCheck,
+  Stamp,
+  ClipboardCheck,
+  Palmtree,
+  Package,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 
@@ -17,6 +37,11 @@ interface DashboardVentasPorTipoProps {
 interface RespuestaVentasPorTipo {
   datos: VentaPorTipo[];
   totalVendido: number;
+}
+
+interface Etiqueta {
+  label: string;
+  icon: LucideIcon;
 }
 
 const COLORES = [
@@ -37,20 +62,60 @@ const formatoCOP = (valor: number) =>
     maximumFractionDigits: 0,
   }).format(valor);
 
-const ETIQUETAS: Record<string, string> = {
-  TIQUETE: "Tiquetes",
-  HOTEL: "Hoteles",
-  TRASLADO: "Traslados",
-  ALQUILER_AUTO: "Alquiler de autos",
-  SALON: "Salones",
-  EVENTO: "Eventos",
-  SILLA: "Sillas",
-  TARJETA_ASISTENCIA: "Tarjetas de asistencia",
-  VISA: "Visas",
-  WEB_CHECKIN: "Web check-in",
-  PLAN_VACACIONAL: "Planes vacacionales",
-  OTROS: "Otros",
+const ETIQUETAS: Record<string, Etiqueta> = {
+  TIQUETE: { label: "Tiquetes", icon: Plane },
+  HOTEL: { label: "Hoteles", icon: Hotel },
+  TRASLADO: { label: "Traslados", icon: CarFront },
+  ALQUILER_AUTO: { label: "Alquiler de autos", icon: CarFront },
+  SALON: { label: "Salones", icon: Building2 },
+  EVENTO: { label: "Eventos", icon: PartyPopper },
+  SILLA: { label: "Sillas", icon: Armchair },
+  TARJETA_ASISTENCIA: {
+    label: "Tarjetas de asistencia",
+    icon: ShieldCheck,
+  },
+  VISA: { label: "Visas", icon: Stamp },
+  WEB_CHECKIN: { label: "Web check-in", icon: ClipboardCheck },
+  PLAN_VACACIONAL: { label: "Planes vacacionales", icon: Palmtree },
+  OTROS: { label: "Otros", icon: Package },
 };
+
+interface PorcentajeLabelProps {
+  x?: number;
+  y?: number;
+  value?: number | string;
+}
+
+// Etiqueta personalizada para mostrar el porcentaje en el gráfico
+function PorcentajeLabel({ x, y, value }: PorcentajeLabelProps) {
+  if (typeof x !== "number" || typeof y !== "number" || value === undefined) {
+    return null;
+  }
+
+  const porcentaje = Number(value);
+
+  // Evitamos etiquetas demasiado juntas en segmentos pequeños
+  if (porcentaje < 4) return null;
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="#ffffff"
+      textAnchor="middle"
+      dominantBaseline="central"
+      fontSize={14}
+      fontWeight={600}
+      stroke="rgba(0,0,0,0.2)"
+      strokeWidth={2}
+      paintOrder="stroke"
+    >
+      {`${porcentaje.toLocaleString("es-CO", {
+        maximumFractionDigits: 1,
+      })}%`}
+    </text>
+  );
+}
 
 export default function DashboardVentasPorTipo({
   dateRange,
@@ -79,7 +144,7 @@ export default function DashboardVentasPorTipo({
         }
 
         const response = await fetch(
-          `/api/dashboard/asesor/ventas-por-tipo?${params.toString()}`,
+          `/api/dashboard/resumen/ventas-por-tipo?${params.toString()}`,
           { signal: controller.signal },
         );
 
@@ -117,10 +182,22 @@ export default function DashboardVentasPorTipo({
     .reduce((acumulado, item) => acumulado + item.total, 0);
 
   if (totalOtros > 0) {
-    datosVisibles.push({
-      tipo: "OTROS",
-      total: totalOtros,
-    });
+    // Evitamos duplicar la categoría OTROS si ya existe entre los primeros cinco.
+    const indiceOtros = datosVisibles.findIndex(
+      (item) => item.tipo === "OTROS",
+    );
+
+    if (indiceOtros >= 0) {
+      datosVisibles[indiceOtros] = {
+        ...datosVisibles[indiceOtros],
+        total: datosVisibles[indiceOtros].total + totalOtros,
+      };
+    } else {
+      datosVisibles.push({
+        tipo: "OTROS",
+        total: totalOtros,
+      });
+    }
   }
 
   const datosConPorcentaje = datosVisibles.map((item) => ({
@@ -129,15 +206,18 @@ export default function DashboardVentasPorTipo({
   }));
 
   return (
-    <section className="flex h-full md:min-h-80 flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <section className="flex h-full md:min-h-80 flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm font-inter">
       <div className="mb-5">
-        <h2 className="font-inter text-sm font-semibold text-primary-blue">
+        <h2 className="font-inter text-sm 2xl:text-base font-semibold text-primary-blue">
           Distribución por servicio
         </h2>
+        <p className="mt-1 font-inter text-xs text-gray-500">
+          Acumulado del mes
+        </p>
       </div>
 
       {loading ? (
-        <div className="flex h-64 items-center justify-center text-sm text-gray-500">
+        <div className="flex h-64 items-center justify-center text-sm text-fifth-gray">
           Cargando ventas...
         </div>
       ) : error ? (
@@ -145,11 +225,12 @@ export default function DashboardVentasPorTipo({
           No se pudieron cargar las ventas.
         </div>
       ) : datos.length === 0 || totalVendido <= 0 ? (
-        <div className="flex h-64 items-center justify-center text-sm text-gray-500">
+        <div className="flex h-64 items-center justify-center text-sm text-fifth-gray">
           No hay ventas para este período.
         </div>
       ) : (
         <div className="grid flex-1 grid-cols-1 items-center gap-6 md:grid-cols-2">
+          {/* Gráfico */}
           <div className="relative h-64 min-w-0">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -157,7 +238,7 @@ export default function DashboardVentasPorTipo({
                   data={datosConPorcentaje}
                   dataKey="total"
                   nameKey="tipo"
-                  innerRadius="66%"
+                  innerRadius="55%"
                   outerRadius="90%"
                   paddingAngle={2}
                   stroke="none"
@@ -173,47 +254,72 @@ export default function DashboardVentasPorTipo({
                       />
                     );
                   }}
-                />
+                >
+                  <LabelList
+                    dataKey="porcentaje"
+                    position="inside"
+                    content={(props) => (
+                      <PorcentajeLabel {...(props as PorcentajeLabelProps)} />
+                    )}
+                  />
+                </Pie>
               </PieChart>
             </ResponsiveContainer>
 
-            <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-              <span className="mt-1 text-center text-lg font-semibold text-primary-blue">
+            {/* Total central */}
+            <div className="pointer-events-none font-inter absolute inset-0 flex flex-col items-center justify-center">
+              <span className="mt-1 text-center text-lg font-bold text-primary-blue">
                 {formatoCOP(totalVendido)}
               </span>
               <span className="text-xs text-gray-500">Total ventas</span>
             </div>
           </div>
 
+          {/* Leyenda */}
           <div className="flex flex-col gap-4">
-            {datosConPorcentaje.map((item, index) => (
-              <div key={item.tipo} className="flex items-start gap-3">
-                <span
-                  className="mt-1.5 h-3 w-3 shrink-0 rounded-sm"
-                  style={{
-                    backgroundColor: COLORES[index % COLORES.length],
-                  }}
-                />
+            {datosConPorcentaje.map((item, index) => {
+              const etiqueta = ETIQUETAS[item.tipo] ?? {
+                label: item.tipo,
+                icon: Package,
+              };
 
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="text-sm text-fifth-gray">
-                      {ETIQUETAS[item.tipo] ?? item.tipo}
-                    </span>
-                    <span className="shrink-0 text-sm font-medium text-fifth-gray">
-                      {item.porcentaje.toLocaleString("es-CO", {
-                        maximumFractionDigits: 1,
-                      })}
-                      %
-                    </span>
+              const Icon = etiqueta.icon;
+              const color = COLORES[index % COLORES.length];
+
+              return (
+                <div key={item.tipo} className="flex items-start gap-3">
+                  <div
+                    className="p-1 rounded-full"
+                    style={{ backgroundColor: color }}
+                  >
+                    <Icon
+                      size={17}
+                      strokeWidth={1.8}
+                      className="mt-0.5 shrink-0 text-white"
+                    />
                   </div>
 
-                  <p className="mt-1 text-sm text-gray-500">
-                    {formatoCOP(item.total)}
-                  </p>
+                  <div className="min-w-0 flex-1 font-inter">
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="text-xs text-fifth-gray">
+                        {etiqueta.label}
+                      </span>
+
+                      <span className="shrink-0 text-sm font-medium text-fifth-gray">
+                        {item.porcentaje.toLocaleString("es-CO", {
+                          maximumFractionDigits: 1,
+                        })}
+                        %
+                      </span>
+                    </div>
+
+                    <p className="mt-1 text-sm text-fifth-gray">
+                      {formatoCOP(item.total)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

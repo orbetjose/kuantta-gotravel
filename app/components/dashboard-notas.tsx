@@ -37,40 +37,45 @@ export default function DashboardNotas() {
     return () => clearTimeout(timeout);
   }, []);
 
-    async function handleCrearNota(data: NotaFormValues) {
-      const resultado = await crearNota(data);
-  
-      if (!resultado.success) {
-        console.error(resultado.error);
-        return;
-      }
-  
-      setNotas((actuales) =>
-        [resultado.nota, ...actuales].sort((a, b) => {
-          if (a.fijada !== b.fijada) {
-            return Number(b.fijada) - Number(a.fijada);
-          }
-  
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-        }),
-      );
-  
-      setModalAbierta(false);
+  async function handleCrearNota(data: NotaFormValues) {
+    const resultado = await crearNota(data);
+
+    if (!resultado.success) {
+      console.error(resultado.error);
+      return;
     }
+
+    setNotas((actuales) =>
+      [resultado.nota, ...actuales].sort((a, b) => {
+        if (a.fijada !== b.fijada) {
+          return Number(b.fijada) - Number(a.fijada);
+        }
+
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      }),
+    );
+
+    setModalAbierta(false);
+  }
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm relative mt-2 font-inter text-sm text-fifth-gray">
       <div className="flex justify-between">
         <span>Últimas notas</span>
         <div className="bg-primary-blue rounded p-0.2">
-          <Plus className="w-5 h-5 text-white" onClick={()=> setModalAbierta(true) } />
+          <Plus
+            className="w-5 h-5 text-white"
+            onClick={() => setModalAbierta(true)}
+          />
         </div>
       </div>
 
       {isLoading ? (
         <p>Cargando notas...</p>
+      ) : notas.length === 0 ? (
+        <p className="text-xs text-fifth-gray mt-2">No hay notas</p>
       ) : (
         notas.map((nota) => (
           <div

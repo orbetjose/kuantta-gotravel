@@ -1,4 +1,3 @@
-
 import "dotenv/config";
 import { prisma } from "@/libs/prisma";
 import { fakerES as faker } from "@faker-js/faker";
@@ -10,8 +9,13 @@ import bcrypt from "bcryptjs";
 
 const CANTIDAD_CLIENTES = 15;
 const CANTIDAD_PROVEEDORES = 10;
-const CANTIDAD_SERVICIOS = 20;
+const CANTIDAD_SERVICIOS = 90;
 const CANTIDAD_PASAJEROS = 30;
+
+const ANIO_SEED = 2026;
+
+const SERVICIOS_OCTUBRE = 70;
+const SERVICIOS_NOVIEMBRE = 20;
 
 // Límites de caracteres para los nombres.
 const MAX_NOMBRE_CLIENTE = 40;
@@ -31,17 +35,9 @@ const ESTADOS = [
   "ANULADO",
 ] as const;
 
-const FORMAS_PAGO = [
-  "CASH",
-  "TARJETA_CREDITO",
-  "CREDITO_AGENCIA",
-] as const;
+const FORMAS_PAGO = ["CASH", "TARJETA_CREDITO", "CREDITO_AGENCIA"] as const;
 
-const TIPOS_ITINERARIO = [
-  "SOLO_IDA",
-  "IDA_VUELTA",
-  "MULTIDESTINO",
-] as const;
+const TIPOS_ITINERARIO = ["SOLO_IDA", "IDA_VUELTA"] as const;
 
 const CANALES_VENTA = [
   "AMADEUS",
@@ -87,10 +83,52 @@ function randomDate(start: Date, end: Date): Date {
   });
 }
 
+// Sumar días sin depender de la zona horaria del servidor.
 function addDays(date: Date, days: number): Date {
   const result = new Date(date);
-  result.setDate(result.getDate() + days);
+  result.setUTCDate(result.getUTCDate() + days);
   return result;
+}
+
+// Construir una fecha correspondiente al horario de Colombia (UTC-5).
+function fechaColombia(
+  anio: number,
+  mes: number,
+  dia: number,
+  hora: number,
+  minutos = 0,
+): Date {
+  return new Date(Date.UTC(anio, mes, dia, hora + 5, minutos));
+}
+
+// Generar fechas de creación según el periodo correspondiente.
+// Los primeros 70 servicios serán de octubre.
+// Los siguientes 20 serán de noviembre.
+
+function generarFechaCreacionServicio(indice: number): Date {
+  const esOctubre = indice < SERVICIOS_OCTUBRE;
+
+  const inicio = esOctubre
+    ? fechaColombia(ANIO_SEED, 9, 1, 8)
+    : fechaColombia(ANIO_SEED, 10, 1, 8);
+
+  const fin = esOctubre
+    ? fechaColombia(ANIO_SEED, 9, 31, 18)
+    : fechaColombia(ANIO_SEED, 10, 9, 18);
+
+  return randomDate(inicio, fin);
+}
+
+// Distribución de estados para generar datos más representativos.
+function generarEstado(): (typeof ESTADOS)[number] {
+  const numero = Math.random();
+
+  if (numero < 0.25) return "FACTURADO";
+  if (numero < 0.6) return "POR_FACTURAR";
+  if (numero < 0.8) return "BORRADOR";
+  if (numero < 0.9) return "DEVUELTO";
+
+  return "ANULADO";
 }
 
 type RutaSeed = {
@@ -124,12 +162,17 @@ function randomRuta(excludeId?: number): RutaSeed {
 async function main() {
   console.log("🌱 Iniciando seed de Kuantta...");
 
+  if (SERVICIOS_OCTUBRE + SERVICIOS_NOVIEMBRE !== CANTIDAD_SERVICIOS) {
+    throw new Error(
+      "La distribución de servicios no coincide con la cantidad total configurada.",
+    );
+  }
+
   // -----------------------------------------------------
   // LIMPIEZA DE DATOS OPERATIVOS
   //
-  // IMPORTANTE:
-  // No se eliminan las rutas existentes.
-  // Tampoco se eliminan los usuarios ni las cuentas.
+  // No se eliminan las rutas.
+  // No se eliminan los usuarios ni las cuentas.
   // -----------------------------------------------------
 
   await prisma.trayectoTiquete.deleteMany();
@@ -183,6 +226,7 @@ async function main() {
         role: "ADMINISTRADOR",
       },
     }),
+
     prisma.user.upsert({
       where: { email: "asesor@kuantta.com" },
       update: {},
@@ -193,6 +237,7 @@ async function main() {
         role: "ASESOR",
       },
     }),
+
     prisma.user.upsert({
       where: { email: "facturador@kuantta.com" },
       update: {},
@@ -272,15 +317,9 @@ async function main() {
   for (let i = 0; i < CANTIDAD_PASAJEROS; i++) {
     const pasajero = await prisma.pasajero.create({
       data: {
-        nombre: limitarTexto(
-          faker.person.firstName(),
-          MAX_NOMBRE_PASAJERO,
-        ),
+        nombre: limitarTexto(faker.person.firstName(), MAX_NOMBRE_PASAJERO),
 
-        apellido: limitarTexto(
-          faker.person.lastName(),
-          MAX_NOMBRE_PASAJERO,
-        ),
+        apellido: limitarTexto(faker.person.lastName(), MAX_NOMBRE_PASAJERO),
 
         documento: `PAS${String(i + 1).padStart(10, "0")}`,
 
@@ -312,10 +351,7 @@ async function main() {
   for (let i = 0; i < CANTIDAD_PROVEEDORES; i++) {
     const proveedor = await prisma.proveedor.create({
       data: {
-        razonSocial: limitarTexto(
-          faker.company.name(),
-          MAX_RAZON_SOCIAL,
-        ),
+        razonSocial: limitarTexto(faker.company.name(), MAX_RAZON_SOCIAL),
 
         nombreComercial: limitarTexto(
           faker.company.name(),
@@ -366,9 +402,6 @@ async function main() {
   // -----------------------------------------------------
 
   const ahora = new Date();
-  const haceUnAnio = new Date();
-
-  haceUnAnio.setFullYear(ahora.getFullYear() - 1);
 
   // -----------------------------------------------------
   // SERVICIOS
@@ -378,21 +411,34 @@ async function main() {
   let trayectosCreados = 0;
   let detallesCreados = 0;
 
+  let serviciosOctubreCreados = 0;
+  let serviciosNoviembreCreados = 0;
+
   for (let i = 0; i < CANTIDAD_SERVICIOS; i++) {
-    const tipo = TIPOS_SERVICIO[i % TIPOS_SERVICIO.length];
+    const tipo = randomItem(TIPOS_SERVICIO);
 
     const cliente = randomItem(clientes);
     const pasajero = randomItem(pasajeros);
 
-    const proveedor =
-      Math.random() > 0.05
-        ? randomItem(proveedores)
-        : null;
+    const proveedor = Math.random() > 0.05 ? randomItem(proveedores) : null;
 
-    const estado = randomItem(ESTADOS);
+    const estado = generarEstado();
 
-    const fechaEmision = randomDate(haceUnAnio, ahora);
-    const fechaSolicitud = randomDate(haceUnAnio, fechaEmision);
+    // ---------------------------------------------------
+    // FECHAS DEL SERVICIO
+    // ---------------------------------------------------
+
+    const fechaCreacion = generarFechaCreacionServicio(i);
+
+    const fechaEmision = randomDate(addDays(fechaCreacion, -2), fechaCreacion);
+
+    const fechaSolicitud = randomDate(addDays(fechaEmision, -7), fechaEmision);
+
+    if (i < SERVICIOS_OCTUBRE) {
+      serviciosOctubreCreados++;
+    } else {
+      serviciosNoviembreCreados++;
+    }
 
     // ---------------------------------------------------
     // FORMA DE PAGO
@@ -406,19 +452,13 @@ async function main() {
         : null;
 
     const creditoAgencia =
-      formaPago === "CREDITO_AGENCIA"
-        ? randomItem([3, 8, 15, 30])
-        : null;
+      formaPago === "CREDITO_AGENCIA" ? randomItem([3, 8, 15, 30]) : null;
 
     const numeroTarjeta =
-      formaPago === "TARJETA_CREDITO"
-        ? faker.finance.creditCardNumber()
-        : null;
+      formaPago === "TARJETA_CREDITO" ? faker.finance.creditCardNumber() : null;
 
     const numeroAprobacion =
-      formaPago === "TARJETA_CREDITO"
-        ? faker.string.numeric(6)
-        : null;
+      formaPago === "TARJETA_CREDITO" ? faker.string.numeric(6) : null;
 
     // ---------------------------------------------------
     // PAGOS
@@ -429,14 +469,12 @@ async function main() {
       : randomItem(["SI", "NO"] as const);
 
     const fechaPagoProveedor =
-      pagadoProveedor === "SI"
-        ? randomDate(fechaEmision, ahora)
-        : null;
+      pagadoProveedor === "SI" ? randomDate(fechaCreacion, ahora) : null;
 
     const pagadoCliente = Math.random() > 0.3;
 
     const fechaPagoCliente = pagadoCliente
-      ? randomDate(fechaEmision, ahora)
+      ? randomDate(fechaCreacion, ahora)
       : null;
 
     // ---------------------------------------------------
@@ -446,7 +484,7 @@ async function main() {
     const facturado = estado === "FACTURADO";
 
     const fechaFacturacion = facturado
-      ? randomDate(fechaEmision, ahora)
+      ? randomDate(fechaCreacion, ahora)
       : null;
 
     const creadoPor = randomItem([admin, asesor]);
@@ -474,14 +512,9 @@ async function main() {
         creditoAgencia,
 
         proyectoFCDS:
-          Math.random() > 0.5
-            ? `FCDS-${faker.string.numeric(4)}`
-            : null,
+          Math.random() > 0.5 ? `FCDS-${faker.string.numeric(4)}` : null,
 
-        ceCos:
-          Math.random() > 0.5
-            ? `CC-${faker.string.numeric(4)}`
-            : null,
+        ceCos: Math.random() > 0.5 ? `CC-${faker.string.numeric(4)}` : null,
 
         vencimientoFacturaProveedor: proveedor
           ? addDays(fechaEmision, 30)
@@ -506,9 +539,7 @@ async function main() {
           : null,
 
         soporteTiqueteElectronicoUrl:
-          tipo === "TIQUETE"
-            ? "https://example.com/soporte-tiquete.pdf"
-            : null,
+          tipo === "TIQUETE" ? "https://example.com/soporte-tiquete.pdf" : null,
 
         creadoPorId: creadoPor.id,
         facturadoPorId: facturadoPor?.id ?? null,
@@ -518,6 +549,9 @@ async function main() {
           estado === "DEVUELTO"
             ? limitarTexto(faker.lorem.sentence(), 160)
             : null,
+
+        // Fecha controlada para los gráficos.
+        createdAt: fechaCreacion,
       },
     });
 
@@ -559,12 +593,7 @@ async function main() {
 
       const revision = Math.random() > 0.85;
 
-      const cantidadTrayectos =
-        tipoItinerario === "SOLO_IDA"
-          ? 1
-          : tipoItinerario === "IDA_VUELTA"
-            ? 2
-            : faker.number.int({ min: 3, max: 4 });
+      const cantidadTrayectos = tipoItinerario === "SOLO_IDA" ? 1 : 2;
 
       const trayectosData: {
         orden: number;
@@ -582,6 +611,7 @@ async function main() {
 
         if (tipoItinerario === "IDA_VUELTA" && j === 1) {
           // El regreso invierte el origen y destino de la ida.
+
           origen = rutasCargadas.find(
             (ruta) => ruta.id === trayectosData[0].destinoId,
           )!;
@@ -594,21 +624,14 @@ async function main() {
         }
 
         const fechaSalida =
-          j === 0
-            ? fechaIda
-            : addDays(
-                trayectosData[j - 1].fechaSalida,
-                tipoItinerario === "IDA_VUELTA" ? 5 : 2,
-              );
+          j === 0 ? fechaIda : addDays(trayectosData[j - 1].fechaSalida, 5);
 
         trayectosData.push({
           orden: j + 1,
           origenId: origen.id,
           destinoId: destino.id,
           fechaSalida,
-          fechaRegreso: new Date(
-            fechaSalida.getTime() + 3 * 60 * 60 * 1000,
-          ),
+          fechaRegreso: new Date(fechaSalida.getTime() + 3 * 60 * 60 * 1000),
         });
 
         aeropuertoActual = destino;
@@ -619,18 +642,18 @@ async function main() {
           servicioId: servicio.id,
 
           numeroTiquete: faker.string.numeric(13),
-          codigoReserva: faker.string
-            .alphanumeric(6)
-            .toUpperCase(),
+
+          codigoReserva: faker.string.alphanumeric(6).toUpperCase(),
 
           canalVenta: randomItem(CANALES_VENTA),
+
           tipoViaje: randomItem(["NACIONAL", "INTERNACIONAL"] as const),
+
           tipoItinerario,
 
           revision,
-          numeroTiqueteRevision: revision
-            ? faker.string.numeric(13)
-            : null,
+
+          numeroTiqueteRevision: revision ? faker.string.numeric(13) : null,
 
           clase: randomItem(["E", "B", "M", "Y", "J"] as const),
 
@@ -639,6 +662,7 @@ async function main() {
           otrosImpuestos: decimal(otrosImpuestos),
 
           tarifaAdministrativaNeta: decimal(tarifaAdministrativaNeta),
+
           ivaTarifaAdministrativa: decimal(ivaTarifaAdministrativa),
 
           feeAgenciaNeta: decimal(feeAgenciaNeta),
@@ -678,24 +702,22 @@ async function main() {
       const tarifaNeta = randomMoney(250_000, 1_500_000);
       const ivaTarifa = tarifaNeta * 0.19;
 
-      const tarifaNetaProveedor = tarifaNeta * faker.number.float({
-        min: 0.65,
-        max: 0.9,
-        fractionDigits: 2,
-      });
+      const tarifaNetaProveedor =
+        tarifaNeta *
+        faker.number.float({
+          min: 0.65,
+          max: 0.9,
+          fractionDigits: 2,
+        });
 
       const ivaTarifaProveedor = tarifaNetaProveedor * 0.19;
 
       const feePagoTarjetaCredito =
-        formaPago === "TARJETA_CREDITO"
-          ? randomMoney(10_000, 100_000)
-          : 0;
+        formaPago === "TARJETA_CREDITO" ? randomMoney(10_000, 100_000) : 0;
 
-      const totalVentaAgencia =
-        tarifaNeta + ivaTarifa + feePagoTarjetaCredito;
+      const totalVentaAgencia = tarifaNeta + ivaTarifa + feePagoTarjetaCredito;
 
-      const totalPagado =
-        tarifaNetaProveedor + ivaTarifaProveedor;
+      const totalPagado = tarifaNetaProveedor + ivaTarifaProveedor;
 
       const comisionAgencia = tarifaNeta - tarifaNetaProveedor;
 
@@ -721,9 +743,7 @@ async function main() {
             MAX_DESCRIPCION_SERVICIO,
           ),
 
-          codigoReserva: faker.string
-            .alphanumeric(8)
-            .toUpperCase(),
+          codigoReserva: faker.string.alphanumeric(8).toUpperCase(),
 
           ciudad: ubicacion.ciudad,
           pais: ubicacion.pais,
@@ -734,10 +754,13 @@ async function main() {
           tarifaNeta: decimal(tarifaNeta),
           ivaTarifa: decimal(ivaTarifa),
           feePagoTarjetaCredito: decimal(feePagoTarjetaCredito),
+
           totalVentaAgencia: decimal(totalVentaAgencia),
 
           tarifaNetaProveedor: decimal(tarifaNetaProveedor),
+
           ivaTarifaProveedor: decimal(ivaTarifaProveedor),
+
           comisionAgencia: decimal(comisionAgencia),
           totalPagado: decimal(totalPagado),
         },
@@ -752,14 +775,24 @@ async function main() {
   // -----------------------------------------------------
 
   console.log("\n📊 RESUMEN DEL SEED");
+  console.log("--------------------------------");
+
   console.log(`👥 Clientes: ${clientes.length}`);
   console.log(`🧳 Pasajeros: ${pasajeros.length}`);
   console.log(`🏢 Proveedores: ${proveedores.length}`);
+
   console.log(`✈️ Rutas conservadas y utilizadas: ${rutasCargadas.length}`);
-  console.log(`📦 Servicios: ${CANTIDAD_SERVICIOS}`);
+
+  console.log(`📦 Servicios totales: ${CANTIDAD_SERVICIOS}`);
+
+  console.log(`📅 Servicios octubre: ${serviciosOctubreCreados}`);
+  console.log(`📅 Servicios noviembre: ${serviciosNoviembreCreados}`);
+
   console.log(`🎫 Tiquetes: ${tiquetesCreados}`);
   console.log(`🛫 Trayectos: ${trayectosCreados}`);
   console.log(`🏨 Detalles de hotel: ${detallesCreados}`);
+
+  console.log("--------------------------------");
   console.log("✅ Seed completado.");
 }
 

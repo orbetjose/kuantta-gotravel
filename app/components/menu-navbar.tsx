@@ -39,7 +39,7 @@ export default function Navbar() {
 
             <a
               href="/login"
-              className="rounded-lg bg-primary-green px-3 py-1.5 text-sm font-bold text-white transition hover:bg-primary-blue"
+              className="rounded-lg bg-secondary-blue px-3 py-1.5 text-sm font-bold text-white transition hover:bg-primary-blue shadow-2xl"
             >
               Solicitar demo
             </a>

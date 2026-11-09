@@ -28,9 +28,9 @@ function obtenerEtiqueta(fecha: string) {
 export async function GET() {
   try {
     const session = await auth();
-    const asesorId = session?.user?.id;
+    const facturadorId = session?.user?.id;
 
-    if (!asesorId) {
+    if (!facturadorId) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 
@@ -42,11 +42,9 @@ export async function GET() {
     const fechaFin = inicioDelDia(diaSiguiente);
 
     const filtrosServicio = {
-      creadoPorId: asesorId,
-      estado: {
-        not: EstadoServicio.ANULADO,
-      },
-      createdAt: {
+      facturadoPorId: facturadorId,
+      estado: EstadoServicio.FACTURADO,
+      fechaFacturacion: {
         gte: fechaInicio,
         lt: fechaFin,
       },
@@ -61,7 +59,7 @@ export async function GET() {
           totalPagar: true,
           servicio: {
             select: {
-              createdAt: true,
+              fechaFacturacion: true,
             },
           },
         },
@@ -75,60 +73,63 @@ export async function GET() {
           totalVentaAgencia: true,
           servicio: {
             select: {
-              createdAt: true,
+              fechaFacturacion: true,
             },
           },
         },
       }),
     ]);
 
-    // Inicializamos los siete días, incluso los que no tengan ventas.
-    const ventasPorDia = new Map<
+    // Inicializamos los siete días, incluso los que no tengan facturados.
+    const facturadosPordia = new Map<
       string,
-      { fecha: string; dia: string; ventas: number }
+      { fecha: string; dia: string; facturados: number }
     >();
 
     for (let i = 0; i < 7; i++) {
       const fecha = sumarDias(primerDia, i);
 
-      ventasPorDia.set(fecha, {
+      facturadosPordia.set(fecha, {
         fecha,
         dia: obtenerEtiqueta(fecha),
-        ventas: 0,
+        facturados: 0,
       });
     }
 
-    // Sumamos las ventas de los tiquetes según su fecha de creación.
+    // Sumamos las facturados de los tiquetes según su fecha de creación.
     for (const tiquete of tiquetes) {
-      const fecha = obtenerFecha(tiquete.servicio.createdAt);
-      const registro = ventasPorDia.get(fecha);
-
-      if (registro) {
-        registro.ventas += Number(tiquete.totalPagar);
+      if (tiquete.servicio.fechaFacturacion) {
+        const fecha = obtenerFecha(tiquete.servicio.fechaFacturacion);
+        const registro = facturadosPordia.get(fecha);
+        if (registro) {
+          registro.facturados += Number(tiquete.totalPagar);
+        }
       }
     }
 
-    // Sumamos las ventas de los demás tipos de servicio.
+    // Sumamos las facturados de los demás tipos de servicio.
     for (const detalle of detalles) {
-      const fecha = obtenerFecha(detalle.servicio.createdAt);
-      const registro = ventasPorDia.get(fecha);
+      if (detalle.servicio.fechaFacturacion) {
+        const fecha = obtenerFecha(detalle.servicio.fechaFacturacion);
+        const registro = facturadosPordia.get(fecha);
 
-      if (registro) {
-        registro.ventas += Number(detalle.totalVentaAgencia);
+        if (registro) {
+          registro.facturados += Number(detalle.totalVentaAgencia);
+        }
       }
     }
 
-    const datos = Array.from(ventasPorDia.values()).map((registro) => ({
+    const datos = Array.from(facturadosPordia.values()).map((registro) => ({
       ...registro,
-      ventas: Math.round(registro.ventas * 100) / 100,
+      facturados: Math.round(registro.facturados * 100) / 100,
     }));
 
     return NextResponse.json({ datos });
   } catch (error) {
-    console.error("Error al obtener ventas semanales:", error);
+    console.error("Error al obtener facturados semanales:", error);
 
     return NextResponse.json(
-      { error: "Error al obtener las ventas semanales" },
+      { error: "Error al obtener las facturados semanales" },
       { status: 500 },
     );
   }

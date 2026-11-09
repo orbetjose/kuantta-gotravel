@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -46,9 +45,7 @@ export default function DashboardVentasSemanales() {
         setLoading(true);
         setError(false);
 
-        const response = await fetch(
-          "/api/dashboard/asesor/ventas-semanales",
-        );
+        const response = await fetch("/api/dashboard/resumen/ventas-semanales");
 
         if (!response.ok) {
           throw new Error("Error obteniendo ventas semanales");
@@ -70,7 +67,7 @@ export default function DashboardVentasSemanales() {
   return (
     <section className="flex h-full md:min-h-80 flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <div className="mb-5">
-        <h2 className="font-inter text-sm font-semibold text-primary-blue">
+        <h2 className="font-inter text-sm 2xl:text-base font-semibold text-primary-blue">
           Ventas por día (últimos 7 días)
         </h2>
       </div>
@@ -117,10 +114,7 @@ export default function DashboardVentasSemanales() {
               />
 
               <Tooltip
-                formatter={(value) => [
-                  formatCurrency(Number(value)),
-                  "Ventas",
-                ]}
+                formatter={(value) => [formatCurrency(Number(value)), "Ventas"]}
                 labelFormatter={(_, payload) =>
                   payload?.[0]?.payload?.fecha ?? ""
                 }

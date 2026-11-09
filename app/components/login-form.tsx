@@ -123,13 +123,13 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full rounded-lg bg-primary-blue px-4 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg bg-secondary-blue px-4 py-2.5 text-sm font-bold text-white transition hover:bg-primary-blue focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? "Iniciando sesión..." : "Iniciar sesión"}
           </button>
         </form>
 
-        {/* Register */}
+        {/* Register 
         <p className="mt-6 text-center text-sm text-white">
           ¿No tienes una cuenta?{" "}
           <Link
@@ -139,6 +139,7 @@ export default function LoginForm() {
             Crear una cuenta
           </Link>
         </p>
+        */}
       </div>
     </div>
   );

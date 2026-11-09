@@ -6,22 +6,12 @@ import {
 } from "@/libs/generated/prisma/enums";
 import { auth } from "@/auth";
 import { prisma } from "@/libs/prisma";
-import { obtenerFecha, inicioDelDia } from "@/libs/dashboard-helpers";
-
-function fechaValida(fecha: string) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return false;
-
-  const fechaParseada = inicioDelDia(fecha);
-
-  return (
-    !Number.isNaN(fechaParseada.getTime()) &&
-    obtenerFecha(fechaParseada) === fecha
-  );
-}
-
-function redondear(valor: number) {
-  return Math.round(valor * 100) / 100;
-}
+import {
+  obtenerFecha,
+  inicioDelDia,
+  fechaValida,
+  redondear,
+} from "@/libs/dashboard-helpers";
 
 export async function GET(request: Request) {
   try {
@@ -178,6 +168,7 @@ export async function GET(request: Request) {
           totalVentaAgencia: true,
         },
       }),
+
       prisma.cliente.count({
         where: {
           servicios: {

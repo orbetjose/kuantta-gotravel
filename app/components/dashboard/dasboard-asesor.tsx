@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import DashboardCalendar from "@/app/components/dashboard/dashboard-calendar";
-import DashboardStats from "@/app/components/dashboard/dashboard-stats";
+import DashboardStatsAsesor from "./stats-dashboard/dashboard-stats-asesor";
 import DashboardNotas from "../dashboard-notas";
 import DashboardVentasSemanales from "@/app/components/dashboard/dashboard-ventas-semanales";
 import DashboardVentasPorTipo from "@/app/components/dashboard/dashboard-ventas-por-tipo";
@@ -18,22 +18,7 @@ interface DashboardSummary {
   clientesConCartera: number;
   proveedoresPendientes: number;
 
-  ventasPorTipo: {
-    tipo: string;
-    total: number;
-  }[];
 
-  ventasPorPeriodo: {
-    periodo: string;
-    total: number;
-  }[];
-
-  periodoAgrupacion: "DIA" | "SEMANA" | "MES";
-
-  serviciosPorCantidad: {
-    tipo: string;
-    cantidad: number;
-  }[];
 }
 
 export default function DashboardAsesor() {
@@ -44,14 +29,12 @@ export default function DashboardAsesor() {
     ventasDelDia: 0,
     clientesConCartera: 0,
     proveedoresPendientes: 0,
-    serviciosPorCantidad: [],
-    ventasPorTipo: [],
-    ventasPorPeriodo: [],
-    periodoAgrupacion: "MES",
+
   });
 
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -92,8 +75,8 @@ export default function DashboardAsesor() {
   return (
     <div className="w-full rounded-lg bg-fourth-gray p-4">
       <div className="mb-4">
-        <h1 className="font-inter text-4xl font-bold text-fifth-gray">
-          Dashboard
+        <h1 className="font-inter text-3xl font-bold text-fifth-gray">
+          Dashboard Asesor
         </h1>
         <p className="font-inter text-sm text-fifth-gray">
           Resumen general de ventas y servicios
@@ -102,7 +85,7 @@ export default function DashboardAsesor() {
 
       <div className="flex flex-col gap-4 lg:flex-row">
         <div className="min-w-0 flex-1">
-          <DashboardStats
+          <DashboardStatsAsesor
             totalVendido={summary.totalVendido}
             totalCartera={summary.carteraPendiente}
             pagoPendienteProveedores={summary.pagoPendienteProveedores}

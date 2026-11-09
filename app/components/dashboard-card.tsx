@@ -23,14 +23,14 @@ export default function DashboardCard({
     <div className="rounded-xl border border-gray-200 bg-white px-3 py-4 3xl:px-5 3xl:py-5 shadow-sm">
       <div className="flex items-center gap-2">
         <div className="bg-fourth-gray rounded-full p-1.5">
-          {Icon && <Icon size={20} />}
+          {Icon && <Icon size={24} />}
         </div>
         <p className="font-inter text-sm 3xl:text-sm text-fifth-gray 3xl:min-h-auto leading-4">
           {title}
         </p>
       </div>
 
-      <p className="mt-2 font-poppins text-2xl md:text-xl 2xl:text-3xl font-bold text-primary-blue">
+      <p className="mt-2 font-poppins text-2xl 2xl:text-3xl font-bold text-primary-blue">
         {value}
       </p>
       {moneda && (

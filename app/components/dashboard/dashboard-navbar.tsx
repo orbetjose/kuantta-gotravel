@@ -23,7 +23,7 @@ export default function DashboardNavbar({ user }: DashboardNavbarProps) {
 
   return (
     <header className="md:px-8 px-2 pt-4 font-inter">
-      <div className="h-16 px-4 rounded-3xl flex items-center justify-end lg:justify-between bg-primary-gray relative">
+      <div className="h-16 ps-4 rounded-3xl flex items-center justify-end lg:justify-between bg-primary-gray relative">
         {/* Logo */}
         <div className=" items-center hidden lg:flex">
           <img
@@ -38,44 +38,69 @@ export default function DashboardNavbar({ user }: DashboardNavbarProps) {
           <h1 className="text-lg font-bold text-primary-blue">{title}</h1>
         </div>
 
+        <div className="min-w-40" />
+
         {/* User */}
         <div
-          className="flex items-center gap-3 cursor-pointer"
+          className={`absolute top-0 right-0 flex flex-col cursor-pointer px-2 overflow-hidden transition-all duration-300 ${
+            isOpen ? "bg-secondary-blue rounded-3xl" : "rounded-r-3xl"
+          }`}
           onClick={() => setIsOpen((prev) => !prev)}
           aria-expanded={isOpen}
         >
-          <div className="text-right">
-            <p className="text-sm font-bold text-primary-blue capitalize">
-              Hola, {user.name}
-            </p>
-            <span className="text-sm text-primary-green font-bold uppercase ">
-              {user.role}
-            </span>
+          {/* Información del usuario */}
+          <div className="flex h-full items-center gap-3 py-2">
+            <div className="text-right">
+              <div className="flex items-center gap-2">
+                <ChevronDown
+                  size={20}
+                  className={`transition-transform duration-300 ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                />
+                <p className="text-sm font-bold text-primary-blue capitalize">
+                  Hola, {user.name}
+                </p>
+              </div>
+
+              <span
+                className={`text-xs font-bold ${
+                  isOpen ? "text-primary-blue" : "text-secondary-blue"
+                }`}
+              >
+                {user.role}
+              </span>
+            </div>
+
+            <div className="h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-secondary-blue">
+              <img
+                src="/assets/images/ico-user.png"
+                alt="Juan Pérez"
+                className="object-cover"
+              />
+            </div>
           </div>
 
-          <div className="h-11 w-11 overflow-hidden rounded-full bg-primary-green ">
-            <img
-              src="/assets/images/ico-user.png"
-              alt="Juan Pérez"
-              className="object-cover p-2"
-            />
-            <ChevronDown
-              size={16}
-              className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
-            />
-          </div>
-          {isOpen && (
-            <div className="absolute right-4 top-[90%] z-50 w-48 bg-primary-gray rounded-b-xl p-2 shadow-lg font-inter">
+          {/* Menú desplegable */}
+          <div
+            className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+              isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            }`}
+          >
+            <div className="overflow-hidden flex ">
               <button
                 type="button"
-                onClick={() => signOut({ callbackUrl: "/login" })}
-                className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:opacity-70"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  signOut({ callbackUrl: "/login" });
+                }}
+                className="flex w-full justify-center items-center gap-3 px-3 py-3 text-sm font-medium text-white transition-opacity hover:opacity-70 cursor-pointer"
               >
                 <LogOut size={16} />
                 Cerrar sesión
               </button>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </header>
